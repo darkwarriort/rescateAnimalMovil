@@ -1,0 +1,100 @@
+<resources>
+    <string name="app_name">Rescate Animal Ecuador</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Usuario no registrado</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_account">Account</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="user">Usuario</string>
+    <string name="password">Clave</string>
+    <string name="register">Registrarse</string>
+    <string name="accept">Aceptar</string>
+    <string name="login">Inicio Sesion</string>
+    <string name="profile">Perfil</string>
+    <string name="logout">Cerrar Sesion</string>
+    <string name="exit">Salir</string>
+
+    <string name="register_save">Guardar</string>
+    <string name="name">Nombre</string>
+    <string name="name_mascota">Nombre de la mascota</string>
+
+    <string name="lastname">Apellido</string>
+    <string name="email">Correo</string>
+    <string name="phone">Telefono</string>
+    <string name="address">Direccion</string>
+
+    <string name="report">Reportes</string>
+    <string name="service">Servicios</string>
+    <string name="product">Productos</string>
+    <string name="about">Quienes Somos</string>
+
+    <string name="breed">Raza</string>
+
+
+    <string name="adoption">Adoptar</string>
+    <string name="newreport">Reportar</string>
+    <string name="fixPoint">Fijar Punto</string>
+    <string name="question">Deseas formar parte de la app Cola</string>
+
+    <string-array name="array_species">
+        <item>Especie</item>
+        <item>Perro</item>
+        <item>Gato</item>
+    </string-array>
+    <string-array name="array_reporte">
+        <item>Tipo de reporte</item>
+        <item>Abandono</item>
+        <item>Extraviado</item>
+    </string-array>
+
+    <!--MAP-->
+    <string name="map_top_bar_text">UBICA LA DIRECCIÓN DE TÚ DOMICILIO</string>
+    <string name="map_search_bar_hint">Buscar dirección</string>
+    <string name="map_permission_yes_">Si</string>
+    <string name="map_permission_no">No</string>
+
+    <string name="about_title">Somos una fundación sin fines de lucro</string>
+    <string name="about_mision">Mision</string>
+    <string name="about_mision_content">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."</string>
+    <string name="about_vision">Vision</string>
+    <string name="about_vision_content"> Excepteur sint occaecat cupidatat non proident, sunt in culpa, sed do eiusmod tempor incididunt ut labore et qui officia deserunt mollit anim id est laborum.</string>
+
+    <string name="report_list_about">Quienes somos</string>
+    <string name="report_list_servicio">Servicio</string>
+    <string name="report_list_login">Login</string>
+    <string name="report_list_report">Reportar</string>
+    <string name="report_list_adopcion">Adopcion</string>
+
+    <string name="report_title_activity">Nuevo Reporte</string>
+
+    <string name="view_mascota_postular">Postular</string>
+    <string name="view_mascota_title_activity">Adopcion</string>
+
+
+    <string name="complete_form_save">Guardar</string>
+    <string name="complete_form_exit">Salir</string>
+
+    <string name="complete_form_titulo">Completa los datos\nde mascota reportada</string>
+    <string name="complete_form_nombre">Nombre persona</string>
+    <string name="complete_form_nombre_mascota">Nombre de mascota</string>
+    <string name="complete_form_especie">Especie</string>
+    <string name="complete_form_raza">Raza</string>
+    <string name="complete_form_edad">Edad</string>
+    <string name="complete_form_sexo">Sexo</string>
+    <string name="complete_form_telefono">Telefono</string>
+    <string name="complete_form_direccion">Direccion</string>
+    <string name="complete_form_reporte">Reporte</string>
+    <string name="complete_form_foto">Foto</string>
+
+
+    <string name="about_title_activity">Quienes somos</string>
+    <string name="login_title_activity">Iniciar sesion</string>
+
+
+</resources>

@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.fundacionrescate.rescata.activity.Account">
+
+
+    <item android:id="@+id/gotoHome"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Inicio"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom" />
+</menu>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <!-- TODO: Update blank fragment layout -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listProducto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="70dp"
+        android:overScrollMode="never"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        tools:context=".view.comercio.ComercioFragment"
+        tools:listitem="@layout/item_mascota" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/indigo">
+        <Button
+            android:id="@+id/view_mascotas_postular"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+
+            android:layout_height="50dp"
+            android:background="@drawable/button_rounded"
+            android:text="@string/view_mascota_postular" />
+    </LinearLayout>
+    <!--<Button-->
+        <!--android:id="@+id/register_new_button"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_margin="20dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:background="@drawable/button_rounded"-->
+        <!--android:text="@string/view_mascota_postular" />-->
+</RelativeLayout>
