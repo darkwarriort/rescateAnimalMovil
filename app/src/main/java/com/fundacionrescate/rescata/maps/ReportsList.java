@@ -30,8 +30,11 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.fundacionrescate.rescata.R;
 import com.fundacionrescate.rescata.activity.Container;
+import com.fundacionrescate.rescata.app.AppConfig;
+import com.fundacionrescate.rescata.cnx.Consulta;
 import com.fundacionrescate.rescata.fragment.Reporte;
 import com.fundacionrescate.rescata.fragment.ViewMascotas;
+import com.fundacionrescate.rescata.model.Raza;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -56,6 +59,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.List;
@@ -93,6 +97,7 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
     private Handler mHandler;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     SupportMapFragment fm;
+    Context context;
 
     public ReportsList() {
         // Required empty public constructor
@@ -100,6 +105,7 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        this.context = context;
 //        if (context instanceof OnFragmentInteractionListener) {
 //            mListener = (OnFragmentInteractionListener) context;
 
@@ -173,24 +179,29 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
         mGoogleMap = googleMap;
         mGoogleMap.setOnCameraMoveListener(this);
         mGoogleMap.setOnMapClickListener(this);
+
+        Consulta.GETARRAY(AppConfig.URL_LIST_REPORTE,consultaReportes);
 //        new LatLng(-33.852, 151.211);
-        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-2.193847, -79.887411))
-                .title("Mascota 1"));
 
-        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-2.189550, -79.886836))
-                .title("Mascota 2"));
+//        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-2.193847, -79.887411))
+////                .title("Mascota 1"));
+////
+////        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-2.189550, -79.886836))
+////                .title("Mascota 2"));
+////
+////        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-2.185554, -79.896872))
+////                .title("Mascota 3"));
+////
+////        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-2.185541, -79.895466))
+////                .title("Mascota 4"));
+////
+////        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-2.176148, -79.886396))
+////                .title("Mascota 5"));
+////
+////        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-2.175526, -79.887340))
+//                .title("Mascota 6"));
 
-        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-2.185554, -79.896872))
-                .title("Mascota 3"));
 
-        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-2.185541, -79.895466))
-                .title("Mascota 4"));
-
-        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-2.176148, -79.886396))
-                .title("Mascota 5"));
-
-        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-2.175526, -79.887340))
-                .title("Mascota 6"));
         // -2.193847, -79.887411
 //        -2.189550, -79.886836
 
@@ -408,4 +419,31 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
         getActivity().startActivity(modulCNB);
         getActivity().overridePendingTransition(0, 0);
     }
+
+
+    Consulta.CallBackConsulta consultaReportes = new Consulta.CallBackConsulta() {
+        @Override
+        public void onError(Object response) {
+
+        }
+
+        @Override
+        public void onSuccess(Object response) {
+            com.fundacionrescate.rescata.model.Reporte[] lstReporte =
+                    new Gson().fromJson(response.toString(), com.fundacionrescate.rescata.model.Reporte[].class);
+
+            for (com.fundacionrescate.rescata.model.Reporte reporte : lstReporte){
+
+                mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(reporte.getLongitud(), reporte.getLatitud()))
+                .title("Mascota "+reporte.getIdReporte()));
+            }
+        }
+
+        @Override
+        public Context getContext() {
+            return context;
+        }
+    };
+
+
 }

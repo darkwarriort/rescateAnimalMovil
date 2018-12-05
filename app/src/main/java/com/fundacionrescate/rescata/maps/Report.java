@@ -385,7 +385,7 @@ public class Report extends Fragment implements OnMapReadyCallback,
                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                            String lon =  mLongitude+","+mLatitude;
+                            String lon =   latLng.latitude+","+ latLng.longitude;
                             fragmentTransaction.replace(R.id.fragment_content,  Reporte.newInstance(mAddress,lon));
                             fragmentTransaction.commit();
                         }

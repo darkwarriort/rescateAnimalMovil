@@ -25,6 +25,9 @@ public class Reporte implements Parcelable {
     private Date fecha;
     private String estado;
 
+    public Reporte() {
+    }
+
     protected Reporte(Parcel in) {
         if (in.readByte() == 0) {
             idReporte = null;

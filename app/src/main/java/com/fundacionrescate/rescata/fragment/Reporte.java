@@ -5,17 +5,26 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.fundacionrescate.rescata.R;
+import com.fundacionrescate.rescata.app.AppConfig;
+import com.fundacionrescate.rescata.cnx.Consulta;
+import com.fundacionrescate.rescata.model.Especie;
+import com.fundacionrescate.rescata.model.Raza;
+import com.fundacionrescate.rescata.util.OnCustomItemSelectedListener;
+import com.google.gson.Gson;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,14 +54,24 @@ public class Reporte extends Fragment {
     MaterialBetterSpinner spnEspecie;
     @BindView(R.id.spnReporte)
     MaterialBetterSpinner spnReporte;
+    @BindView(R.id.spnRaza)
+    MaterialBetterSpinner spnRaza;
 
 
     String[] SPINNERREPORTE = {"Abandono","Extraviado"};
     String[] SPINNERESPECIE = {"Perro","Gato"};
 
+    ArrayAdapter<Especie> adapterEspecie;
+    ArrayAdapter<Raza> adapterRaza;
+    ArrayAdapter<String> adapterReporte;
+    Especie[] lstEspecie;
+    Raza[] lstRaza;
+
 
     public Reporte() {
         // Required empty public constructor
+        lstEspecie = new Especie[0];
+        lstRaza  = new Raza[0];
     }
 
     /**
@@ -103,21 +122,137 @@ public class Reporte extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         report_address_input.setText(direccion);
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context,
-                android.R.layout.simple_dropdown_item_1line, SPINNERESPECIE);
-        spnEspecie.setAdapter(arrayAdapter);
-        ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(context,
+        adapterEspecie= new ArrayAdapter<>(context,
+                android.R.layout.simple_dropdown_item_1line, lstEspecie);
+        spnEspecie.setAdapter(adapterEspecie);
+
+        adapterReporte = new  ArrayAdapter<>(context,
                 android.R.layout.simple_dropdown_item_1line, SPINNERREPORTE);
-        spnReporte.setAdapter(arrayAdapter2);
+        spnReporte.setAdapter(adapterReporte);
+
+        adapterRaza = new ArrayAdapter<>(context,
+                android.R.layout.simple_dropdown_item_1line, lstRaza);
+        spnRaza.setAdapter(adapterRaza);
+        cargaDato();
+        spnEspecie.addTextChangedListener(listenerSpinnerEspecie );
+
+
+    }
+
+
+    public void cargaDato(){
+        Consulta.GETARRAY(AppConfig.URL_ESPECIE, consultaEspecie);
+
     }
 
 
     @OnClick(R.id.register_new_button)
     void nextFormQuestion() {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_content, new Question());
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        com.fundacionrescate.rescata.model.Reporte reporte = new  com.fundacionrescate.rescata.model.Reporte();
+        reporte.setEstado("ACTIVO");
+        String [] gps = coordenada.split(",");
+
+        reporte.setLongitud(Float.parseFloat(gps[0]));
+        reporte.setLatitud(Float.parseFloat(gps[1]));
+        for (Especie e : lstEspecie){
+            if(e.getNombre().equals(spnEspecie.getText().toString())){
+                reporte.setIdEspecie(e.getIdEspecie());
+                break;
+            }
+        }
+        for (Raza r : lstRaza){
+            if(r.getNombre().equals(spnRaza.getText().toString())){
+                reporte.setIdRaza(r.getIdEspecie());
+                break;
+            }
+        }
+        try {
+            Consulta.POST(new JSONObject(new Gson().toJson(reporte)),AppConfig.URL_REPORTE,postAgregar);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
+
+
+    OnCustomItemSelectedListener listenerSpinnerEspecie = new OnCustomItemSelectedListener() {
+        @Override
+        protected void onItemSelected(String string) {
+
+            for (Especie e : lstEspecie){
+                if(e.getNombre().equals(string)){
+                    Consulta.GETARRAY(AppConfig.URL_RAZA+"/"+ e.getIdEspecie(),consultaRaza);
+                    break;
+                }
+            } }
+    };
+
+    Consulta.CallBackConsulta consultaEspecie = new Consulta.CallBackConsulta() {
+        @Override
+        public void onError(Object response) {
+
+        }
+
+        @Override
+        public void onSuccess(Object response) {
+            try {
+
+                lstEspecie = new Gson().fromJson(response.toString(), Especie[].class);
+                adapterEspecie = new ArrayAdapter<>(context,
+                        android.R.layout.simple_dropdown_item_1line, lstEspecie);
+                spnEspecie.setAdapter(adapterEspecie);
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public Context getContext() {
+            return context;
+        }
+    };
+
+    Consulta.CallBackConsulta consultaRaza = new Consulta.CallBackConsulta() {
+        @Override
+        public void onError(Object response) {
+
+        }
+
+        @Override
+        public void onSuccess(Object response) {
+            lstRaza = new Gson().fromJson(response.toString(), Raza[].class);
+
+            adapterRaza = new ArrayAdapter<>(context,
+                    android.R.layout.simple_dropdown_item_1line, lstRaza);
+            spnRaza.setAdapter(adapterRaza);
+            spnRaza.setText("");
+        }
+
+        @Override
+        public Context getContext() {
+            return context;
+        }
+    };
+
+    Consulta.CallBackConsulta postAgregar = new Consulta.CallBackConsulta() {
+        @Override
+        public void onError(Object response) {
+
+        }
+
+        @Override
+        public void onSuccess(Object response) {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_content, new Question());
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+
+        @Override
+        public Context getContext() {
+            return context;
+        }
+    };
+
 }
