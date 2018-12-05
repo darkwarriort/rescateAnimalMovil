@@ -213,6 +213,13 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
         getPermissions();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Consulta.GETARRAY(AppConfig.URL_LIST_REPORTE,consultaReportes);
+
+    }
+
     protected GoogleApiClient buildGoogleApiClient() {
         if (mGoogleApiClient == null) {
             Activity act = getActivity();

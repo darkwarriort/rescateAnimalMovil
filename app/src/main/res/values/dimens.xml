@@ -25,4 +25,19 @@
     <dimen name="about_title_content">20sp</dimen>
     <dimen name="about_title_subcontent">15sp</dimen>
 
+    <dimen name="ob_direccion_text_hint_field_large">16sp</dimen>
+    <dimen name="ob_activity_vertical_margin">20sp</dimen>
+    <dimen name="ob_direccion_text_subtittle_small">16sp</dimen>
+    <dimen name="ob_margin_24">24dp</dimen>
+    <dimen name="ob_back_button_size">30dp</dimen>
+    <dimen name="ob_direccion_text_hint_field_small">12sp</dimen>
+    <dimen name="ob_margin_8">8dp</dimen>
+    <dimen name="ob_size_15">15dp</dimen>
+    <dimen name="ob_size_100">100dp</dimen>
+    <dimen name="ob_margin_16">16dp</dimen>
+    <dimen name="ob_txt_27">27sp</dimen>
+    <dimen name="ob_txt_18">18sp</dimen>
+    <dimen name="ob_margin_48">48dp</dimen>
+    <dimen name="ob_87dp">87dp</dimen>
+
 </resources>

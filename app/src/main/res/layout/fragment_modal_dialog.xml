@@ -1,0 +1,72 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container_modal_dialog">
+
+    <!--tools:context="com.technisys.pacifico_onboarding_android.modal_dialog.view.fragment.ModalDialogFragment"-->
+
+    <android.support.constraint.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/negroOpacity90"
+        android:alpha="0.8"
+        >
+
+        <LinearLayout
+            android:id="@+id/modal_linear_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/title_modal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/ob_activity_vertical_margin"
+                android:layout_marginTop="@dimen/ob_activity_vertical_margin"
+                android:gravity="center"
+                android:lineSpacingExtra="6dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/ob_direccion_text_subtittle_small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/body_modal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/ob_activity_vertical_margin"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/ob_direccion_text_hint_field_large" />
+
+            <Button
+                android:id="@+id/button_modal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ob_map_button_next_height"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/white"
+                android:textSize="@dimen/ob_direccion_text_subtittle_small" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/modal_back"
+            android:layout_width="@dimen/ob_back_button_size"
+            android:layout_height="@dimen/ob_back_button_size"
+            android:layout_marginStart="@dimen/ob_margin_24"
+            android:layout_marginTop="@dimen/ob_margin_24"
+            android:src="@drawable/ic_close_black_48dp"
+            android:tint="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>

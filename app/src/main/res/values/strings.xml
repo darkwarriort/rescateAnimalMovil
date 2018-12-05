@@ -40,7 +40,7 @@
     <string name="adoption">Adoptar</string>
     <string name="newreport">Reportar</string>
     <string name="fixPoint">Fijar Punto</string>
-    <string name="question">Deseas formar parte de la app Cola</string>
+    <string name="question">Deseas formar parte de la app Cola? </string>
 
     <string-array name="array_species">
         <item>Especie</item>
@@ -85,11 +85,13 @@
     <string name="complete_form_nombre_mascota">Nombre de mascota</string>
     <string name="complete_form_especie">Especie</string>
     <string name="complete_form_raza">Raza</string>
+    <string name="complete_form_color">Color</string>
     <string name="complete_form_edad">Edad</string>
     <string name="complete_form_sexo">Sexo</string>
     <string name="complete_form_telefono">Telefono</string>
     <string name="complete_form_direccion">Direccion</string>
     <string name="complete_form_reporte">Reporte</string>
+    <string name="complete_form_tipo_reporte">Tipo de reporte</string>
     <string name="complete_form_foto">Foto</string>
 
 

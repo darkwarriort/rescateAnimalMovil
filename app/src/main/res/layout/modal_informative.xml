@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/informative_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.8"
+        android:background="@color/negroOpacity90">
+
+
+        <ScrollView
+            android:id="@+id/informative_scroll"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ob_margin_48"
+            app:layout_constraintEnd_toStartOf="@+id/guideline12"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/guideline11"
+            app:layout_constraintTop_toBottomOf="@+id/informative_title">
+
+            <TextView
+                android:id="@+id/informative_body_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lineSpacingExtra="3sp"
+                android:textColor="#C9C9C9"
+                android:textSize="@dimen/ob_txt_18"
+                tools:layout_editor_absoluteX="layout_editor_absoluteX"
+                tools:layout_editor_absoluteY="layout_editor_absoluteY" />
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/informative_tap_close"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/ob_size_15"
+            android:layout_marginEnd="@dimen/ob_margin_8"
+            android:layout_marginStart="@dimen/ob_margin_8"
+            android:text="TAP PARA CERRAR"
+            android:textColor="#95989A"
+            android:textSize="@dimen/ob_direccion_text_hint_field_small"
+            app:layout_constraintBottom_toTopOf="@+id/guideline13"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/informative_aditional"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/ob_size_100"
+            android:layout_marginBottom="@dimen/ob_margin_16"
+            android:layout_marginEnd="@dimen/ob_margin_8"
+            android:layout_marginStart="@dimen/ob_margin_8"
+            android:layout_marginTop="@dimen/ob_margin_8"
+            app:layout_constraintBottom_toTopOf="@+id/informative_tap_close"
+            app:layout_constraintEnd_toStartOf="@+id/guideline12"
+            app:layout_constraintStart_toStartOf="@+id/guideline11"
+            app:layout_constraintTop_toBottomOf="@+id/informative_scroll">
+            <!--app:lottie_loop="true"-->
+
+            <TextView
+                android:id="@+id/informative_text_below_body"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/ob_margin_16"
+                android:gravity="center_horizontal"
+                android:visibility="gone"
+                android:textColor="@android:color/white" />
+        </FrameLayout>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.9045161" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/ob_87dp" />
+
+        <TextView
+            android:id="@+id/informative_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/ob_margin_16"
+            android:layout_marginStart="@dimen/ob_margin_16"
+            android:layout_marginTop="@dimen/ob_margin_8"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ob_txt_27"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline15" />
+
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>

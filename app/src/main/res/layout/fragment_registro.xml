@@ -35,7 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/name"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textCapWords"
                     android:maxLines="1" />
 
             </android.support.design.widget.TextInputLayout>
@@ -52,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/lastname"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textCapWords"
                     android:maxLines="1" />
 
             </android.support.design.widget.TextInputLayout>
@@ -141,7 +141,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/password"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textPassword"
                     android:maxLines="1" />
 
             </android.support.design.widget.TextInputLayout>

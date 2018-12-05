@@ -51,7 +51,7 @@ public class Consulta {
        mProgressDialog.show();
        mProgressDialog.setContentView(R.layout.my_progress);
 
-
+       System.out.println(jsonRequest.toString());
        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST,
                url,jsonRequest,
                new Response.Listener() {

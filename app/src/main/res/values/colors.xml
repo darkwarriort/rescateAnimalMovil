@@ -18,7 +18,12 @@
     <color name="indigo">#e8eaf6</color>
 
     <color name="transparent_gray">#7f494949</color>
+    <color name="rojo">#ff0000</color>
     <color name="error_red_color">#ff0000</color>
     <color name="note_yellow_color">#FFFACD</color>
     <color name="yellow_accent">#ffca28</color>
+
+    <color name="negroOpacity90">#E6000000</color>
+    <color name="negroOpacity40">#66000000</color>
+    <color name="blancoOpacity20">#24ffffff</color>
 </resources>

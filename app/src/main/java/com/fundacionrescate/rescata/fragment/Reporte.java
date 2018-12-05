@@ -2,6 +2,7 @@ package com.fundacionrescate.rescata.fragment;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -19,7 +20,9 @@ import com.fundacionrescate.rescata.R;
 import com.fundacionrescate.rescata.app.AppConfig;
 import com.fundacionrescate.rescata.cnx.Consulta;
 import com.fundacionrescate.rescata.model.Especie;
+import com.fundacionrescate.rescata.model.Mascota;
 import com.fundacionrescate.rescata.model.Raza;
+import com.fundacionrescate.rescata.util.ActivityUtils;
 import com.fundacionrescate.rescata.util.OnCustomItemSelectedListener;
 import com.google.gson.Gson;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -66,7 +69,7 @@ public class Reporte extends Fragment {
     ArrayAdapter<String> adapterReporte;
     Especie[] lstEspecie;
     Raza[] lstRaza;
-
+    Mascota mascota = null;
 
     public Reporte() {
         // Required empty public constructor
@@ -167,7 +170,15 @@ public class Reporte extends Fragment {
             }
         }
         try {
+
+            mascota = new Mascota();
+            mascota.setDireccion(direccion);
+            mascota.setEspecie(spnEspecie.getText().toString());
+            mascota.setRaza(spnRaza.getText().toString());
+            mascota.setReporte(spnReporte.getText().toString());
+
             Consulta.POST(new JSONObject(new Gson().toJson(reporte)),AppConfig.URL_REPORTE,postAgregar);
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -242,11 +253,34 @@ public class Reporte extends Fragment {
 
         @Override
         public void onSuccess(Object response) {
+            /*
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.fragment_content, new Question());
             fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+            fragmentTransaction.commit();*/
+
+
+            System.out.println(response);
+
+            final com.fundacionrescate.rescata.model.Reporte reporte = new Gson().fromJson(response.toString(), com.fundacionrescate.rescata.model.Reporte.class);
+            Bitmap map = ActivityUtils.takeScreenShot(getActivity());
+            Bitmap blurredBitmap = ActivityUtils.blur(getActivity(), map);
+            ActivityUtils.customDialogBlur(context, 0, getString(R.string.app_name), getString(R.string.question), getString(R.string.accept), true, new ActivityUtils.FinishDialog() {
+                @Override
+                public void successModalDialog(Boolean respuesta) {
+                    if(respuesta){
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_content, Registro.newInstance(reporte,mascota));
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                    }else{
+                        getActivity().finish();
+                    }
+                }
+            },blurredBitmap);
+
         }
 
         @Override
@@ -254,5 +288,7 @@ public class Reporte extends Fragment {
             return context;
         }
     };
+
+
 
 }
