@@ -19,6 +19,7 @@
         android:orientation="horizontal"
         android:weightSum="2">
         <ImageView
+            android:id="@+id/imgMascota"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:src="@color/light_blue"

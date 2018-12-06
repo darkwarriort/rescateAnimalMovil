@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -15,17 +16,24 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import com.fundacionrescate.rescata.R;
 import com.fundacionrescate.rescata.adapter.Mascotas;
+import com.fundacionrescate.rescata.cnx.Consulta;
 import com.fundacionrescate.rescata.maps.ReportsList;
+import com.fundacionrescate.rescata.model.Adopcion;
 import com.fundacionrescate.rescata.model.Mascota;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.fundacionrescate.rescata.app.AppConfig.URL_ADOPCIONES;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,15 +44,12 @@ public class ViewMascotas extends Fragment {
 
 
     RecyclerView recyclerView;
-    List<Mascota> items;
+    ArrayList<Adopcion> items;
+
     Mascotas mascotasAdapter;
     public ViewMascotas() {
         // Required empty public constructor
         items = new ArrayList<>();
-        items.add(new Mascota());
-        items.add(new Mascota());
-        items.add(new Mascota());
-        items.add(new Mascota());
 
     }
 
@@ -54,14 +59,25 @@ public class ViewMascotas extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_view_mascotas, container, false);
+        ButterKnife.bind(this, v);
+
         recyclerView = (RecyclerView) v.findViewById(R.id.listProducto);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        mascotasAdapter = new Mascotas(items);
-        ButterKnife.bind(this, v);
+        mascotasAdapter = new Mascotas(items,context);
         recyclerView.setAdapter(mascotasAdapter);
+
+        Consulta.GETARRAY(URL_ADOPCIONES,consultaAdopcion);
         return v;
 
     }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -105,4 +121,29 @@ public class ViewMascotas extends Fragment {
                 });
         alertDialog.show();
     }
+
+
+    Consulta.CallBackConsulta consultaAdopcion = new Consulta.CallBackConsulta() {
+        @Override
+        public void onError(Object response) {
+
+        }
+
+        @Override
+        public void onSuccess(Object response) {
+            try {
+                items.clear();
+                items.addAll(Arrays.asList(new Gson().fromJson(response.toString(), Adopcion[].class)));
+                mascotasAdapter.notifyDataSetChanged();
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public Context getContext() {
+            return context;
+        }
+    };
 }

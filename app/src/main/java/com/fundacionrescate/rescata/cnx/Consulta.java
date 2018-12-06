@@ -11,6 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -83,6 +84,51 @@ public class Consulta {
 
    }
 
+    public static void POSTMultiPart (final JSONObject jsonRequest, final String url, final CallBackConsulta callback ){
+        final ProgressDialog mProgressDialog ;
+        mProgressDialog = new ProgressDialog(callback.getContext());
+
+        mProgressDialog.getWindow().setBackgroundDrawable(new
+
+                ColorDrawable(android.graphics.Color.TRANSPARENT));
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+        mProgressDialog.setContentView(R.layout.my_progress);
+
+        System.out.println(jsonRequest.toString());
+
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST,
+                url,jsonRequest,
+                new Response.Listener() {
+                    @Override
+                    public void onResponse(Object response) {
+                        if(mProgressDialog!=null){
+                            mProgressDialog.dismiss();
+                        }
+                        System.out.println("GET :" +response);
+                        callback.onSuccess(response);
+
+                    }
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Failure Callback
+                        if(mProgressDialog!=null){
+                            mProgressDialog.dismiss();
+                        }
+                        callback.onError(null);
+
+                    }
+                });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(req, "POST");
+
+    }
       public static void GET (final String url, final CallBackConsulta callback ){
         final ProgressDialog mProgressDialog ;
         mProgressDialog = new ProgressDialog(callback.getContext());

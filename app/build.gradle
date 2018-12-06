@@ -55,5 +55,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-places:11.8.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.4.3'
 
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+
     implementation 'com.weiwangcn.betterspinner:library-material:1.1.0'
 }

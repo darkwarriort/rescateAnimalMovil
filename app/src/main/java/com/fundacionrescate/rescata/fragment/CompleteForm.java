@@ -186,6 +186,8 @@ public class CompleteForm extends Fragment {
         reporte.setTelefono(telefono_input.getText().toString());
         reporte.setColor(color_input.getText().toString());
 
+//        Consulta.POST();
+
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         for(int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
@@ -196,6 +198,43 @@ public class CompleteForm extends Fragment {
     }
 
 
+    Consulta.CallBackConsulta postUpdate = new Consulta.CallBackConsulta() {
+        @Override
+        public void onError(Object response) {
+
+        }
+
+        @Override
+        public void onSuccess(Object response) {
+            /*
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_content, new CompleteForm());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+            */
+
+            System.out.println(response);
+            if(reporte!=null && mascota !=null){
+                final Usuario usuario = new Gson().fromJson(response.toString(),Usuario.class);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_content, CompleteForm.newInstance(reporte,usuario,mascota));
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }else{
+                getActivity().finish();
+            }
+
+
+
+        }
+
+        @Override
+        public Context getContext() {
+            return context;
+        }
+    };
     public class NumericKeyBoardTransformationMethod extends PasswordTransformationMethod {
         @Override
         public CharSequence getTransformation(CharSequence source, View view) {
