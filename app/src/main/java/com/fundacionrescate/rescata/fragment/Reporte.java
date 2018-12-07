@@ -157,6 +157,7 @@ public class Reporte extends Fragment {
 
         reporte.setLongitud(Float.parseFloat(gps[0]));
         reporte.setLatitud(Float.parseFloat(gps[1]));
+        reporte.setDireccion(direccion);
         for (Especie e : lstEspecie){
             if(e.getNombre().equals(spnEspecie.getText().toString())){
                 reporte.setIdEspecie(e.getIdEspecie());

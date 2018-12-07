@@ -11,7 +11,10 @@ public class AppConfig {
 	public static String URL_ESPECIE = HOST+"api/especie";
     public static String URL_RAZA = HOST+"api/raza";
     public static String URL_REPORTE = HOST+"api/reportar/new";
+    public static String URL_REPORTE_IMAGE = HOST+"api/reportar/uploadImage/";
+    public static String URL_REPORTE_UPDATE = HOST+"api/reportar/update/";
     public static String URL_LIST_REPORTE = HOST+"api/reportar";
+
     public static String URL_USUARIO = HOST+"api/usuario/new";
     public static String URL_ADOPCIONES = HOST+"api/adopciones";
 

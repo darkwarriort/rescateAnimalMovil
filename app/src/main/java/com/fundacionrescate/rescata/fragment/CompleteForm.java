@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.fundacionrescate.rescata.R;
+import com.fundacionrescate.rescata.app.AppConfig;
 import com.fundacionrescate.rescata.cnx.Consulta;
 import com.fundacionrescate.rescata.maps.ReportsList;
 import com.fundacionrescate.rescata.model.Mascota;
@@ -25,6 +26,8 @@ import com.fundacionrescate.rescata.model.Sexo;
 import com.fundacionrescate.rescata.model.Usuario;
 import com.google.gson.Gson;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -186,15 +189,13 @@ public class CompleteForm extends Fragment {
         reporte.setTelefono(telefono_input.getText().toString());
         reporte.setColor(color_input.getText().toString());
 
-//        Consulta.POST();
 
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        for(int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
-            fragmentManager.popBackStack();
+        try {
+            Consulta.POST(new JSONObject(new Gson().toJson(reporte)), AppConfig.URL_REPORTE_UPDATE+usuario.getIdUsuario(),postUpdate);
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        fragmentTransaction.replace(R.id.fragment_content, new ReportsList());
-        fragmentTransaction.commit();
+
     }
 
 
@@ -206,26 +207,16 @@ public class CompleteForm extends Fragment {
 
         @Override
         public void onSuccess(Object response) {
-            /*
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_content, new CompleteForm());
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-            */
+            getActivity().finish();
 
-            System.out.println(response);
-            if(reporte!=null && mascota !=null){
-                final Usuario usuario = new Gson().fromJson(response.toString(),Usuario.class);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_content, CompleteForm.newInstance(reporte,usuario,mascota));
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }else{
-                getActivity().finish();
-            }
 
+//            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            for(int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+//                fragmentManager.popBackStack();
+//            }
+//            fragmentTransaction.replace(R.id.fragment_content, new ReportsList());
+//            fragmentTransaction.commit();
 
 
         }
