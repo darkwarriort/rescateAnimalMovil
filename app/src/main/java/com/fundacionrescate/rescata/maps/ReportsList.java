@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,8 +15,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -32,9 +28,6 @@ import com.fundacionrescate.rescata.R;
 import com.fundacionrescate.rescata.activity.Container;
 import com.fundacionrescate.rescata.app.AppConfig;
 import com.fundacionrescate.rescata.cnx.Consulta;
-import com.fundacionrescate.rescata.fragment.Reporte;
-import com.fundacionrescate.rescata.fragment.ViewMascotas;
-import com.fundacionrescate.rescata.model.Raza;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -48,12 +41,11 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -61,14 +53,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 
-import java.io.IOException;
-import java.util.List;
-
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.app.Activity.RESULT_CANCELED;
-import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -437,12 +423,28 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
         @Override
         public void onSuccess(Object response) {
             com.fundacionrescate.rescata.model.Reporte[] lstReporte =
-                    new Gson().fromJson(response.toString(), com.fundacionrescate.rescata.model.Reporte[].class);
+                new Gson().fromJson(response.toString(), com.fundacionrescate.rescata.model.Reporte[].class);
 
             for (com.fundacionrescate.rescata.model.Reporte reporte : lstReporte){
+                MarkerOptions markerOptions =new MarkerOptions();
+                markerOptions.position(new LatLng(reporte.getLongitud(), reporte.getLatitud()));
 
-                mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(reporte.getLongitud(), reporte.getLatitud()))
-                .title("Mascota "+reporte.getIdReporte()));
+                if(reporte.getNombre()!=null){
+                    markerOptions.title(reporte.getNombre());
+                    markerOptions.snippet(reporte.getEspecie()+" "+reporte.getRaza());
+
+                }else{
+                    markerOptions.title(reporte.getEspecie()+" "+reporte.getRaza());
+
+                }
+                if(reporte.getEstado_animal()!=null && reporte.getEstado_animal().equals("Extraviado")){
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+
+                }else{
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+
+                }
+                mGoogleMap.addMarker(markerOptions);
             }
         }
 

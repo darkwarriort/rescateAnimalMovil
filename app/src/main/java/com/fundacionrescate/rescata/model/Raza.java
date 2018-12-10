@@ -4,32 +4,32 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Raza implements Parcelable {
-    private Long idRaza;
+    private Long id_raza;
     private String nombre;
-    private Long idEspecie;
+    private Long id_especie;
     private String estado;
-    private Long idUsuario;
+    private Long id_usuario;
 
     public Raza() {
     }
 
     protected Raza(Parcel in) {
         if (in.readByte() == 0) {
-            idRaza = null;
+            id_raza = null;
         } else {
-            idRaza = in.readLong();
+            id_raza = in.readLong();
         }
         nombre = in.readString();
         if (in.readByte() == 0) {
-            idEspecie = null;
+            id_especie = null;
         } else {
-            idEspecie = in.readLong();
+            id_especie = in.readLong();
         }
         estado = in.readString();
         if (in.readByte() == 0) {
-            idUsuario = null;
+            id_usuario = null;
         } else {
-            idUsuario = in.readLong();
+            id_usuario = in.readLong();
         }
     }
 
@@ -52,34 +52,34 @@ public class Raza implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        if (idRaza == null) {
+        if (id_raza == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeLong(idRaza);
+            parcel.writeLong(id_raza);
         }
         parcel.writeString(nombre);
-        if (idEspecie == null) {
+        if (id_especie == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeLong(idEspecie);
+            parcel.writeLong(id_especie);
         }
         parcel.writeString(estado);
-        if (idUsuario == null) {
+        if (id_usuario == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeLong(idUsuario);
+            parcel.writeLong(id_usuario);
         }
     }
 
-    public Long getIdRaza() {
-        return idRaza;
+    public Long getId_raza() {
+        return id_raza;
     }
 
-    public void setIdRaza(Long idRaza) {
-        this.idRaza = idRaza;
+    public void setId_raza(Long id_raza) {
+        this.id_raza = id_raza;
     }
 
     public String getNombre() {
@@ -90,12 +90,12 @@ public class Raza implements Parcelable {
         this.nombre = nombre;
     }
 
-    public Long getIdEspecie() {
-        return idEspecie;
+    public Long getId_especie() {
+        return id_especie;
     }
 
-    public void setIdEspecie(Long idEspecie) {
-        this.idEspecie = idEspecie;
+    public void setId_especie(Long id_especie) {
+        this.id_especie = id_especie;
     }
 
     public String getEstado() {
@@ -106,12 +106,12 @@ public class Raza implements Parcelable {
         this.estado = estado;
     }
 
-    public Long getIdUsuario() {
-        return idUsuario;
+    public Long getId_usuario() {
+        return id_usuario;
     }
 
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setId_usuario(Long id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
 

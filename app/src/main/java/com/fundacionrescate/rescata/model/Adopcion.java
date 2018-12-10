@@ -12,15 +12,15 @@ public class Adopcion implements Parcelable{
 
     private String nombre;
     private int edad;
-    private Long idEspecie;
-    private Long idRaza;
-    private Long idSexo;
+    private Long id_especie;
+    private Long id_raza;
+    private Long id_sexo;
     private String descripcion;
     private String foto;
-    private String estadoAnimal;
-    private Long idUsuario;
-    private Date fechaIngreso;
-    private Date fechaModificacion;
+    private String estado_animal;
+    private Long id_usuario;
+    private Date fecha_ingreso;
+    private Date fecha_modificacion;
     private String estado;
 
 
@@ -51,28 +51,28 @@ public class Adopcion implements Parcelable{
         this.edad = edad;
     }
 
-    public Long getIdEspecie() {
-        return idEspecie;
+    public Long getId_especie() {
+        return id_especie;
     }
 
-    public void setIdEspecie(Long idEspecie) {
-        this.idEspecie = idEspecie;
+    public void setId_especie(Long id_especie) {
+        this.id_especie = id_especie;
     }
 
-    public Long getIdRaza() {
-        return idRaza;
+    public Long getId_raza() {
+        return id_raza;
     }
 
-    public void setIdRaza(Long idRaza) {
-        this.idRaza = idRaza;
+    public void setId_raza(Long id_raza) {
+        this.id_raza = id_raza;
     }
 
-    public Long getIdSexo() {
-        return idSexo;
+    public Long getId_sexo() {
+        return id_sexo;
     }
 
-    public void setIdSexo(Long idSexo) {
-        this.idSexo = idSexo;
+    public void setId_sexo(Long id_sexo) {
+        this.id_sexo = id_sexo;
     }
 
     public String getDescripcion() {
@@ -91,36 +91,36 @@ public class Adopcion implements Parcelable{
         this.foto = foto;
     }
 
-    public String getEstadoAnimal() {
-        return estadoAnimal;
+    public String getEstado_animal() {
+        return estado_animal;
     }
 
-    public void setEstadoAnimal(String estadoAnimal) {
-        this.estadoAnimal = estadoAnimal;
+    public void setEstado_animal(String estado_animal) {
+        this.estado_animal = estado_animal;
     }
 
-    public Long getIdUsuario() {
-        return idUsuario;
+    public Long getId_usuario() {
+        return id_usuario;
     }
 
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setId_usuario(Long id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
-    public Date getFechaIngreso() {
-        return fechaIngreso;
+    public Date getFecha_ingreso() {
+        return fecha_ingreso;
     }
 
-    public void setFechaIngreso(Date fechaIngreso) {
-        this.fechaIngreso = fechaIngreso;
+    public void setFecha_ingreso(Date fecha_ingreso) {
+        this.fecha_ingreso = fecha_ingreso;
     }
 
-    public Date getFechaModificacion() {
-        return fechaModificacion;
+    public Date getFecha_modificacion() {
+        return fecha_modificacion;
     }
 
-    public void setFechaModificacion(Date fechaModificacion) {
-        this.fechaModificacion = fechaModificacion;
+    public void setFecha_modificacion(Date fecha_modificacion) {
+        this.fecha_modificacion = fecha_modificacion;
     }
 
     public String getEstado() {
@@ -140,27 +140,27 @@ public class Adopcion implements Parcelable{
         nombre = in.readString();
         edad = in.readInt();
         if (in.readByte() == 0) {
-            idEspecie = null;
+            id_especie = null;
         } else {
-            idEspecie = in.readLong();
+            id_especie = in.readLong();
         }
         if (in.readByte() == 0) {
-            idRaza = null;
+            id_raza = null;
         } else {
-            idRaza = in.readLong();
+            id_raza = in.readLong();
         }
         if (in.readByte() == 0) {
-            idSexo = null;
+            id_sexo = null;
         } else {
-            idSexo = in.readLong();
+            id_sexo = in.readLong();
         }
         descripcion = in.readString();
         foto = in.readString();
-        estadoAnimal = in.readString();
+        estado_animal = in.readString();
         if (in.readByte() == 0) {
-            idUsuario = null;
+            id_usuario = null;
         } else {
-            idUsuario = in.readLong();
+            id_usuario = in.readLong();
         }
         estado = in.readString();
     }
@@ -192,32 +192,32 @@ public class Adopcion implements Parcelable{
         }
         parcel.writeString(nombre);
         parcel.writeInt(edad);
-        if (idEspecie == null) {
+        if (id_especie == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeLong(idEspecie);
+            parcel.writeLong(id_especie);
         }
-        if (idRaza == null) {
+        if (id_raza == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeLong(idRaza);
+            parcel.writeLong(id_raza);
         }
-        if (idSexo == null) {
+        if (id_sexo == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeLong(idSexo);
+            parcel.writeLong(id_sexo);
         }
         parcel.writeString(descripcion);
         parcel.writeString(foto);
-        parcel.writeString(estadoAnimal);
-        if (idUsuario == null) {
+        parcel.writeString(estado_animal);
+        if (id_usuario == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeLong(idUsuario);
+            parcel.writeLong(id_usuario);
         }
         parcel.writeString(estado);
     }

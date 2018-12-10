@@ -5,9 +5,9 @@ import android.os.Parcelable;
 
 public class Especie implements Parcelable{
 
-    private Long idEspecie;
+    private Long id_especie;
     private String nombre;
-    private Long idUsuario;
+    private Long id_usuario;
     private String estado;
 
     public Especie() {
@@ -15,15 +15,15 @@ public class Especie implements Parcelable{
 
     protected Especie(Parcel in) {
         if (in.readByte() == 0) {
-            idEspecie = null;
+            id_especie = null;
         } else {
-            idEspecie = in.readLong();
+            id_especie = in.readLong();
         }
         nombre = in.readString();
         if (in.readByte() == 0) {
-            idUsuario = null;
+            id_usuario = null;
         } else {
-            idUsuario = in.readLong();
+            id_usuario = in.readLong();
         }
         estado = in.readString();
     }
@@ -41,11 +41,11 @@ public class Especie implements Parcelable{
     };
 
     public Long getIdEspecie() {
-        return idEspecie;
+        return id_especie;
     }
 
     public void setIdEspecie(Long idEspecie) {
-        this.idEspecie = idEspecie;
+        this.id_especie = idEspecie;
     }
 
     public String getNombre() {
@@ -56,12 +56,12 @@ public class Especie implements Parcelable{
         this.nombre = nombre;
     }
 
-    public Long getIdUsuario() {
-        return idUsuario;
+    public Long getId_usuario() {
+        return id_usuario;
     }
 
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setId_usuario(Long id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
     public String getEstado() {
@@ -78,18 +78,18 @@ public class Especie implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        if (idEspecie == null) {
+        if (id_especie == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeLong(idEspecie);
+            parcel.writeLong(id_especie);
         }
         parcel.writeString(nombre);
-        if (idUsuario == null) {
+        if (id_usuario == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeLong(idUsuario);
+            parcel.writeLong(id_usuario);
         }
         parcel.writeString(estado);
     }

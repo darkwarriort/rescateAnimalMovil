@@ -235,7 +235,7 @@ public class Report extends Fragment implements OnMapReadyCallback,
             // Schedule a task to reverse geocode position
             mRunnable = new Runnable() {
                 public void run() {
-                    getAddressAsync(mGoogleMap.getCameraPosition().target);
+//                    getAddressAsync(mGoogleMap.getCameraPosition().target);
                 }
             };
         }
@@ -271,6 +271,7 @@ public class Report extends Fragment implements OnMapReadyCallback,
         mGoogleMap = googleMap;
         mGoogleMap.setOnCameraMoveListener(this);
         mGoogleMap.setOnMapClickListener(this);
+
 
         getPermissions();
     }
@@ -374,12 +375,12 @@ public class Report extends Fragment implements OnMapReadyCallback,
 //
                     mGoogleMap.addMarker(new MarkerOptions().position(latLng)
                             .title("Reportar aqui"));
-                    if (mHandler == null) {
-                        mHandler = new android.os.Handler();
-                    }
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run () {
+//                    if (mHandler == null) {
+//                        mHandler = new android.os.Handler();
+//                    }
+//                    mHandler.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run () {
                             // make operation on UI - on example
                             // on progress bar.
                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -388,8 +389,8 @@ public class Report extends Fragment implements OnMapReadyCallback,
                             String lon =   latLng.latitude+","+ latLng.longitude;
                             fragmentTransaction.replace(R.id.fragment_content,  Reporte.newInstance(mAddress,lon));
                             fragmentTransaction.commit();
-                        }
-                    }, 500);
+//                        }
+//                    }, 500);
 
 
                     taskGps.cancel(true);

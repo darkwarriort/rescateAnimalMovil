@@ -9,10 +9,10 @@ public class Reporte implements Parcelable {
 
     private Long idReporte;
     private String nombre;
-    private Long idEspecie;
-    private Long idRaza;
+    private Long id_especie;
+    private Long id_raza;
     private String edad;
-    private Long idSexo;
+    private Long id_sexo;
     private String color;
     private String telefono;
     private String direccion;
@@ -20,13 +20,17 @@ public class Reporte implements Parcelable {
     private float latitud;
     private float longitud;
     private String foto;
-    private String estadoAnimal;
-    private Date fechaModificacion;
-    private Date fecha;
+    private String estado_animal;
+//    private long fecha_modificacion;
+//    private long fecha;
     private String estado;
+
+    private String especie;
+    private String raza;
 
     public Reporte() {
     }
+
 
     protected Reporte(Parcel in) {
         if (in.readByte() == 0) {
@@ -36,20 +40,20 @@ public class Reporte implements Parcelable {
         }
         nombre = in.readString();
         if (in.readByte() == 0) {
-            idEspecie = null;
+            id_especie = null;
         } else {
-            idEspecie = in.readLong();
+            id_especie = in.readLong();
         }
         if (in.readByte() == 0) {
-            idRaza = null;
+            id_raza = null;
         } else {
-            idRaza = in.readLong();
+            id_raza = in.readLong();
         }
         edad = in.readString();
         if (in.readByte() == 0) {
-            idSexo = null;
+            id_sexo = null;
         } else {
-            idSexo = in.readLong();
+            id_sexo = in.readLong();
         }
         color = in.readString();
         telefono = in.readString();
@@ -58,8 +62,56 @@ public class Reporte implements Parcelable {
         latitud = in.readFloat();
         longitud = in.readFloat();
         foto = in.readString();
-        estadoAnimal = in.readString();
+        estado_animal = in.readString();
         estado = in.readString();
+        especie = in.readString();
+        raza = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (idReporte == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(idReporte);
+        }
+        dest.writeString(nombre);
+        if (id_especie == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id_especie);
+        }
+        if (id_raza == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id_raza);
+        }
+        dest.writeString(edad);
+        if (id_sexo == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id_sexo);
+        }
+        dest.writeString(color);
+        dest.writeString(telefono);
+        dest.writeString(direccion);
+        dest.writeString(coordenadas);
+        dest.writeFloat(latitud);
+        dest.writeFloat(longitud);
+        dest.writeString(foto);
+        dest.writeString(estado_animal);
+        dest.writeString(estado);
+        dest.writeString(especie);
+        dest.writeString(raza);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Reporte> CREATOR = new Creator<Reporte>() {
@@ -73,50 +125,6 @@ public class Reporte implements Parcelable {
             return new Reporte[size];
         }
     };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        if (idReporte == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeLong(idReporte);
-        }
-        parcel.writeString(nombre);
-        if (idEspecie == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeLong(idEspecie);
-        }
-        if (idRaza == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeLong(idRaza);
-        }
-        parcel.writeString(edad);
-        if (idSexo == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeLong(idSexo);
-        }
-        parcel.writeString(color);
-        parcel.writeString(telefono);
-        parcel.writeString(direccion);
-        parcel.writeString(coordenadas);
-        parcel.writeFloat(latitud);
-        parcel.writeFloat(longitud);
-        parcel.writeString(foto);
-        parcel.writeString(estadoAnimal);
-        parcel.writeString(estado);
-    }
 
     public Long getIdReporte() {
         return idReporte;
@@ -134,20 +142,20 @@ public class Reporte implements Parcelable {
         this.nombre = nombre;
     }
 
-    public Long getIdEspecie() {
-        return idEspecie;
+    public Long getId_especie() {
+        return id_especie;
     }
 
-    public void setIdEspecie(Long idEspecie) {
-        this.idEspecie = idEspecie;
+    public void setId_especie(Long id_especie) {
+        this.id_especie = id_especie;
     }
 
-    public Long getIdRaza() {
-        return idRaza;
+    public Long getId_raza() {
+        return id_raza;
     }
 
-    public void setIdRaza(Long idRaza) {
-        this.idRaza = idRaza;
+    public void setId_raza(Long id_raza) {
+        this.id_raza = id_raza;
     }
 
     public String getEdad() {
@@ -158,12 +166,12 @@ public class Reporte implements Parcelable {
         this.edad = edad;
     }
 
-    public Long getIdSexo() {
-        return idSexo;
+    public Long getId_sexo() {
+        return id_sexo;
     }
 
-    public void setIdSexo(Long idSexo) {
-        this.idSexo = idSexo;
+    public void setId_sexo(Long id_sexo) {
+        this.id_sexo = id_sexo;
     }
 
     public String getColor() {
@@ -222,28 +230,12 @@ public class Reporte implements Parcelable {
         this.foto = foto;
     }
 
-    public String getEstadoAnimal() {
-        return estadoAnimal;
+    public String getEstado_animal() {
+        return estado_animal;
     }
 
-    public void setEstadoAnimal(String estadoAnimal) {
-        this.estadoAnimal = estadoAnimal;
-    }
-
-    public Date getFechaModificacion() {
-        return fechaModificacion;
-    }
-
-    public void setFechaModificacion(Date fechaModificacion) {
-        this.fechaModificacion = fechaModificacion;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setEstado_animal(String estado_animal) {
+        this.estado_animal = estado_animal;
     }
 
     public String getEstado() {
@@ -252,5 +244,21 @@ public class Reporte implements Parcelable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getEspecie() {
+        return especie;
+    }
+
+    public void setEspecie(String especie) {
+        this.especie = especie;
+    }
+
+    public String getRaza() {
+        return raza;
+    }
+
+    public void setRaza(String raza) {
+        this.raza = raza;
     }
 }

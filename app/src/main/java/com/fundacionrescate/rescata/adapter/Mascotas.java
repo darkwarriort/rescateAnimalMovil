@@ -1,7 +1,6 @@
 package com.fundacionrescate.rescata.adapter;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +13,7 @@ import com.fundacionrescate.rescata.app.AppConfig;
 import com.fundacionrescate.rescata.model.Adopcion;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class Mascotas extends RecyclerView.Adapter<Mascotas.ViewHolder> {
 
@@ -36,7 +32,7 @@ public class Mascotas extends RecyclerView.Adapter<Mascotas.ViewHolder> {
     }
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.sexo.setText( String.valueOf(mValues.get(position).getIdSexo()));
+        holder.sexo.setText( String.valueOf(mValues.get(position).getId_sexo()));
         holder.especie.setText(mValues.get(position).getNombre());
         Picasso.with(context).load(AppConfig.HOST_IMAGE+mValues.get(position).getFoto())
                 .placeholder(R.drawable.ic_pawprint)

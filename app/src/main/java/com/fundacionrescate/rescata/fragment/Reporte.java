@@ -2,19 +2,23 @@ package com.fundacionrescate.rescata.fragment;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.fundacionrescate.rescata.R;
 import com.fundacionrescate.rescata.app.AppConfig;
@@ -55,18 +59,20 @@ public class Reporte extends Fragment {
     @BindView(R.id.spnSpecies)
 
     MaterialBetterSpinner spnEspecie;
-    @BindView(R.id.spnReporte)
-    MaterialBetterSpinner spnReporte;
+    //    @BindView(R.id.spnReporte)
+//    MaterialBetterSpinner spnReporte;
     @BindView(R.id.spnRaza)
     MaterialBetterSpinner spnRaza;
 
 
-    String[] SPINNERREPORTE = {"Abandono","Extraviado"};
-    String[] SPINNERESPECIE = {"Perro","Gato"};
+    //    String[] SPINNERREPORTE = {"Abandono","Extraviado"};
+//    String[] SPINNERESPECIE = {"Perro","Gato"};
+    @BindView(R.id.rdgReporte)
+    RadioGroup rdgReporte;
 
     ArrayAdapter<Especie> adapterEspecie;
     ArrayAdapter<Raza> adapterRaza;
-    ArrayAdapter<String> adapterReporte;
+    //    ArrayAdapter<String> adapterReporte;
     Especie[] lstEspecie;
     Raza[] lstRaza;
     Mascota mascota = null;
@@ -125,19 +131,25 @@ public class Reporte extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         report_address_input.setText(direccion);
 
+        report_address_input.setEnabled(false);
+
+
+
         adapterEspecie= new ArrayAdapter<>(context,
                 android.R.layout.simple_dropdown_item_1line, lstEspecie);
         spnEspecie.setAdapter(adapterEspecie);
 
-        adapterReporte = new  ArrayAdapter<>(context,
-                android.R.layout.simple_dropdown_item_1line, SPINNERREPORTE);
-        spnReporte.setAdapter(adapterReporte);
+//        adapterReporte = new  ArrayAdapter<>(context,
+//                android.R.layout.simple_dropdown_item_1line, SPINNERREPORTE);
+//        spnReporte.setAdapter(adapterReporte);
 
         adapterRaza = new ArrayAdapter<>(context,
                 android.R.layout.simple_dropdown_item_1line, lstRaza);
         spnRaza.setAdapter(adapterRaza);
         cargaDato();
         spnEspecie.addTextChangedListener(listenerSpinnerEspecie );
+
+
 
 
     }
@@ -158,30 +170,35 @@ public class Reporte extends Fragment {
         reporte.setLongitud(Float.parseFloat(gps[0]));
         reporte.setLatitud(Float.parseFloat(gps[1]));
         reporte.setDireccion(direccion);
-        for (Especie e : lstEspecie){
-            if(e.getNombre().equals(spnEspecie.getText().toString())){
-                reporte.setIdEspecie(e.getIdEspecie());
-                break;
+        reporte.setEstado_animal((String) ((RadioButton)getView().findViewById(rdgReporte.getCheckedRadioButtonId())).getText());
+        if(spnRaza.getEditableText().toString().isEmpty() || spnEspecie.getEditableText().toString().isEmpty()){
+            Toast.makeText(context, "Por favor complete los datos", Toast.LENGTH_SHORT).show();
+        }else{
+            for (Especie e : lstEspecie){
+                if(e.getNombre().equals(spnEspecie.getText().toString())){
+                    reporte.setId_especie(e.getIdEspecie());
+                    break;
+                }
             }
-        }
-        for (Raza r : lstRaza){
-            if(r.getNombre().equals(spnRaza.getText().toString())){
-                reporte.setIdRaza(r.getIdEspecie());
-                break;
+            for (Raza r : lstRaza){
+                if(r.getNombre().equals(spnRaza.getText().toString())){
+                    reporte.setId_raza(r.getId_especie());
+                    break;
+                }
             }
-        }
-        try {
+            try {
 
-            mascota = new Mascota();
-            mascota.setDireccion(direccion);
-            mascota.setEspecie(spnEspecie.getText().toString());
-            mascota.setRaza(spnRaza.getText().toString());
-            mascota.setReporte(spnReporte.getText().toString());
+                mascota = new Mascota();
+                mascota.setDireccion(direccion);
+                mascota.setEspecie(spnEspecie.getText().toString());
+                mascota.setRaza(spnRaza.getText().toString());
+                mascota.setReporte((String) ((RadioButton)getView().findViewById(rdgReporte.getCheckedRadioButtonId())).getText());
 
-            Consulta.POST(new JSONObject(new Gson().toJson(reporte)),AppConfig.URL_REPORTE,postAgregar);
+                Consulta.POST(new JSONObject(new Gson().toJson(reporte)),AppConfig.URL_REPORTE,postAgregar);
 
-        }catch (Exception e){
-            e.printStackTrace();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -265,22 +282,49 @@ public class Reporte extends Fragment {
             System.out.println(response);
 
             final com.fundacionrescate.rescata.model.Reporte reporte = new Gson().fromJson(response.toString(), com.fundacionrescate.rescata.model.Reporte.class);
-            Bitmap map = ActivityUtils.takeScreenShot(getActivity());
-            Bitmap blurredBitmap = ActivityUtils.blur(getActivity(), map);
-            ActivityUtils.customDialogBlur(context, 0, getString(R.string.app_name), getString(R.string.question), getString(R.string.accept), true, new ActivityUtils.FinishDialog() {
-                @Override
-                public void successModalDialog(Boolean respuesta) {
-                    if(respuesta){
-                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.fragment_content, Registro.newInstance(reporte,mascota));
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-                    }else{
-                        getActivity().finish();
-                    }
-                }
-            },blurredBitmap);
+//            Bitmap map = ActivityUtils.takeScreenShot(getActivity());
+//            Bitmap blurredBitmap = ActivityUtils.blur(getActivity(), map);
+//            ActivityUtils.customDialogBlur(context, 0, getString(R.string.app_name), getString(R.string.question), getString(R.string.accept), true, new ActivityUtils.FinishDialog() {
+//                @Override
+//                public void successModalDialog(Boolean respuesta) {
+//                    if(respuesta){
+//                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                        fragmentTransaction.replace(R.id.fragment_content, Registro.newInstance(reporte,mascota));
+////                        fragmentTransaction.addToBackStack(null);
+//                        fragmentTransaction.commit();
+//                    }else{
+//                        getActivity().finish();
+//                    }
+//                }
+//            },blurredBitmap);
+
+            AlertDialog.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+            } else {
+                builder = new AlertDialog.Builder(context);
+            }
+            builder.setTitle(getString(R.string.app_name))
+                    .setMessage(getString(R.string.question))
+                    .setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.fragment_content, Registro.newInstance(reporte,mascota));
+//                        fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                            getActivity().finish();
+
+                        }
+                    })
+                    .show();
 
         }
 

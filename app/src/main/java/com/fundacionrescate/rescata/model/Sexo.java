@@ -1,27 +1,27 @@
 package com.fundacionrescate.rescata.model;
 
 public class Sexo  {
-    long idSexo;
+    long id_sexo;
     String nombre;
-    long idUsuario;
+    long id_usuario;
     String estado;
 
     public Sexo() {
     }
 
-    public Sexo(long idSexo, String nombre, long idUsuario, String estado) {
-        this.idSexo = idSexo;
+    public Sexo(long idSexo, String nombre, long id_usuario, String estado) {
+        this.id_sexo = idSexo;
         this.nombre = nombre;
-        this.idUsuario = idUsuario;
+        this.id_usuario = id_usuario;
         this.estado = estado;
     }
 
-    public long getIdSexo() {
-        return idSexo;
+    public long getId_sexo() {
+        return id_sexo;
     }
 
-    public void setIdSexo(long idSexo) {
-        this.idSexo = idSexo;
+    public void setId_sexo(long id_sexo) {
+        this.id_sexo = id_sexo;
     }
 
     public String getNombre() {
@@ -32,12 +32,12 @@ public class Sexo  {
         this.nombre = nombre;
     }
 
-    public long getIdUsuario() {
-        return idUsuario;
+    public long getId_usuario() {
+        return id_usuario;
     }
 
-    public void setIdUsuario(long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setId_usuario(long id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
     public String getEstado() {

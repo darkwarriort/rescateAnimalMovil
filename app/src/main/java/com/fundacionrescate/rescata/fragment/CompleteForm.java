@@ -144,6 +144,9 @@ public class CompleteForm extends Fragment {
         direccion_input.setText(mascota.getDireccion());
         direccion_input.setEnabled(false);
 
+        telefono_input.setText(usuario.getTelefono());
+        telefono_input.setEnabled(false);
+
 
         edad_input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
         edad_input.setTransformationMethod(new NumericKeyBoardTransformationMethod());
@@ -181,7 +184,7 @@ public class CompleteForm extends Fragment {
 
         for (Sexo r : lstSexo){
             if(r.getNombre().equals(spnSexo.getText().toString())){
-                reporte.setIdSexo(r.getIdSexo());
+                reporte.setId_sexo(r.getId_sexo());
                 break;
             }
         }
@@ -191,7 +194,7 @@ public class CompleteForm extends Fragment {
 
 
         try {
-            Consulta.POST(new JSONObject(new Gson().toJson(reporte)), AppConfig.URL_REPORTE_UPDATE+usuario.getIdUsuario(),postUpdate);
+            Consulta.POST(new JSONObject(new Gson().toJson(reporte)), AppConfig.URL_REPORTE_UPDATE+usuario.getId_usuario(),postUpdate);
         }catch (Exception e){
             e.printStackTrace();
         }

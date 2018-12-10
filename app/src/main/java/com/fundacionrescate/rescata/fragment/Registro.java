@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -40,24 +41,40 @@ public class Registro extends Fragment {
 
     @BindView(R.id.register_name_input)
     TextInputEditText name_input;
+    @BindView(R.id.register_name_layout)
+    TextInputLayout name_layout;
+
+
     @BindView(R.id.register_lastname_input)
     TextInputEditText lastname_input;
+    @BindView(R.id.register_lastname_layout)
+    TextInputLayout lastname_layout;
 
     @BindView(R.id.register_email_input)
     TextInputEditText email_input;
+    @BindView(R.id.register_email_layout)
+    TextInputLayout email_layout;
 
     @BindView(R.id.register_phone_input)
     TextInputEditText phone_input;
+    @BindView(R.id.register_phone_layout)
+    TextInputLayout phone_layout;
 
     @BindView(R.id.register_address_input)
     TextInputEditText address_input;
+    @BindView(R.id.register_address_layout)
+    TextInputLayout address_layout;
 
     @BindView(R.id.register_user_input)
     TextInputEditText user_input;
+    @BindView(R.id.register_user_layout)
+    TextInputLayout user_layout;
 
 
     @BindView(R.id.register_password_input)
     TextInputEditText password_input;
+    @BindView(R.id.register_password_layout)
+    TextInputLayout password_layout;
 
 
 
@@ -119,21 +136,57 @@ public class Registro extends Fragment {
 
     @OnClick(R.id.register_new_button)
     void nextFormQuestion() {
-        Usuario user = new Usuario();
-        user.setApellidos(lastname_input.getText().toString());
-        user.setNombres(name_input.getText().toString());
-        user.setCorreo(email_input.getText().toString());
-        user.setTelefono(phone_input.getText().toString());
-        user.setDireccion(address_input.getText().toString());
-        user.setUsuario(user_input.getText().toString());
-        user.setContrasena(password_input.getText().toString());
-        user.setEstado("ACTIVO");
 
-        try {
-            Consulta.POST(new JSONObject(new Gson().toJson(user)), AppConfig.URL_USUARIO,postAgregar);
-        }catch (Exception e){
-            e.printStackTrace();
+        boolean berror = false;
+        if(name_input.getText().toString().isEmpty()){
+            name_layout.setError("Por favor ingrese el nombre");
+            berror = true;
         }
+        if(lastname_input.getText().toString().isEmpty()){
+
+            lastname_layout.setError("Por favor ingrese el apellido");
+            berror = true;
+        }
+        if(email_input.getText().toString().isEmpty()){
+
+            email_layout.setError("Por favor ingrese el email");
+            berror = true;
+        }
+        if(phone_input.getText().toString().isEmpty()){
+
+            phone_layout.setError("Por favor ingrese el numero de telefono");
+            berror = true;
+        }
+        if(address_input.getText().toString().isEmpty()){
+            address_layout.setError("Por favor ingrese la direccion");
+            berror = true;
+        }
+        if(user_input.getText().toString().isEmpty()){
+            user_layout.setError("Por favor ingrese su usuario");
+            berror = true;
+        }
+        if(password_input.getText().toString().isEmpty()){
+            password_layout.setError("Por favor ingrese la clave");
+
+        }
+        if(!berror){
+            Usuario user = new Usuario();
+            user.setApellidos(lastname_input.getText().toString());
+            user.setNombres(name_input.getText().toString());
+            user.setCorreo(email_input.getText().toString());
+            user.setTelefono(phone_input.getText().toString());
+            user.setDireccion(address_input.getText().toString());
+            user.setUsuario(user_input.getText().toString());
+            user.setContrasena(password_input.getText().toString());
+            user.setEstado("ACTIVO");
+
+            try {
+                Consulta.POST(new JSONObject(new Gson().toJson(user)), AppConfig.URL_USUARIO,postAgregar);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
 
 
 

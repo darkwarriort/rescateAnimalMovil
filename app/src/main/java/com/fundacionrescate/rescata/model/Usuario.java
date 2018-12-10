@@ -3,12 +3,10 @@ package com.fundacionrescate.rescata.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Date;
-
 public class Usuario implements Parcelable{
 
 
-    private Long idUsuario;
+    private Long id_usuario;
 
     private String nombres;
     private String apellidos;
@@ -18,18 +16,18 @@ public class Usuario implements Parcelable{
     private String usuario;
     private String contrasena;
 
-    private Long idUsers;
+    private Long id_users;
     private String estado;
 
     public Usuario() {
     }
 
-    public Long getIdUsuario() {
-        return idUsuario;
+    public Long getId_usuario() {
+        return id_usuario;
     }
 
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setId_usuario(Long id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
     public String getNombres() {
@@ -88,12 +86,12 @@ public class Usuario implements Parcelable{
         this.contrasena = contrasena;
     }
 
-    public Long getIdUsers() {
-        return idUsers;
+    public Long getId_users() {
+        return id_users;
     }
 
-    public void setIdUsers(Long idUsers) {
-        this.idUsers = idUsers;
+    public void setId_users(Long id_users) {
+        this.id_users = id_users;
     }
 
     public String getEstado() {
@@ -106,9 +104,9 @@ public class Usuario implements Parcelable{
 
     protected Usuario(Parcel in) {
         if (in.readByte() == 0) {
-            idUsuario = null;
+            id_usuario = null;
         } else {
-            idUsuario = in.readLong();
+            id_usuario = in.readLong();
         }
         nombres = in.readString();
         apellidos = in.readString();
@@ -118,9 +116,9 @@ public class Usuario implements Parcelable{
         usuario = in.readString();
         contrasena = in.readString();
         if (in.readByte() == 0) {
-            idUsers = null;
+            id_users = null;
         } else {
-            idUsers = in.readLong();
+            id_users = in.readLong();
         }
         estado = in.readString();
     }
@@ -144,11 +142,11 @@ public class Usuario implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        if (idUsuario == null) {
+        if (id_usuario == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeLong(idUsuario);
+            parcel.writeLong(id_usuario);
         }
         parcel.writeString(nombres);
         parcel.writeString(apellidos);
@@ -157,11 +155,11 @@ public class Usuario implements Parcelable{
         parcel.writeString(direccion);
         parcel.writeString(usuario);
         parcel.writeString(contrasena);
-        if (idUsers == null) {
+        if (id_users == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeLong(idUsers);
+            parcel.writeLong(id_users);
         }
         parcel.writeString(estado);
     }
