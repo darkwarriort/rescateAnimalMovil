@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.fundacionrescate.rescata.R;
 import com.fundacionrescate.rescata.app.AppConfig;
@@ -59,6 +61,15 @@ public class CompleteForm extends Fragment {
 
     @BindView(R.id.complete_form_especie_input)
     TextInputEditText especie_input;
+
+
+    @BindView(R.id.complete_form_edad_layout)
+    TextInputLayout edad_layout;
+    @BindView(R.id.complete_form_color_layout)
+    TextInputLayout color_layout;
+    @BindView(R.id.register_name_mascota_layout)
+    TextInputLayout mascota_layout;
+
 
 
     @BindView(R.id.complete_form_raza_input)
@@ -115,10 +126,12 @@ public class CompleteForm extends Fragment {
         View v = inflater.inflate(R.layout.fragment_complete_form, container, false);
         ButterKnife.bind(this, v);
 
-        lstSexo = new Sexo[3];
-        lstSexo[0] = new Sexo(1,"Masculino",0,"ACTIVO");
-        lstSexo[1] = new Sexo(2,"Femenino",0,"ACTIVO");
-        lstSexo[2] = new Sexo(5,"Desconocido",0,"ACTIVO");
+        lstSexo = new Sexo[0];
+//        lstSexo[0] = new Sexo(1,"Masculino",0,"ACTIVO");
+//        lstSexo[1] = new Sexo(2,"Femenino",0,"ACTIVO");
+//        lstSexo[2] = new Sexo(5,"Desconocido",0,"ACTIVO");
+        getActivity().setTitle("Completar datos");
+
         return v;
     }
 
@@ -163,6 +176,9 @@ public class CompleteForm extends Fragment {
         adapterSexo= new ArrayAdapter<>(context,
                 android.R.layout.simple_dropdown_item_1line, lstSexo);
         spnSexo.setAdapter(adapterSexo);
+        Consulta.GETARRAY(AppConfig.URL_SEXO, consultaSexo);
+
+
 
     }
 
@@ -179,7 +195,32 @@ public class CompleteForm extends Fragment {
 
     @OnClick(R.id.complete_form_guardar)
     void saveForm() {
+        boolean isComplete = true;
+        if(edad_input.getText().toString().isEmpty())
+        {
+            isComplete =false;
+            edad_layout.setErrorEnabled(true);
+            edad_layout.setError("Ingrese una edad aproximada");
+        }else{
+            edad_layout.setErrorEnabled(false);
 
+        }
+
+        if(spnSexo.getText().toString().isEmpty()){
+            isComplete =false;
+            spnSexo.setError("Seleccione un sexo");
+        }
+
+        if(color_input.getText().toString().isEmpty())
+        {
+            isComplete =false;
+            color_layout.setErrorEnabled(true);
+            color_layout.setError("Ingrese un color");
+        }else{
+            color_layout.setErrorEnabled(false);
+
+        }
+        if(isComplete){
         reporte.setEdad(edad_input.getText().toString());
 
         for (Sexo r : lstSexo){
@@ -198,6 +239,10 @@ public class CompleteForm extends Fragment {
         }catch (Exception e){
             e.printStackTrace();
         }
+        }else{
+            Toast.makeText(context, "Por favor valide los datos", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 
@@ -213,15 +258,34 @@ public class CompleteForm extends Fragment {
             getActivity().finish();
 
 
-//            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//            for(int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
-//                fragmentManager.popBackStack();
-//            }
-//            fragmentTransaction.replace(R.id.fragment_content, new ReportsList());
-//            fragmentTransaction.commit();
+        }
+
+        @Override
+        public Context getContext() {
+            return context;
+        }
+    };
 
 
+
+    Consulta.CallBackConsulta consultaSexo = new Consulta.CallBackConsulta() {
+        @Override
+        public void onError(Object response) {
+
+        }
+
+        @Override
+        public void onSuccess(Object response) {
+            try {
+
+                lstSexo = new Gson().fromJson(response.toString(), Sexo[].class);
+                adapterSexo = new ArrayAdapter<>(context,
+                        android.R.layout.simple_dropdown_item_1line, lstSexo);
+                spnSexo.setAdapter(adapterSexo);
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
         @Override

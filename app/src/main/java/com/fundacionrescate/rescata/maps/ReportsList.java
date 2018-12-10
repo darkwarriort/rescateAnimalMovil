@@ -380,12 +380,7 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
 
     @OnClick(R.id.register_report)
     void nextMapReport() {
-//        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//
-//        fragmentTransaction.replace(R.id.fragment_content,  new Report());
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
+
 
         Intent modulCNB = new Intent(getContext(), Container.class);
         Bundle b = new Bundle();
@@ -396,14 +391,36 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
 
     }
 
+    @OnClick(R.id.register_login)
+    void nextLogin() {
+
+        Intent modulCNB = new Intent(getContext(), Container.class);
+        Bundle b = new Bundle();
+        b.putInt("key", Container.FRAGMENT_LOGIN); //Your id
+        modulCNB.putExtras(b); //Put your id to your next Intent
+        getActivity().startActivity(modulCNB);
+        getActivity().overridePendingTransition(0, 0);
+
+    }
+    @OnClick(R.id.report_about)
+    void nextAbout() {
+
+        Intent modulCNB = new Intent(getContext(), Container.class);
+        Bundle b = new Bundle();
+        b.putInt("key", Container.FRAGMENT_ABOUT); //Your id
+        modulCNB.putExtras(b); //Put your id to your next Intent
+        getActivity().startActivity(modulCNB);
+        getActivity().overridePendingTransition(0, 0);
+
+    }
+
+    @OnClick(R.id.register_service)
+    void nextService() {
+
+    }
+
     @OnClick(R.id.report_adoption)
     void nextAdopcion() {
-//        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//
-//        fragmentTransaction.replace(R.id.fragment_content,  new ViewMascotas());
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
 
         Intent modulCNB = new Intent(getContext(), Container.class);
         Bundle b = new Bundle();

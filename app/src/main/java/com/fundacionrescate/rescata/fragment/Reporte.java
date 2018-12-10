@@ -300,14 +300,14 @@ public class Reporte extends Fragment {
 //            },blurredBitmap);
 
             AlertDialog.Builder builder;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
-            } else {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+//            } else {
                 builder = new AlertDialog.Builder(context);
-            }
-            builder.setTitle(getString(R.string.app_name))
+//            }
+            builder.setTitle("Su mascota ha sido registrada con éxito")
                     .setMessage(getString(R.string.question))
-                    .setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
+                    .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // continue with delete
                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -317,7 +317,7 @@ public class Reporte extends Fragment {
                             fragmentTransaction.commit();
                         }
                     })
-                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // do nothing
                             getActivity().finish();

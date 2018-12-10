@@ -6,7 +6,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,6 +26,7 @@ import com.fundacionrescate.rescata.cnx.Consulta;
 import com.fundacionrescate.rescata.maps.ReportsList;
 import com.fundacionrescate.rescata.model.Adopcion;
 import com.fundacionrescate.rescata.model.Mascota;
+import com.fundacionrescate.rescata.model.ObAdopcion;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -42,9 +45,10 @@ public class ViewMascotas extends Fragment {
 
     Context context ;
 
+    SharedPreferences prefs;
 
     RecyclerView recyclerView;
-    ArrayList<Adopcion> items;
+    ArrayList<ObAdopcion> items;
 
     Mascotas mascotasAdapter;
     public ViewMascotas() {
@@ -75,6 +79,7 @@ public class ViewMascotas extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
     }
 
@@ -94,32 +99,59 @@ public class ViewMascotas extends Fragment {
     //
     @OnClick(R.id.view_mascotas_postular)
     void clickPostular() {
-        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-        alertDialog.setTitle(context.getString(R.string.app_name));
-        alertDialog.setMessage("Gracias, nos comunicaremos con usted");
-        alertDialog.setCancelable(false);
-//        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancelar", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//
-//            }
-//        });
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Aceptar",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+
+        boolean isLoggeado = prefs.getBoolean("Logeado", false);
+        if(isLoggeado) {
+            AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+            alertDialog.setTitle(context.getString(R.string.app_name));
+            alertDialog.setMessage("Gracias, nos comunicaremos con usted");
+            alertDialog.setCancelable(false);
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Aceptar",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
 
 
-                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        for(int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
-                            fragmentManager.popBackStack();
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+                                fragmentManager.popBackStack();
+                            }
+                            fragmentTransaction.replace(R.id.fragment_content, new ReportsList());
+                            fragmentTransaction.commit();
                         }
-                        fragmentTransaction.replace(R.id.fragment_content, new ReportsList());
-                        fragmentTransaction.commit();
-                    }
-                });
-        alertDialog.show();
+                    });
+            alertDialog.show();
+        }
+        else{
+            android.support.v7.app.AlertDialog.Builder builder;
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+//            } else {
+            builder = new android.support.v7.app.AlertDialog.Builder(context);
+//            }
+            builder.setTitle("No se encuentra registrado")
+                    .setMessage(getString(R.string.question))
+                    .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.fragment_content,new Registro());
+//                        fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                            getActivity().finish();
+
+                        }
+                    })
+                    .show();
+
+        }
     }
 
 
@@ -133,7 +165,7 @@ public class ViewMascotas extends Fragment {
         public void onSuccess(Object response) {
             try {
                 items.clear();
-                items.addAll(Arrays.asList(new Gson().fromJson(response.toString(), Adopcion[].class)));
+                items.addAll(Arrays.asList(new Gson().fromJson(response.toString(), ObAdopcion[].class)));
                 mascotasAdapter.notifyDataSetChanged();
 
             }catch (Exception e){

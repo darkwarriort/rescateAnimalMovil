@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -117,7 +118,7 @@ public class Registro extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_registro, container, false);
         ButterKnife.bind(this, v);
-
+        getActivity().setTitle("Registro de usuario");
         return  v;
     }
 
@@ -139,36 +140,67 @@ public class Registro extends Fragment {
 
         boolean berror = false;
         if(name_input.getText().toString().isEmpty()){
+            name_layout.setErrorEnabled(true);
             name_layout.setError("Por favor ingrese el nombre");
+
             berror = true;
+        }else {
+            name_layout.setErrorEnabled(false);
+
         }
         if(lastname_input.getText().toString().isEmpty()){
-
+            lastname_layout.setErrorEnabled(true);
             lastname_layout.setError("Por favor ingrese el apellido");
             berror = true;
+        }else{
+            lastname_layout.setErrorEnabled(false);
+
         }
         if(email_input.getText().toString().isEmpty()){
-
+            email_layout.setErrorEnabled(true);
             email_layout.setError("Por favor ingrese el email");
-            berror = true;
-        }
-        if(phone_input.getText().toString().isEmpty()){
 
+            berror = true;
+        }else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email_input.getText().toString()).matches()){
+            email_layout.setErrorEnabled(true);
+            email_layout.setError("Por favor ingrese un email valido");
+            berror = true;
+        }else{
+            email_layout.setErrorEnabled(false);
+        }
+
+        if(phone_input.getText().toString().isEmpty()){
+            phone_layout.setErrorEnabled(true);
             phone_layout.setError("Por favor ingrese el numero de telefono");
             berror = true;
+        }else{
+            phone_layout.setErrorEnabled(false);
         }
+
         if(address_input.getText().toString().isEmpty()){
+            address_layout.setErrorEnabled(true);
             address_layout.setError("Por favor ingrese la direccion");
             berror = true;
+        }else{
+            address_layout.setErrorEnabled(false);
         }
+
         if(user_input.getText().toString().isEmpty()){
+            user_layout.setErrorEnabled(true);
             user_layout.setError("Por favor ingrese su usuario");
             berror = true;
-        }
-        if(password_input.getText().toString().isEmpty()){
-            password_layout.setError("Por favor ingrese la clave");
+        }else{
+            user_layout.setErrorEnabled(false);
 
         }
+        if(password_input.getText().toString().isEmpty()){
+            password_layout.setErrorEnabled(true);
+            password_layout.setError("Por favor ingrese la clave");
+            berror = true;
+        }else{
+            password_layout.setErrorEnabled(false);
+        }
+
         if(!berror){
             Usuario user = new Usuario();
             user.setApellidos(lastname_input.getText().toString());
@@ -202,13 +234,7 @@ public class Registro extends Fragment {
 
         @Override
         public void onSuccess(Object response) {
-            /*
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_content, new CompleteForm());
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-            */
+
 
             System.out.println(response);
             if(reporte!=null && mascota !=null){

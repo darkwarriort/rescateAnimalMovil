@@ -26,8 +26,7 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/register_name_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:errorEnabled="true">
+                android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/register_name_input"
@@ -42,8 +41,7 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/register_lastname_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:errorEnabled="true">
+                android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/register_lastname_input"
@@ -58,9 +56,7 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/register_email_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                app:errorEnabled="true">
+                android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/register_email_input"
@@ -77,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                app:errorEnabled="true">
+                >
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/register_phone_input"
@@ -94,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                app:errorEnabled="true">
+               >
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/register_address_input"
@@ -113,8 +109,7 @@
                 android:id="@+id/register_user_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                app:errorEnabled="true">
+                >
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/register_user_input"
@@ -130,9 +125,7 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/register_password_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                app:errorEnabled="true">
+                android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/register_password_input"
