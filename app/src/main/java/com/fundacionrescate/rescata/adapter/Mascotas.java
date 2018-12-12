@@ -12,6 +12,7 @@ import com.fundacionrescate.rescata.R;
 import com.fundacionrescate.rescata.app.AppConfig;
 import com.fundacionrescate.rescata.model.Adopcion;
 import com.fundacionrescate.rescata.model.ObAdopcion;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -37,10 +38,24 @@ public class Mascotas extends RecyclerView.Adapter<Mascotas.ViewHolder> {
         holder.raza.setText("Raza: \t"+mValues.get(position).getRaza());
         holder.sexo.setText("Sexo: \t"+mValues.get(position).getSexo());
         holder.especie.setText("Especie \t"+mValues.get(position).getEspecie());
+        System.out.println("FOTO : " +AppConfig.HOST_IMAGE+mValues.get(position).getFoto());
         Picasso.with(context).load(AppConfig.HOST_IMAGE+mValues.get(position).getFoto())
                 .placeholder(R.drawable.ic_pawprint)
                 .error(R.drawable.ic_pawprint)
-                .into(holder.imgMascota);
+                .centerInside()
+                .fit()
+                .into(holder.imgMascota, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        System.out.println("Success LOAD");
+
+                    }
+
+                    @Override
+                    public void onError() {
+                        System.out.println("ERROR LOAD");
+                    }
+                });
 
     }
     @Override

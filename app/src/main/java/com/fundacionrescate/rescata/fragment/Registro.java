@@ -2,7 +2,9 @@ package com.fundacionrescate.rescata.fragment;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -22,6 +24,7 @@ import com.fundacionrescate.rescata.app.AppConfig;
 import com.fundacionrescate.rescata.cnx.Consulta;
 import com.fundacionrescate.rescata.model.Mascota;
 import com.fundacionrescate.rescata.model.Usuario;
+import com.fundacionrescate.rescata.util.Security;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -39,6 +42,8 @@ public class Registro extends Fragment {
 
 
     Context context;
+    SharedPreferences prefs;
+
 
     @BindView(R.id.register_name_input)
     TextInputEditText name_input;
@@ -131,6 +136,7 @@ public class Registro extends Fragment {
         phone_input.setTransformationMethod(new NumericKeyBoardTransformationMethod());
 //            TextViewUtils.separateGroups(edtAmount);
         phone_input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
 
     }
@@ -216,7 +222,7 @@ public class Registro extends Fragment {
             user.setTelefono(phone_input.getText().toString());
             user.setDireccion(address_input.getText().toString());
             user.setUsuario(user_input.getText().toString());
-            user.setContrasena(password_input.getText().toString());
+            user.setContrasena(Security.MD5(password_input.getText().toString()));
             user.setEstado("ACTIVO");
 
             try {
@@ -253,6 +259,10 @@ public class Registro extends Fragment {
             System.out.println(response);
             if(reporte!=null && mascota !=null){
                 final Usuario usuario = new Gson().fromJson(response.toString(),Usuario.class);
+                prefs.edit().putString(AppConfig.PREF_USUARIO,response.toString());
+                prefs.edit().putBoolean(AppConfig.PREF_isLOGGED,true);
+
+
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_content, CompleteForm.newInstance(reporte,usuario,mascota));

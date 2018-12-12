@@ -1,5 +1,7 @@
 package com.fundacionrescate.rescata.util;
 
+import java.security.MessageDigest;
+
 public class Security {
 
     public static String MD5(String md5) {
@@ -15,4 +17,6 @@ public class Security {
         }
         return null;
     }
+
+
 }
