@@ -11,7 +11,8 @@ public class Adopcion implements Parcelable{
     private Long id;
 
     private String nombre;
-    private int edad;
+    private int anio;
+    private int mes;
     private Long id_especie;
     private Long id_raza;
     private Long id_sexo;
@@ -26,6 +27,99 @@ public class Adopcion implements Parcelable{
 
     public Adopcion() {
     }
+
+    protected Adopcion(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
+        nombre = in.readString();
+        anio = in.readInt();
+        mes = in.readInt();
+        if (in.readByte() == 0) {
+            id_especie = null;
+        } else {
+            id_especie = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            id_raza = null;
+        } else {
+            id_raza = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            id_sexo = null;
+        } else {
+            id_sexo = in.readLong();
+        }
+        descripcion = in.readString();
+        foto = in.readString();
+        estado_animal = in.readString();
+        if (in.readByte() == 0) {
+            id_usuario = null;
+        } else {
+            id_usuario = in.readLong();
+        }
+        estado = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id);
+        }
+        dest.writeString(nombre);
+        dest.writeInt(anio);
+        dest.writeInt(mes);
+        if (id_especie == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id_especie);
+        }
+        if (id_raza == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id_raza);
+        }
+        if (id_sexo == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id_sexo);
+        }
+        dest.writeString(descripcion);
+        dest.writeString(foto);
+        dest.writeString(estado_animal);
+        if (id_usuario == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id_usuario);
+        }
+        dest.writeString(estado);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Adopcion> CREATOR = new Creator<Adopcion>() {
+        @Override
+        public Adopcion createFromParcel(Parcel in) {
+            return new Adopcion(in);
+        }
+
+        @Override
+        public Adopcion[] newArray(int size) {
+            return new Adopcion[size];
+        }
+    };
 
     public Long getId() {
         return id;
@@ -43,12 +137,20 @@ public class Adopcion implements Parcelable{
         this.nombre = nombre;
     }
 
-    public int getEdad() {
-        return edad;
+    public int getAnio() {
+        return anio;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public void setAnio(int anio) {
+        this.anio = anio;
+    }
+
+    public int getMes() {
+        return mes;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
     }
 
     public Long getId_especie() {
@@ -129,96 +231,5 @@ public class Adopcion implements Parcelable{
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    protected Adopcion(Parcel in) {
-        if (in.readByte() == 0) {
-            id = null;
-        } else {
-            id = in.readLong();
-        }
-        nombre = in.readString();
-        edad = in.readInt();
-        if (in.readByte() == 0) {
-            id_especie = null;
-        } else {
-            id_especie = in.readLong();
-        }
-        if (in.readByte() == 0) {
-            id_raza = null;
-        } else {
-            id_raza = in.readLong();
-        }
-        if (in.readByte() == 0) {
-            id_sexo = null;
-        } else {
-            id_sexo = in.readLong();
-        }
-        descripcion = in.readString();
-        foto = in.readString();
-        estado_animal = in.readString();
-        if (in.readByte() == 0) {
-            id_usuario = null;
-        } else {
-            id_usuario = in.readLong();
-        }
-        estado = in.readString();
-    }
-
-    public static final Creator<Adopcion> CREATOR = new Creator<Adopcion>() {
-        @Override
-        public Adopcion createFromParcel(Parcel in) {
-            return new Adopcion(in);
-        }
-
-        @Override
-        public Adopcion[] newArray(int size) {
-            return new Adopcion[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        if (id == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeLong(id);
-        }
-        parcel.writeString(nombre);
-        parcel.writeInt(edad);
-        if (id_especie == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeLong(id_especie);
-        }
-        if (id_raza == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeLong(id_raza);
-        }
-        if (id_sexo == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeLong(id_sexo);
-        }
-        parcel.writeString(descripcion);
-        parcel.writeString(foto);
-        parcel.writeString(estado_animal);
-        if (id_usuario == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeLong(id_usuario);
-        }
-        parcel.writeString(estado);
     }
 }

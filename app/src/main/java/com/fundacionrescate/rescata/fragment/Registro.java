@@ -198,7 +198,14 @@ public class Registro extends Fragment {
             password_layout.setError("Por favor ingrese la clave");
             berror = true;
         }else{
-            password_layout.setErrorEnabled(false);
+            if(isPasswordValid(password_input.getText().toString())){
+                password_layout.setErrorEnabled(true);
+                password_layout.setError("La clave debe tener entre 6 u 8 caracteres");
+                berror = true;
+            }else{
+                password_layout.setErrorEnabled(false);
+            }
+
         }
 
         if(!berror){
@@ -225,6 +232,13 @@ public class Registro extends Fragment {
     }
 
 
+    public boolean isPasswordValid(String clave){
+        if(clave.length()>=6 && clave.length()<=8){
+            return clave.matches("/^[a-zA-Z0-9]]+$/");
+        }
+        return false;
+
+    }
 
     Consulta.CallBackConsulta postAgregar = new Consulta.CallBackConsulta() {
         @Override

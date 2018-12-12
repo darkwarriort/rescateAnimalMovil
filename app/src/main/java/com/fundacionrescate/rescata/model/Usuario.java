@@ -16,11 +16,61 @@ public class Usuario implements Parcelable{
     private String usuario;
     private String contrasena;
 
-    private Long id_users;
     private String estado;
 
     public Usuario() {
     }
+
+    protected Usuario(Parcel in) {
+        if (in.readByte() == 0) {
+            id_usuario = null;
+        } else {
+            id_usuario = in.readLong();
+        }
+        nombres = in.readString();
+        apellidos = in.readString();
+        correo = in.readString();
+        telefono = in.readString();
+        direccion = in.readString();
+        usuario = in.readString();
+        contrasena = in.readString();
+        estado = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id_usuario == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id_usuario);
+        }
+        dest.writeString(nombres);
+        dest.writeString(apellidos);
+        dest.writeString(correo);
+        dest.writeString(telefono);
+        dest.writeString(direccion);
+        dest.writeString(usuario);
+        dest.writeString(contrasena);
+        dest.writeString(estado);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Usuario> CREATOR = new Creator<Usuario>() {
+        @Override
+        public Usuario createFromParcel(Parcel in) {
+            return new Usuario(in);
+        }
+
+        @Override
+        public Usuario[] newArray(int size) {
+            return new Usuario[size];
+        }
+    };
 
     public Long getId_usuario() {
         return id_usuario;
@@ -86,81 +136,11 @@ public class Usuario implements Parcelable{
         this.contrasena = contrasena;
     }
 
-    public Long getId_users() {
-        return id_users;
-    }
-
-    public void setId_users(Long id_users) {
-        this.id_users = id_users;
-    }
-
     public String getEstado() {
         return estado;
     }
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    protected Usuario(Parcel in) {
-        if (in.readByte() == 0) {
-            id_usuario = null;
-        } else {
-            id_usuario = in.readLong();
-        }
-        nombres = in.readString();
-        apellidos = in.readString();
-        correo = in.readString();
-        telefono = in.readString();
-        direccion = in.readString();
-        usuario = in.readString();
-        contrasena = in.readString();
-        if (in.readByte() == 0) {
-            id_users = null;
-        } else {
-            id_users = in.readLong();
-        }
-        estado = in.readString();
-    }
-
-    public static final Creator<Usuario> CREATOR = new Creator<Usuario>() {
-        @Override
-        public Usuario createFromParcel(Parcel in) {
-            return new Usuario(in);
-        }
-
-        @Override
-        public Usuario[] newArray(int size) {
-            return new Usuario[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        if (id_usuario == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeLong(id_usuario);
-        }
-        parcel.writeString(nombres);
-        parcel.writeString(apellidos);
-        parcel.writeString(correo);
-        parcel.writeString(telefono);
-        parcel.writeString(direccion);
-        parcel.writeString(usuario);
-        parcel.writeString(contrasena);
-        if (id_users == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeLong(id_users);
-        }
-        parcel.writeString(estado);
     }
 }

@@ -182,7 +182,7 @@ public class Reporte extends Fragment {
             }
             for (Raza r : lstRaza){
                 if(r.getNombre().equals(spnRaza.getText().toString())){
-                    reporte.setId_raza(r.getId_especie());
+                    reporte.setId_raza(r.getId_raza());
                     break;
                 }
             }

@@ -34,9 +34,9 @@ public class Mascotas extends RecyclerView.Adapter<Mascotas.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.nombre.setText(mValues.get(position).getNombre());
-        holder.raza.setText(mValues.get(position).getRaza());
-        holder.sexo.setText(mValues.get(position).getSexo());
-        holder.especie.setText(mValues.get(position).getEspecie());
+        holder.raza.setText("Raza: \t"+mValues.get(position).getRaza());
+        holder.sexo.setText("Sexo: \t"+mValues.get(position).getSexo());
+        holder.especie.setText("Especie \t"+mValues.get(position).getEspecie());
         Picasso.with(context).load(AppConfig.HOST_IMAGE+mValues.get(position).getFoto())
                 .placeholder(R.drawable.ic_pawprint)
                 .error(R.drawable.ic_pawprint)
