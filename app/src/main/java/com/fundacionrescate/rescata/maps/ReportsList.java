@@ -6,11 +6,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -21,6 +23,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -53,6 +56,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -84,6 +88,12 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
     private FusedLocationProviderClient mFusedLocationProviderClient;
     SupportMapFragment fm;
     Context context;
+
+    SharedPreferences prefs;
+    boolean isLoggeado = false;
+
+    @BindView(R.id.register_login)
+    Button btnLogin;
 
     public ReportsList() {
         // Required empty public constructor
@@ -123,6 +133,21 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
         fm = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_fragment);
         fm.getMapAsync(this);
         return  v;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        isLoggeado = prefs.getBoolean(AppConfig.PREF_isLOGGED, false);
+        if(isLoggeado){
+            btnLogin.setVisibility(View.INVISIBLE);
+        }
+
+
+
     }
 
     @Override

@@ -34,6 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/name"
+                    android:drawableLeft="@drawable/ic_person_outline_black_24dp"
                     android:inputType="textCapWords"
                     android:maxLines="1" />
 
@@ -49,6 +50,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/lastname"
+                    android:drawableLeft="@drawable/ic_person_outline_black_24dp"
+
                     android:inputType="textCapWords"
                     android:maxLines="1" />
 
@@ -64,6 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/email"
+                    android:drawableLeft="@drawable/ic_mail_outline_black_24dp"
                     android:inputType="textEmailAddress"
                     android:maxLines="1" />
 
@@ -81,6 +85,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/phone"
+                    android:drawableLeft="@drawable/ic_phone_android_black_24dp"
                     android:inputType="textEmailAddress"
                     android:maxLines="1" />
 
@@ -98,6 +103,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/address"
+                    android:drawableLeft="@drawable/ic_location_on_black_24dp"
                     android:inputType="textEmailAddress"
                     android:maxLines="1" />
 
@@ -117,6 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/user"
+                    android:drawableLeft="@drawable/ic_person_black_24dp"
                     android:inputType="textEmailAddress"
                     android:maxLines="1" />
 
@@ -133,6 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/password"
+                    android:drawableLeft="@drawable/ic_vpn_key_black_24dp"
                     android:inputType="textPassword"
                     android:maxLines="1" />
 

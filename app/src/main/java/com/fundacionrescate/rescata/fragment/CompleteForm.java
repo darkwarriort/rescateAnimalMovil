@@ -210,6 +210,10 @@ public class CompleteForm extends Fragment {
             isComplete =false;
             spnSexo.setError("Seleccione un sexo");
         }
+        if(mascota_input.getText().toString().isEmpty()){
+            isComplete =false;
+            mascota_layout.setError("Asignele un nombre a la mascota");
+        }
 
         if(color_input.getText().toString().isEmpty())
         {
@@ -232,6 +236,7 @@ public class CompleteForm extends Fragment {
         reporte.setNombre(mascota_input.getText().toString());
         reporte.setTelefono(telefono_input.getText().toString());
         reporte.setColor(color_input.getText().toString());
+        reporte.setEstado("ACTIVO");
 
 
         try {

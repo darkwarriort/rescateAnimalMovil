@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 
 import com.fundacionrescate.rescata.R;
 import com.fundacionrescate.rescata.adapter.Mascotas;
+import com.fundacionrescate.rescata.app.AppConfig;
 import com.fundacionrescate.rescata.cnx.Consulta;
 import com.fundacionrescate.rescata.maps.ReportsList;
 import com.fundacionrescate.rescata.model.Adopcion;
@@ -100,7 +101,7 @@ public class ViewMascotas extends Fragment {
     @OnClick(R.id.view_mascotas_postular)
     void clickPostular() {
 
-        boolean isLoggeado = prefs.getBoolean("Logeado", false);
+        boolean isLoggeado = prefs.getBoolean(AppConfig.PREF_isLOGGED, false);
         if(isLoggeado) {
             AlertDialog alertDialog = new AlertDialog.Builder(context).create();
             alertDialog.setTitle(context.getString(R.string.app_name));

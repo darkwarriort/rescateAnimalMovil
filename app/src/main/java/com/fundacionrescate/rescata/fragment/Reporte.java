@@ -3,9 +3,11 @@ package com.fundacionrescate.rescata.fragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
@@ -26,6 +28,7 @@ import com.fundacionrescate.rescata.cnx.Consulta;
 import com.fundacionrescate.rescata.model.Especie;
 import com.fundacionrescate.rescata.model.Mascota;
 import com.fundacionrescate.rescata.model.Raza;
+import com.fundacionrescate.rescata.model.Usuario;
 import com.fundacionrescate.rescata.util.ActivityUtils;
 import com.fundacionrescate.rescata.util.OnCustomItemSelectedListener;
 import com.google.gson.Gson;
@@ -52,6 +55,7 @@ public class Reporte extends Fragment {
     private String direccion;
     private String coordenada;
     Context context;
+    SharedPreferences prefs;
 
     @BindView(R.id.report_address_input)
     TextInputEditText report_address_input;
@@ -77,6 +81,8 @@ public class Reporte extends Fragment {
     Raza[] lstRaza;
     Mascota mascota = null;
 
+    Usuario userRegistrado= null;
+    boolean isLoggeado = false;
     public Reporte() {
         // Required empty public constructor
         lstEspecie = new Especie[0];
@@ -133,6 +139,7 @@ public class Reporte extends Fragment {
 
         report_address_input.setEnabled(false);
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
 
         adapterEspecie= new ArrayAdapter<>(context,
@@ -148,7 +155,12 @@ public class Reporte extends Fragment {
         spnRaza.setAdapter(adapterRaza);
         cargaDato();
         spnEspecie.addTextChangedListener(listenerSpinnerEspecie );
+        isLoggeado = prefs.getBoolean(AppConfig.PREF_isLOGGED, false);
+        if(isLoggeado){
+            String sUsuario = prefs.getString(AppConfig.PREF_USUARIO,null);
+            userRegistrado = new Gson().fromJson(sUsuario, Usuario.class);
 
+        }
 
 
 
@@ -164,12 +176,15 @@ public class Reporte extends Fragment {
     @OnClick(R.id.register_new_button)
     void nextFormQuestion() {
         com.fundacionrescate.rescata.model.Reporte reporte = new  com.fundacionrescate.rescata.model.Reporte();
-        reporte.setEstado("ACTIVO");
+        reporte.setEstado("INACTIVO");
         String [] gps = coordenada.split(",");
 
         reporte.setLongitud(Float.parseFloat(gps[0]));
         reporte.setLatitud(Float.parseFloat(gps[1]));
         reporte.setDireccion(direccion);
+        if(userRegistrado!=null){
+            reporte.setId_usuario(userRegistrado.getId_usuario());
+        }
         reporte.setEstado_animal((String) ((RadioButton)getView().findViewById(rdgReporte.getCheckedRadioButtonId())).getText());
         if(spnRaza.getEditableText().toString().isEmpty() || spnEspecie.getEditableText().toString().isEmpty()){
             Toast.makeText(context, "Por favor complete los datos", Toast.LENGTH_SHORT).show();
@@ -271,60 +286,44 @@ public class Reporte extends Fragment {
 
         @Override
         public void onSuccess(Object response) {
-            /*
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_content, new Question());
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();*/
-
 
             System.out.println(response);
 
             final com.fundacionrescate.rescata.model.Reporte reporte = new Gson().fromJson(response.toString(), com.fundacionrescate.rescata.model.Reporte.class);
-//            Bitmap map = ActivityUtils.takeScreenShot(getActivity());
-//            Bitmap blurredBitmap = ActivityUtils.blur(getActivity(), map);
-//            ActivityUtils.customDialogBlur(context, 0, getString(R.string.app_name), getString(R.string.question), getString(R.string.accept), true, new ActivityUtils.FinishDialog() {
-//                @Override
-//                public void successModalDialog(Boolean respuesta) {
-//                    if(respuesta){
-//                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                        fragmentTransaction.replace(R.id.fragment_content, Registro.newInstance(reporte,mascota));
-////                        fragmentTransaction.addToBackStack(null);
-//                        fragmentTransaction.commit();
-//                    }else{
-//                        getActivity().finish();
-//                    }
-//                }
-//            },blurredBitmap);
+            if(isLoggeado && userRegistrado!= null) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_content, CompleteForm.newInstance(reporte,userRegistrado,mascota));
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }else{
 
-            AlertDialog.Builder builder;
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
-//            } else {
+                AlertDialog.Builder builder;
+
                 builder = new AlertDialog.Builder(context);
-//            }
-            builder.setTitle("Su mascota ha sido registrada con éxito")
-                    .setMessage(getString(R.string.question))
-                    .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.fragment_content, Registro.newInstance(reporte,mascota));
-//                        fragmentTransaction.addToBackStack(null);
-                            fragmentTransaction.commit();
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // do nothing
-                            getActivity().finish();
 
-                        }
-                    })
-                    .show();
+                builder.setTitle("Su mascota ha sido registrada con éxito")
+                        .setMessage(getString(R.string.question))
+                        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.fragment_content, Registro.newInstance(reporte,mascota));
+//                        fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                                getActivity().finish();
+
+                            }
+                        })
+                        .show();
+
+            }
 
         }
 

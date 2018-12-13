@@ -25,12 +25,13 @@ public class Reporte implements Parcelable {
 //    private long fecha;
     private String estado;
 
+    private Long id_usuario;
+
     private String especie;
     private String raza;
 
     public Reporte() {
     }
-
 
     protected Reporte(Parcel in) {
         if (in.readByte() == 0) {
@@ -64,6 +65,11 @@ public class Reporte implements Parcelable {
         foto = in.readString();
         estado_animal = in.readString();
         estado = in.readString();
+        if (in.readByte() == 0) {
+            id_usuario = null;
+        } else {
+            id_usuario = in.readLong();
+        }
         especie = in.readString();
         raza = in.readString();
     }
@@ -105,6 +111,12 @@ public class Reporte implements Parcelable {
         dest.writeString(foto);
         dest.writeString(estado_animal);
         dest.writeString(estado);
+        if (id_usuario == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id_usuario);
+        }
         dest.writeString(especie);
         dest.writeString(raza);
     }
@@ -244,6 +256,14 @@ public class Reporte implements Parcelable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Long getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(Long id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
     public String getEspecie() {

@@ -2,8 +2,10 @@ package com.fundacionrescate.rescata;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.fundacionrescate.rescata.activity.Container;
+import com.fundacionrescate.rescata.app.AppConfig;
 import com.fundacionrescate.rescata.fragment.About;
 import com.fundacionrescate.rescata.fragment.CompleteForm;
 import com.fundacionrescate.rescata.fragment.Credenciales;
@@ -35,6 +38,9 @@ public class Navigation extends AppCompatActivity
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+    NavigationView navigationView = null;
+    SharedPreferences prefs;
+    boolean isLoggeado = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,14 +50,6 @@ public class Navigation extends AppCompatActivity
 
         setFragment( new ReportsList());
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -59,8 +57,29 @@ public class Navigation extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Menu menu = navigationView.getMenu();
+         reloadMenu();
+    }
+    void reloadMenu(){
+        Menu menu = navigationView.getMenu();
+        isLoggeado = prefs.getBoolean(AppConfig.PREF_isLOGGED, false);
+
+        if(isLoggeado){
+            menu.findItem(R.id.nav_logout).setVisible(true);
+            menu.findItem(R.id.nav_login).setVisible(false);
+        }else{
+            menu.findItem(R.id.nav_logout).setVisible(false);
+            menu.findItem(R.id.nav_login).setVisible(true);
+        }
     }
 
     @Override
@@ -112,6 +131,13 @@ public class Navigation extends AppCompatActivity
             setFragment( new ReportsList());
         } else if (id == R.id.nav_service) {
 
+        }else if (id == R.id.nav_adoption) {
+            Intent modulCNB = new Intent(Navigation.this, Container.class);
+            Bundle b = new Bundle();
+            b.putInt("key", Container.FRAGMENT_ADOPCION); //Your id
+            modulCNB.putExtras(b); //Put your id to your next Intent
+            startActivity(modulCNB);
+            overridePendingTransition(0, 0);
         } else if (id == R.id.nav_product) {
             setFragment(new ViewProductos());
         } else if (id == R.id.nav_about) {
@@ -130,10 +156,15 @@ public class Navigation extends AppCompatActivity
             modulCNB.putExtras(b); //Put your id to your next Intent
            startActivity(modulCNB);
            overridePendingTransition(0, 0);
-        } else if (id == R.id.nav_profile) {
+        }  else if (id == R.id.nav_logout) {
+            SharedPreferences.Editor editor = prefs.edit();
 
-        } else if (id == R.id.nav_logout) {
+            editor.putString(AppConfig.PREF_USUARIO,null);
+            editor.putBoolean(AppConfig.PREF_isLOGGED,false);
+            editor.commit();
+            setFragment( new ReportsList());
 
+            reloadMenu();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

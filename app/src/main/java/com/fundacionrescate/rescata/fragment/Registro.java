@@ -26,6 +26,7 @@ import com.fundacionrescate.rescata.model.Mascota;
 import com.fundacionrescate.rescata.model.Usuario;
 import com.fundacionrescate.rescata.util.Security;
 import com.google.gson.Gson;
+import com.rw.keyboardlistener.KeyboardUtils;
 
 import org.json.JSONObject;
 
@@ -259,8 +260,10 @@ public class Registro extends Fragment {
             System.out.println(response);
             if(reporte!=null && mascota !=null){
                 final Usuario usuario = new Gson().fromJson(response.toString(),Usuario.class);
-                prefs.edit().putString(AppConfig.PREF_USUARIO,response.toString());
-                prefs.edit().putBoolean(AppConfig.PREF_isLOGGED,true);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString(AppConfig.PREF_USUARIO,response.toString());
+                editor.putBoolean(AppConfig.PREF_isLOGGED,true);
+                editor.commit();
 
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
