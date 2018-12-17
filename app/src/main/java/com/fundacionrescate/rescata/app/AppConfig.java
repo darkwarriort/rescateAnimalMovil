@@ -8,8 +8,8 @@ public class AppConfig {
 
     //        public static String HOST = "http://192.168.100.11:7070/";
 //	public static String HOST = "http://144.217.86.189:7070/";
-//    public static String HOST_IMAGE = "http://144.217.86.189";
-    public static String HOST_IMAGE = " http://51.77.148.251/RescateAnimal/admin/";
+    public static String HOST_IMAGE = "http://144.217.86.189/";
+//    public static String HOST_IMAGE = " http://51.77.148.251/TESTIMAGE/";
 
 
     //	public static String HOST = "http://192.168.1.116/wsbases25660/";
