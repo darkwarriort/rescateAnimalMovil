@@ -88,9 +88,10 @@ public class Registro extends Fragment {
     com.fundacionrescate.rescata.model.Reporte reporte = null ;
     private static final String ARG_PARAM1 = "registro";
     private static final String ARG_PARAM2= "mascota";
+    private static final String ARG_PARAM3= "usuario";
 
     Mascota mascota = null;
-
+    Usuario userRegistrado= null;
     public Registro() {
         // Required empty public constructor
     }
@@ -102,13 +103,27 @@ public class Registro extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+    public static Registro newInstance(Usuario usuario) {
+        Registro fragment = new Registro();
+        Bundle args = new Bundle();
+        args.putParcelable(ARG_PARAM3, usuario);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            reporte = getArguments().getParcelable(ARG_PARAM1);
-            mascota = getArguments().getParcelable(ARG_PARAM2);
+            if(getArguments().getParcelable(ARG_PARAM1)!=null){
+                reporte = getArguments().getParcelable(ARG_PARAM1);
+            }
+            if(getArguments().getParcelable(ARG_PARAM2)!=null){
+                mascota = getArguments().getParcelable(ARG_PARAM2);
+            }
+            if(getArguments().getParcelable(ARG_PARAM3)!=null){
+                 userRegistrado = getArguments().getParcelable(ARG_PARAM3);
+            }
         }
     }
     @Override
@@ -140,6 +155,19 @@ public class Registro extends Fragment {
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
 
+        if(userRegistrado!=null){
+            name_input.setText(userRegistrado.getNombres());
+            lastname_input.setText(userRegistrado.getApellidos());
+            email_input.setText(userRegistrado.getCorreo());
+            address_input.setText(userRegistrado.getDireccion());
+            phone_input.setText(userRegistrado.getTelefono());
+
+            user_input.setText(userRegistrado.getUsuario());
+            user_input.setEnabled(false);
+            password_input.setText(userRegistrado.getContrasena());
+
+
+        }
     }
 
     @OnClick(R.id.register_new_button)
@@ -217,6 +245,9 @@ public class Registro extends Fragment {
 
         if(!berror){
             Usuario user = new Usuario();
+            if(userRegistrado!=null){
+                user.setId_usuario(userRegistrado.getId_usuario());
+            }
             user.setApellidos(lastname_input.getText().toString());
             user.setNombres(name_input.getText().toString());
             user.setCorreo(email_input.getText().toString());
