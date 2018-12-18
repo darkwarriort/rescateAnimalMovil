@@ -2,6 +2,9 @@ package com.fundacionrescate.rescata.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -9,6 +12,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
@@ -16,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.fundacionrescate.rescata.R;
@@ -44,8 +49,8 @@ public class CompleteForm extends Fragment {
     private static final String ARG_PARAM2 = "usuario";
     private static final String ARG_PARAM3= "mascota";
 
-     Reporte reporte ;
-     Usuario usuario;
+    Reporte reporte ;
+    Usuario usuario;
 
 
     @BindView(R.id.spnSexo)
@@ -96,6 +101,18 @@ public class CompleteForm extends Fragment {
     ArrayAdapter<Sexo> adapterSexo;
     Sexo[] lstSexo;
 
+    private int PICK_IMAGE_REQUEST = 1;
+
+    //storage permission code
+    private static final int STORAGE_PERMISSION_CODE = 123;
+
+    //Bitmap to get image from gallery
+    private Bitmap bitmap;
+
+    private ImageView imageView;
+    //Uri to store the image uri
+    private Uri filePath;
+
     public CompleteForm() {
         // Required empty public constructor
     }
@@ -108,6 +125,11 @@ public class CompleteForm extends Fragment {
         args.putParcelable(ARG_PARAM3, mascota);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public interface OnListFragmentInteractionListener {
+        // TODO: Update argument type and name
+//        void onListFragmentInteraction(Comercio item);
     }
 
     @Override
@@ -176,6 +198,8 @@ public class CompleteForm extends Fragment {
         adapterSexo= new ArrayAdapter<>(context,
                 android.R.layout.simple_dropdown_item_1line, lstSexo);
         spnSexo.setAdapter(adapterSexo);
+
+
         Consulta.GETARRAY(AppConfig.URL_SEXO, consultaSexo);
 
 
@@ -225,30 +249,39 @@ public class CompleteForm extends Fragment {
 
         }
         if(isComplete){
-        reporte.setEdad(edad_input.getText().toString());
+            reporte.setEdad(edad_input.getText().toString());
 
-        for (Sexo r : lstSexo){
-            if(r.getNombre().equals(spnSexo.getText().toString())){
-                reporte.setId_sexo(r.getId_sexo());
-                break;
+            for (Sexo r : lstSexo){
+                if(r.getNombre().equals(spnSexo.getText().toString())){
+                    reporte.setId_sexo(r.getId_sexo());
+                    break;
+                }
             }
-        }
-        reporte.setNombre(mascota_input.getText().toString());
-        reporte.setTelefono(telefono_input.getText().toString());
-        reporte.setColor(color_input.getText().toString());
-        reporte.setEstado("ACTIVO");
+            reporte.setNombre(mascota_input.getText().toString());
+            reporte.setTelefono(telefono_input.getText().toString());
+            reporte.setColor(color_input.getText().toString());
+            reporte.setEstado("ACTIVO");
 
 
-        try {
-            Consulta.POST(new JSONObject(new Gson().toJson(reporte)), AppConfig.URL_REPORTE_UPDATE+usuario.getId_usuario(),postUpdate);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+            try {
+                Consulta.POST(new JSONObject(new Gson().toJson(reporte)), AppConfig.URL_REPORTE_UPDATE+usuario.getId_usuario(),postUpdate);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }else{
             Toast.makeText(context, "Por favor valide los datos", Toast.LENGTH_SHORT).show();
         }
 
 
+    }
+
+
+    @OnClick(R.id.imgPhoto)
+     void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
 
@@ -303,5 +336,13 @@ public class CompleteForm extends Fragment {
         public CharSequence getTransformation(CharSequence source, View view) {
             return source;
         }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data); comment this unless you want to pass your result to the activity.
+        System.out.println("StartActivity");
+
     }
 }

@@ -2,7 +2,10 @@ package com.fundacionrescate.rescata.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +23,7 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.fundacionrescate.rescata.R;
 import com.fundacionrescate.rescata.fragment.About;
@@ -36,6 +40,10 @@ public class Container extends AppCompatActivity {
 
     private FragmentTransaction mFragmentTransaction;
     private FragmentManager mFragmentManager;
+
+    //Image request code
+
+
     boolean doubleBackToExitPressedOnce = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +154,6 @@ public class Container extends AppCompatActivity {
 //        }
 //        return super.dispatchTouchEvent( event );
 //    }
-
 
 
 

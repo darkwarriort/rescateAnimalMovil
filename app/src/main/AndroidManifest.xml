@@ -35,6 +35,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCZc0ePmeGOaQ1Woup89p6Roum5mQ3OzxE" />
 
+
+
         <activity android:name=".activity.Container"
             android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
