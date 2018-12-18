@@ -27,7 +27,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_margin="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
                 >
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/login_user_layout"
@@ -65,26 +68,48 @@
 
                 </android.support.design.widget.TextInputLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:id="@+id/txtRecovery"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_marginTop="25dp"
+                    android:textColor="@color/light_blue"
+                    android:text="Recuperar contraseña"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/login_ingresar_button"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="50dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_rounded"
+                    android:text="Ingresar" />
+                <Button
+                    android:id="@+id/login_registrar_button"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="50dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_rounded"
+                    android:text="REGISTRAR" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/indigo">
 
-        <Button
-            android:id="@+id/login_ingresar_button"
-            android:layout_width="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_height="50dp"
-            android:background="@drawable/button_rounded"
-            android:text="Ingresar" />
-    </LinearLayout>
 
 </RelativeLayout>

@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fundacionrescate.rescata.R;
@@ -50,6 +51,9 @@ public class Credenciales extends Fragment {
     TextInputLayout user_layout;
     @BindView(R.id.login_password_layout)
     TextInputLayout password_layout;
+
+    @BindView(R.id.txtRecovery)
+    TextView txtRecovery;
 
     @BindView(R.id.imgLogo)
     ImageView imgLogo;
@@ -104,6 +108,16 @@ public class Credenciales extends Fragment {
     public void onDetach() {
         super.onDetach();
 
+    }
+
+
+    @OnClick(R.id.txtRecovery)
+    void recoveryPassword(){
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_content, new Recovery());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
 

@@ -39,7 +39,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
 
-            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:windowSoftInputMode="stateHidden"
             android:parentActivityName=".Navigation">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
