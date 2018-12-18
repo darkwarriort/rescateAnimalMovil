@@ -32,6 +32,7 @@
             android:layout_alignParentBottom="true"
             android:layout_height="50dp"
             android:layout_margin="5dp"
+            android:textColor="@color/white"
             android:textSize="10sp"
             android:background="@drawable/button_rounded"
             android:text="@string/report_list_about" />
@@ -39,6 +40,7 @@
             android:id="@+id/register_service"
             android:layout_margin="5dp"
             android:layout_width="0dp"
+            android:textColor="@color/white"
             android:layout_weight="1"
             android:layout_alignParentBottom="true"
             android:layout_height="50dp"
@@ -49,6 +51,7 @@
             android:layout_margin="5dp"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:textColor="@color/white"
             android:layout_alignParentBottom="true"
             android:layout_height="50dp"
             android:background="@drawable/button_rounded"
@@ -73,11 +76,13 @@
             android:layout_weight="1"
             android:layout_alignParentBottom="true"
             android:layout_height="50dp"
+            android:textColor="@color/white"
             android:background="@drawable/button_rounded"
             android:text="@string/report_list_report" />
         <Button
             android:id="@+id/report_adoption"
             android:layout_width="0dp"
+            android:textColor="@color/white"
             android:layout_weight="1"
             android:layout_alignParentBottom="true"
             android:layout_height="50dp"
