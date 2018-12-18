@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             android:textSize="@dimen/about_title"
             android:text="@string/about_title"
             />
@@ -23,6 +23,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/about_title_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/about_mision"
             />
         <TextView
@@ -35,7 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/about_title_content"
-
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/about_vision"
             />
         <TextView
@@ -46,23 +49,23 @@
             />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textAlignment="center"
-            android:textSize="@dimen/about_title_content"
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:textAlignment="center"-->
+        <!--android:textSize="@dimen/about_title_content"-->
 
-            android:text="@string/question"
-            />
+        <!--android:text="@string/question"-->
+        <!--/>-->
         <Button
             android:id="@+id/register_new_button"
             android:layout_width="match_parent"
             android:layout_margin="30dp"
             android:layout_height="50dp"
-            android:textColor="@color/white"
+            android:textColor="@color/colorOnTextButton"
             android:background="@drawable/button_rounded"
-            android:text="@string/accept" />
+            android:text="Desea registrarse?" />
     </LinearLayout>
 
 </ScrollView>

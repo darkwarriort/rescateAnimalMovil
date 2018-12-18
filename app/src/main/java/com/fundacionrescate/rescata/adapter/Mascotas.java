@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,17 +35,27 @@ public class Mascotas extends RecyclerView.Adapter<Mascotas.ViewHolder> {
         return new ViewHolder(view);
     }
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.nombre.setText(mValues.get(position).getNombre());
         holder.raza.setText("Raza: \t"+mValues.get(position).getRaza());
         holder.sexo.setText("Sexo: \t"+mValues.get(position).getSexo());
-        holder.especie.setText("Especie \t"+mValues.get(position).getEspecie());
+        holder.especie.setText("Especie: \t"+mValues.get(position).getEspecie());
+        holder.descripcion.setText(mValues.get(position).getDescripcion());
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                mValues.get(position).setCheck(b);
+            }
+        });
         System.out.println("FOTO : " +AppConfig.HOST_IMAGE+mValues.get(position).getFoto());
 
         Glide.with(context)
                 .load(AppConfig.HOST_IMAGE+mValues.get(position).getFoto())
                 .error(R.drawable.ic_pawprint)
                 .into(holder.imgMascota);
+
+
+
 //        Picasso.with(context).load(AppConfig.HOST_IMAGE+mValues.get(position).getFoto())
 //                .placeholder(R.drawable.ic_pawprint)
 //                .error(R.drawable.ic_pawprint)
@@ -53,9 +65,7 @@ public class Mascotas extends RecyclerView.Adapter<Mascotas.ViewHolder> {
 //                    @Override
 //                    public void onSuccess() {
 //                        System.out.println("Success LOAD");
-//
 //                    }
-//
 //                    @Override
 //                    public void onError() {
 //                        System.out.println("ERROR LOAD");
@@ -74,16 +84,20 @@ public class Mascotas extends RecyclerView.Adapter<Mascotas.ViewHolder> {
         final TextView especie;
         final TextView sexo;
         final TextView edad;
+        final CheckBox checkBox;
+        final TextView descripcion;
         final TextView raza;
 
         public ViewHolder(View view) {
             super(view);
             imgMascota = view.findViewById(R.id.imgMascota);
             nombre = view.findViewById(R.id.nombre);
+            checkBox = view.findViewById(R.id.checkbox);
             especie = view.findViewById(R.id.especie);
             raza = view.findViewById(R.id.raza);
             sexo = view.findViewById(R.id.sexo);
             edad = view.findViewById(R.id.edad);
+            descripcion = view.findViewById(R.id.descripcion);
 
         }
     }

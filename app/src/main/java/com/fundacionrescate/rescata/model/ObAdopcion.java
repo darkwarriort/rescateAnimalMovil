@@ -10,7 +10,17 @@ public class ObAdopcion {
     String raza;
     String sexo;
 
+    boolean check;
+
     public ObAdopcion() {
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
     }
 
     public Long getId() {

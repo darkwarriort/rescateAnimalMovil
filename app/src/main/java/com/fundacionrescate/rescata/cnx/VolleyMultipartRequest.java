@@ -27,7 +27,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
     private final String lineEnd = "\r\n";
     private final String boundary = "apiclient-" + System.currentTimeMillis();
 
-    private Response.Listener<NetworkResponse> mListener;
+    private Response.Listener<Object> mListener;
     private Response.ErrorListener mErrorListener;
     private Map<String, String> mHeaders;
 
@@ -40,7 +40,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
      * @param errorListener on error http or library timeout
      */
     public VolleyMultipartRequest(String url, Map<String, String> headers,
-                                  Response.Listener<NetworkResponse> listener,
+                                  Response.Listener<Object> listener,
                                   Response.ErrorListener errorListener) {
         super(Method.POST, url, errorListener);
         this.mListener = listener;
@@ -57,7 +57,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
      * @param errorListener on error event handler
      */
     public VolleyMultipartRequest(int method, String url,
-                                  Response.Listener<NetworkResponse> listener,
+                                  Response.Listener<Object> listener,
                                   Response.ErrorListener errorListener) {
         super(method, url, errorListener);
         this.mListener = listener;
@@ -125,9 +125,38 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
 
     @Override
     protected void deliverResponse(NetworkResponse response) {
-        mListener.onResponse(response);
+        try {
+            mListener.onResponse(new String(response.data, HttpHeaderParser.parseCharset(response.headers)));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            mErrorListener.onErrorResponse(new ParseError(e));
+        }
     }
 
+//    @Override
+//    protected com.android.volley.Response<String> parseNetworkResponse(NetworkResponse response) {
+//        this.statusCode = response.statusCode;
+//        this.responseHeaders = response.headers;
+//        /* Get the response data */
+//        try {
+//            String json = "";
+//            if (response.data != null) {
+//                json = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+//            }
+//            String log = "%1$s\nResponse code: %2$s\nResponse body: %3$s";
+//            VolleyLog.v(log, getUrl(), statusCode, json);
+//            if (statusCode >= 200 && statusCode < 300) {
+//                /* Return the parsed result in a response wrapper */
+//                return shouldCache() ?
+//                        success(json, parseIgnoreCacheHeaders(response)) :
+//                        success(json, parseCacheHeaders(response));
+//            } else {
+//                return error(new ServerError(response));
+//            }
+//        } catch (UnsupportedEncodingException e) {
+//            return error(new ParseError(e));
+//        }
+//    }
     @Override
     public void deliverError(VolleyError error) {
         mErrorListener.onErrorResponse(error);

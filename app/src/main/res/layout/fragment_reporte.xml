@@ -126,6 +126,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="30dp"
         android:layout_height="50dp"
+        android:textColor="@color/colorOnTextButton"
         android:background="@drawable/button_rounded"
         android:text="@string/accept" />
 </RelativeLayout>

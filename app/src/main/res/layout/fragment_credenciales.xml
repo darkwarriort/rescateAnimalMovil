@@ -93,7 +93,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_height="50dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorOnTextButton"
                     android:background="@drawable/button_rounded"
                     android:text="Ingresar" />
                 <Button
@@ -104,7 +104,7 @@
                     android:layout_marginRight="30dp"
                     android:layout_marginBottom="10dp"
                     android:layout_height="50dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorOnTextButton"
                     android:background="@drawable/button_rounded"
                     android:text="REGISTRAR" />
             </LinearLayout>

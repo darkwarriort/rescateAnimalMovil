@@ -3,9 +3,11 @@ package com.fundacionrescate.rescata.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -23,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.fundacionrescate.rescata.R;
 import com.fundacionrescate.rescata.app.AppConfig;
 import com.fundacionrescate.rescata.cnx.Consulta;
@@ -36,9 +39,14 @@ import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -109,7 +117,8 @@ public class CompleteForm extends Fragment {
     //Bitmap to get image from gallery
     private Bitmap bitmap;
 
-    private ImageView imageView;
+    @BindView(R.id.imgPhoto)
+    ImageView imageView;
     //Uri to store the image uri
     private Uri filePath;
 
@@ -261,6 +270,7 @@ public class CompleteForm extends Fragment {
             reporte.setTelefono(telefono_input.getText().toString());
             reporte.setColor(color_input.getText().toString());
             reporte.setEstado("ACTIVO");
+            reporte.setId_usuario(usuario.getId_usuario());
 
 
             try {
@@ -305,7 +315,35 @@ public class CompleteForm extends Fragment {
     };
 
 
+    Consulta.CallBackConsulta uploadFoto = new Consulta.CallBackConsulta() {
+        @Override
+        public void onError(Object response) {
 
+        }
+
+        @Override
+        public void onSuccess(Object response) {
+            try {
+                final com.fundacionrescate.rescata.model.Reporte reporteImage = new Gson().fromJson(response.toString(), com.fundacionrescate.rescata.model.Reporte.class);
+                if(reporteImage.getIdReporte()!= null && reporteImage.getIdReporte()== reporte.getIdReporte()){
+                    Glide.with(context)
+                            .load(AppConfig.HOST_UPLOAD+reporteImage.getFoto())
+                            .error(R.drawable.ic_photo_camera_black_24dp)
+                            .into(imageView);
+                    reporte.setFoto(reporteImage.getFoto());
+
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public Context getContext() {
+            return context;
+        }
+    };
     Consulta.CallBackConsulta consultaSexo = new Consulta.CallBackConsulta() {
         @Override
         public void onError(Object response) {
@@ -343,6 +381,20 @@ public class CompleteForm extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //super.onActivityResult(requestCode, resultCode, data); comment this unless you want to pass your result to the activity.
         System.out.println("StartActivity");
-
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            System.out.println(filePath.toString());
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), filePath);
+                imageView.setImageBitmap(bitmap);
+                Consulta.POSTMultiPart(bitmap,AppConfig.URL_REPORTE_IMAGE+reporte.getIdReporte(),uploadFoto);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
+
+
+
 }

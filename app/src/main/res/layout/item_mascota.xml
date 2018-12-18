@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
+        android:id="@+id/checkbox"
         android:layout_gravity="center"
         />
     <LinearLayout
@@ -37,29 +38,22 @@
                 android:layout_height="wrap_content"
                 android:text="Nombre"
                 android:visibility="gone"
-                android:textSize="18sp"
+                android:textSize="12sp"
                 android:textAppearance="?attr/textAppearanceListItem" />
             <TextView
                 android:id="@+id/especie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Especie"
-                android:textSize="18sp"
+                android:textSize="12sp"
                 android:textAppearance="?attr/textAppearanceListItem" />
 
-            <TextView
-                android:id="@+id/raza"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Raza: "
-                android:textSize="15sp"
-                android:textAppearance="?attr/textAppearanceListItem" />
             <TextView
                 android:id="@+id/sexo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sexo"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:textAppearance="?attr/textAppearanceListItem" />
             <TextView
                 android:id="@+id/edad"
@@ -69,6 +63,22 @@
                 android:textSize="15sp"
                 android:visibility="gone"
                 android:textAppearance="?attr/textAppearanceListItem" />
+            <TextView
+                android:id="@+id/raza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Raza: "
+                android:textSize="12sp"
+                android:textAppearance="?attr/textAppearanceListItem" />
+
+            <TextView
+                android:id="@+id/descripcion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Descripcion"
+                android:textSize="12sp"
+                android:textAppearance="?attr/textAppearanceListItem" />
+
 
         </LinearLayout>
     </LinearLayout>

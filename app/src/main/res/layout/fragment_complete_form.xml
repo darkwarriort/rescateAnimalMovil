@@ -251,7 +251,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="50dp"
-            android:textColor="@color/white"
+            android:textColor="@color/colorOnTextButton"
             android:layout_margin="5dp"
             android:background="@drawable/button_rounded"
             android:text="@string/complete_form_save" />
@@ -259,7 +259,7 @@
             android:id="@+id/complete_form_salir"
             android:layout_margin="5dp"
             android:layout_width="0dp"
-            android:textColor="@color/white"
+            android:textColor="@color/colorOnTextButton"
             android:layout_weight="1"
             android:layout_height="50dp"
             android:background="@drawable/button_rounded"

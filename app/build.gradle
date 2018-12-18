@@ -66,7 +66,7 @@ dependencies {
 //    implementation 'com.github.bumptech.glide:glide:4.8.0'
 //    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 //    implementation 'com.mcxiaoke.volley:library:1.0.8'
-    compile group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5.1'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient-android', version: '4.3.5.1'
     compile('org.apache.httpcomponents:httpmime:4.3') {
         exclude module: "httpclient"
     }

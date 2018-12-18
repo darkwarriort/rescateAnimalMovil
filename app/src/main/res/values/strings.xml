@@ -63,11 +63,11 @@
     <string name="map_permission_yes_">Si</string>
     <string name="map_permission_no">No</string>
 
-    <string name="about_title">Somos una fundación sin fines de lucro</string>
+    <string name="about_title">Somos una Fundación sin fines de lucro, de derecho privado, con personería jurídica, aprobada mediante Acuerdo N.- 029-2012 del Ministerio de Agricultura, Ganadería, Acuacultura y Pesca el 25 de junio del 2012, que nació en la ciudad de Guayaquil con el objetivo de luchar por el bienestar de los animales y fomentar una cultura de tolerancia y respeto hacia ellos.</string>
     <string name="about_mision">Mision</string>
-    <string name="about_mision_content">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."</string>
+    <string name="about_mision_content">Trabajar por la liberación animal a partir de la creación de estrategias educativas, la construcción y promoción de políticas públicas, la ayuda a los animales en situación de riesgo, a nivel local y nacional, que generen un cambio social profundo y permanente para la convivencia armónica humano – animal.</string>
     <string name="about_vision">Vision</string>
-    <string name="about_vision_content"> Excepteur sint occaecat cupidatat non proident, sunt in culpa, sed do eiusmod tempor incididunt ut labore et qui officia deserunt mollit anim id est laborum.</string>
+    <string name="about_vision_content"> Ser activistas en movimiento permanente y en constante lucha por los derechos animales, comprometidos con lograr un cambio cultural en nuestra sociedad que se manifieste en liberación animal, erradicación de la violencia y cultura de paz.</string>
 
     <string name="report_list_about">Quienes somos</string>
     <string name="report_list_servicio">Servicio</string>
@@ -100,6 +100,7 @@
 
 
     <string name="about_title_activity">Quienes somos</string>
+    <string name="service_title_activity">Servicios</string>
     <string name="login_title_activity">Iniciar sesion</string>
 
 

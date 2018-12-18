@@ -6,6 +6,7 @@ public class AppConfig {
 //    public static String HOST = "http://192.168.1.116:7070/";
 //    public static String HOST = "http://51.77.148.251:7070/";
     public static String HOST = "http://144.217.241.211:7070/";
+    public static String HOST_UPLOAD = "http://144.217.241.211/";
 //      public static String HOST = "http://192.168.100.11:7070/";
 //	    public static String HOST = "http://144.217.86.189:7070/";
 //      public static String HOST_IMAGE = "http://144.217.86.189";

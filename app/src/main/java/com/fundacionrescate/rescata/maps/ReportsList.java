@@ -139,18 +139,12 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-        isLoggeado = prefs.getBoolean(AppConfig.PREF_isLOGGED, false);
-        if(isLoggeado){
-            btnLogin.setVisibility(View.INVISIBLE);
-        }
 
 
 
     }
 
-    @Override
+        @Override
     public void onConnected(@Nullable Bundle bundle) {
 
     }
@@ -227,6 +221,13 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
     @Override
     public void onResume() {
         super.onResume();
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        isLoggeado = prefs.getBoolean(AppConfig.PREF_isLOGGED, false);
+        if(isLoggeado){
+            btnLogin.setVisibility(View.INVISIBLE);
+        }
         Consulta.GETARRAY(AppConfig.URL_LIST_REPORTE,consultaReportes);
 
     }
@@ -441,7 +442,12 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
 
     @OnClick(R.id.register_service)
     void nextService() {
-
+        Intent modulCNB = new Intent(getContext(), Container.class);
+        Bundle b = new Bundle();
+        b.putInt("key", Container.FRAGMENT_SERVICE); //Your id
+        modulCNB.putExtras(b); //Put your id to your next Intent
+        getActivity().startActivity(modulCNB);
+        getActivity().overridePendingTransition(0, 0);
     }
 
     @OnClick(R.id.report_adoption)

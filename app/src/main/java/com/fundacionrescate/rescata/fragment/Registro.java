@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -122,7 +123,7 @@ public class Registro extends Fragment {
                 mascota = getArguments().getParcelable(ARG_PARAM2);
             }
             if(getArguments().getParcelable(ARG_PARAM3)!=null){
-                 userRegistrado = getArguments().getParcelable(ARG_PARAM3);
+                userRegistrado = getArguments().getParcelable(ARG_PARAM3);
             }
         }
     }
@@ -291,17 +292,24 @@ public class Registro extends Fragment {
             System.out.println(response);
             if(reporte!=null && mascota !=null){
                 final Usuario usuario = new Gson().fromJson(response.toString(),Usuario.class);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString(AppConfig.PREF_USUARIO,response.toString());
-                editor.putBoolean(AppConfig.PREF_isLOGGED,true);
-                editor.commit();
+
+                if(usuario.getId_usuario() != null && usuario.getId_usuario()>0)
+                {
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString(AppConfig.PREF_USUARIO,response.toString());
+                    editor.putBoolean(AppConfig.PREF_isLOGGED,true);
+                    editor.commit();
 
 
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_content, CompleteForm.newInstance(reporte,usuario,mascota));
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_content, CompleteForm.newInstance(reporte,usuario,mascota));
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }else{
+                    Snackbar.make(getView(), "Usuario o Correo ya se encuentra registrado", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                }
             }else{
                 getActivity().finish();
             }

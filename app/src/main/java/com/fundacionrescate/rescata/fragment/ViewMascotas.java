@@ -50,6 +50,7 @@ public class ViewMascotas extends Fragment {
 
     RecyclerView recyclerView;
     ArrayList<ObAdopcion> items;
+    ArrayList<ObAdopcion> itemsTo;
 
     Mascotas mascotasAdapter;
     public ViewMascotas() {
@@ -100,7 +101,13 @@ public class ViewMascotas extends Fragment {
     //
     @OnClick(R.id.view_mascotas_postular)
     void clickPostular() {
-
+        itemsTo = new ArrayList<>();
+        for(ObAdopcion obAdopcion:items){
+            if(obAdopcion.isCheck()){
+                itemsTo.add(obAdopcion);
+            }
+        }
+        System.out.println("JSON POSTULA: "+itemsTo.toString());
         boolean isLoggeado = prefs.getBoolean(AppConfig.PREF_isLOGGED, false);
         if(isLoggeado) {
             AlertDialog alertDialog = new AlertDialog.Builder(context).create();

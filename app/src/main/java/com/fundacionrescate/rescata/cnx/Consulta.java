@@ -2,6 +2,7 @@ package com.fundacionrescate.rescata.cnx;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.ColorSpace;
 import android.graphics.drawable.ColorDrawable;
 
@@ -26,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -92,7 +94,7 @@ public class Consulta {
 
     }
 
-    public static void POSTMultiPart (final File image, final String url, final CallBackConsulta callback ){
+    public static void POSTMultiPart (final Bitmap image, final String url, final CallBackConsulta callback ){
         final ProgressDialog mProgressDialog ;
         mProgressDialog = new ProgressDialog(callback.getContext());
 
@@ -154,7 +156,7 @@ public class Consulta {
                 // for now just get bitmap data from ImageView
 
 
-//                params.put("avatar", new DataPart("file_avatar.jpg", AppHelper.getFileDataFromDrawable(getBaseContext(), mAvatarImage.getDrawable()), "image/jpeg"));
+                params.put("file", new DataPart(System.currentTimeMillis()+".jpg", getFileDataFromDrawable(image), "image/jpeg"));
 
 
                 //                params.put("cover", new DataPart("file_cover.jpg", AppHelper.getFileDataFromDrawable(getBaseContext(), mCoverImage.getDrawable()), "image/jpeg"));
@@ -166,6 +168,12 @@ public class Consulta {
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(multipartRequest, "GET");
 
+    }
+
+    public static byte[] getFileDataFromDrawable( Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
     }
     public static void GET (final String url, final CallBackConsulta callback ){
         final ProgressDialog mProgressDialog ;
