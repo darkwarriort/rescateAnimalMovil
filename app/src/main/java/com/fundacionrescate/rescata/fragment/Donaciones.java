@@ -27,6 +27,8 @@ public class Donaciones extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_donaciones, container, false);
+        getActivity().setTitle("Donaciones");
+
         ButterKnife.bind(this, v);
         return v;
     }

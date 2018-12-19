@@ -31,6 +31,7 @@ public class Servicios extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_servicios, container, false);
         ButterKnife.bind(this,v);
+        getActivity().setTitle("Servicios");
 
         return v;
     }
@@ -41,6 +42,7 @@ public class Servicios extends Fragment {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_content,new Salud());
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
     @OnClick(R.id.btnDonaciones)
@@ -48,6 +50,7 @@ public class Servicios extends Fragment {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_content,new Donaciones());
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
     }
