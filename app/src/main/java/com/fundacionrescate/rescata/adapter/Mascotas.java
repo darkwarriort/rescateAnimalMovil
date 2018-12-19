@@ -55,23 +55,6 @@ public class Mascotas extends RecyclerView.Adapter<Mascotas.ViewHolder> {
                 .into(holder.imgMascota);
 
 
-
-//        Picasso.with(context).load(AppConfig.HOST_IMAGE+mValues.get(position).getFoto())
-//                .placeholder(R.drawable.ic_pawprint)
-//                .error(R.drawable.ic_pawprint)
-//                .centerInside()
-//                .fit()
-//                .into(holder.imgMascota, new Callback() {
-//                    @Override
-//                    public void onSuccess() {
-//                        System.out.println("Success LOAD");
-//                    }
-//                    @Override
-//                    public void onError() {
-//                        System.out.println("ERROR LOAD");
-//                    }
-//                });
-
     }
     @Override
     public int getItemCount() {

@@ -12,11 +12,17 @@ import android.view.ViewGroup;
 
 import com.fundacionrescate.rescata.R;
 import com.fundacionrescate.rescata.adapter.Productos;
+import com.fundacionrescate.rescata.cnx.Consulta;
 import com.fundacionrescate.rescata.model.Mascota;
 import com.fundacionrescate.rescata.model.Producto;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static com.fundacionrescate.rescata.app.AppConfig.URL_ADOPCIONES;
+import static com.fundacionrescate.rescata.app.AppConfig.URL_PRODUCTOS;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,9 +38,6 @@ public class ViewProductos extends Fragment {
     public ViewProductos() {
         // Required empty public constructor
         items = new ArrayList<>();
-        items.add(new Producto());
-        items.add(new Producto());
-        items.add(new Producto());
     }
 
 
@@ -45,8 +48,10 @@ public class ViewProductos extends Fragment {
         View v = inflater.inflate(R.layout.fragment_view_productos, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.listProducto);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        productosAdapter = new Productos(items);
+        productosAdapter = new Productos(items,context);
         recyclerView.setAdapter(productosAdapter);
+        Consulta.GETARRAY(URL_PRODUCTOS,consultaProductos);
+
         return v ;
     }
 
@@ -62,4 +67,28 @@ public class ViewProductos extends Fragment {
         super.onDetach();
 
     }
+
+    Consulta.CallBackConsulta consultaProductos = new Consulta.CallBackConsulta() {
+        @Override
+        public void onError(Object response) {
+
+        }
+
+        @Override
+        public void onSuccess(Object response) {
+            try {
+                items.clear();
+                items.addAll(Arrays.asList(new Gson().fromJson(response.toString(), Producto[].class)));
+                productosAdapter.notifyDataSetChanged();
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public Context getContext() {
+            return context;
+        }
+    };
 }

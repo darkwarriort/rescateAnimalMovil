@@ -20,4 +20,17 @@
         tools:context=".view.comercio.ComercioFragment"
         tools:listitem="@layout/item_producto" />
 
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:padding="20dp"
+        android:layout_gravity="bottom"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="true"
+            android:layout_gravity="center"
+            android:text="- Dinero"/>
+    </android.support.v7.widget.CardView>
+
 </FrameLayout>
