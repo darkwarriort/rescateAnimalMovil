@@ -4,7 +4,6 @@ package com.fundacionrescate.rescata.fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,8 +13,10 @@ import android.view.ViewGroup;
 
 import com.fundacionrescate.rescata.R;
 import com.fundacionrescate.rescata.adapter.Consejos;
+import com.fundacionrescate.rescata.adapter.Eventos;
 import com.fundacionrescate.rescata.cnx.Consulta;
 import com.fundacionrescate.rescata.model.Consejo;
+import com.fundacionrescate.rescata.model.Evento;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -23,26 +24,26 @@ import java.util.Arrays;
 
 import butterknife.ButterKnife;
 
-import static com.fundacionrescate.rescata.app.AppConfig.URL_PRODUCTOS;
+import static com.fundacionrescate.rescata.app.AppConfig.URL_EVENTO;
 import static com.fundacionrescate.rescata.app.AppConfig.URL_SALUD;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Salud extends Fragment {
+public class ViewEventos extends Fragment {
 
     Context context;
-    ArrayList<Consejo> items;
+    ArrayList<Evento> items;
 
 
     SharedPreferences prefs;
 
     RecyclerView recyclerView;
 
-    ArrayList<Consejo> itemsTo;
+    ArrayList<Evento> itemsTo;
 
-    Consejos consejosAdapter;
-    public Salud() {
+    Eventos eventosAdapter;
+    public ViewEventos() {
         // Required empty public constructor
         items = new ArrayList<>();
     }
@@ -52,16 +53,14 @@ public class Salud extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v =  inflater.inflate(R.layout.fragment_salud, container, false);
+        View v =  inflater.inflate(R.layout.fragment_eventos, container, false);
         ButterKnife.bind(this, v);
-        getActivity().setTitle("Consejos de Salud");
-
+        getActivity().setTitle("Eventos");
         recyclerView = (RecyclerView) v.findViewById(R.id.listProducto);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        consejosAdapter = new Consejos(items,context);
-        recyclerView.setAdapter(consejosAdapter);
-
-        Consulta.GETARRAY(URL_SALUD,consultaProductos);
+        eventosAdapter = new Eventos(items,context);
+        recyclerView.setAdapter(eventosAdapter);
+        Consulta.GETARRAY(URL_EVENTO,consultaEventos);
         return v;
     }
 
@@ -75,13 +74,9 @@ public class Salud extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
-
-
     }
 
-    Consulta.CallBackConsulta consultaProductos = new Consulta.CallBackConsulta() {
+    Consulta.CallBackConsulta consultaEventos = new Consulta.CallBackConsulta() {
         @Override
         public void onError(Object response) {
 
@@ -91,9 +86,8 @@ public class Salud extends Fragment {
         public void onSuccess(Object response) {
             try {
                 items.clear();
-                items.addAll(Arrays.asList(new Gson().fromJson(response.toString(), Consejo[].class)));
-                consejosAdapter.notifyDataSetChanged();
-
+                items.addAll(Arrays.asList(new Gson().fromJson(response.toString(), Evento[].class)));
+                eventosAdapter.notifyDataSetChanged();
             }catch (Exception e){
                 e.printStackTrace();
             }

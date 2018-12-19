@@ -383,8 +383,8 @@ public class Report extends Fragment implements OnMapReadyCallback,
                     System.out.println("Address: " + mAddress);
                     searchView.setText(mAddress);
 //
-                    mGoogleMap.addMarker(new MarkerOptions().position(latLng)
-                            .title("Reportar aqui"));
+//                    mGoogleMap.addMarker(new MarkerOptions().position(latLng)
+//                            .title("Reportar aqui"));
 //                    if (mHandler == null) {
 //                        mHandler = new android.os.Handler();
 //                    }
@@ -398,6 +398,8 @@ public class Report extends Fragment implements OnMapReadyCallback,
 
                             String lon =   latLng.latitude+","+ latLng.longitude;
                             fragmentTransaction.replace(R.id.fragment_content,  Reporte.newInstance(mAddress,lon));
+                            fragmentTransaction.addToBackStack(null);
+
                             fragmentTransaction.commit();
 //                        }
 //                    }, 500);

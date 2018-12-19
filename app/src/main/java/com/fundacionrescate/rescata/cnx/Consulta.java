@@ -71,7 +71,7 @@ public class Consulta {
                         if(mProgressDialog!=null){
                             mProgressDialog.dismiss();
                         }
-                        System.out.println("GET :" +response);
+                        System.out.println("POST :" +response);
                         callback.onSuccess(response);
 
                     }

@@ -56,7 +56,11 @@ public class Servicios extends Fragment {
     }
     @OnClick(R.id.btnEvento)
     void clickEvento(){
-
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_content,new ViewEventos());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
 
 //        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 //        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

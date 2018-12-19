@@ -35,6 +35,7 @@ import com.fundacionrescate.rescata.fragment.About;
 import com.fundacionrescate.rescata.fragment.Credenciales;
 import com.fundacionrescate.rescata.fragment.Servicios;
 import com.fundacionrescate.rescata.fragment.ViewMascotas;
+import com.fundacionrescate.rescata.fragment.ViewProductos;
 import com.fundacionrescate.rescata.maps.Report;
 
 public class Container extends AppCompatActivity {
@@ -44,6 +45,7 @@ public class Container extends AppCompatActivity {
     public final static int FRAGMENT_LOGIN= 3 ;
     public final static int FRAGMENT_ABOUT= 4 ;
     public final static int FRAGMENT_SERVICE= 5 ;
+    public final static int FRAGMENT_PRODUCT= 6 ;
 
     private FragmentTransaction mFragmentTransaction;
     private FragmentManager mFragmentManager;
@@ -95,6 +97,11 @@ public class Container extends AppCompatActivity {
 
                     setFragment(new Servicios());
                     setTitle(R.string.service_title_activity);
+                    break;
+                case FRAGMENT_PRODUCT:
+
+                    setFragment(new ViewProductos());
+                    setTitle(R.string.productos_title_activity);
                     break;
             }
         }

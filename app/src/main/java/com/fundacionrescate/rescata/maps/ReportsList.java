@@ -132,6 +132,8 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_report_list, container, false);
         ButterKnife.bind(this, v);
+        getActivity().setTitle("Rescate Animal Ecuador");
+
         fm = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_fragment);
         fm.getMapAsync(this);
         return  v;

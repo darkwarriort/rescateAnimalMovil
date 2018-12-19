@@ -13,8 +13,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="recovery_title">Recuperaracion de clave</string>
-    <string name="recovery_subtitle">Ingrese su usuario o \ncorreo electronico para poder recuperar su cuenta</string>
-    <string name="recovery_field">Usuario o Correo</string>
+    <string name="recovery_subtitle">Ingrese su correo\n electronico para poder recuperar su cuenta</string>
+    <string name="recovery_field">Correo</string>
     <string name="user">Usuario</string>
     <string name="password">Clave</string>
     <string name="register">Registrarse</string>
@@ -101,6 +101,7 @@
 
     <string name="about_title_activity">Quienes somos</string>
     <string name="service_title_activity">Servicios</string>
+    <string name="productos_title_activity">Productos</string>
     <string name="login_title_activity">Iniciar sesion</string>
 
 

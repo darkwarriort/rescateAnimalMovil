@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lineLogin1"
         android:layout_alignParentTop="true"
         android:weightSum="3">
         <Button
@@ -56,6 +57,18 @@
             android:layout_height="50dp"
             android:background="@drawable/button_rounded"
             android:text="@string/report_list_login" />
+        <Button
+            android:id="@+id/register_report2"
+            android:layout_margin="5dp"
+            android:layout_width="0dp"
+            android:visibility="gone"
+
+            android:layout_weight="1"
+            android:layout_alignParentBottom="true"
+            android:layout_height="50dp"
+            android:textColor="@color/colorOnTextButton"
+            android:background="@drawable/button_rounded"
+            android:text="@string/report_list_report" />
     </LinearLayout>
     <!--<View-->
         <!--android:layout_width="match_parent"-->
@@ -65,6 +78,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/line2"
+
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
         android:weightSum="2">
@@ -90,6 +105,39 @@
             android:background="@drawable/button_rounded"
             android:text="@string/report_list_adopcion" />
     </LinearLayout>
+    <!--android:background="@color/cardview_dark_background"></View>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:id="@+id/lineLogin2"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/gotoPerfil"
+            android:layout_margin="5dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_alignParentBottom="true"
+            android:layout_height="50dp"
+            android:textColor="@color/colorOnTextButton"
+            android:background="@drawable/button_rounded"
+            android:text="Perfil" />
+        <Button
+            android:id="@+id/btnMascotas"
+            android:layout_width="0dp"
+            android:textColor="@color/colorOnTextButton"
+            android:layout_weight="1"
+            android:layout_alignParentBottom="true"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/button_rounded"
+            android:text="Mascotas" />
+    </LinearLayout>
+
 
 
 </RelativeLayout>

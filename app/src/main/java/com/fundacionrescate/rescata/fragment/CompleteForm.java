@@ -1,6 +1,7 @@
 package com.fundacionrescate.rescata.fragment;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -217,13 +218,16 @@ public class CompleteForm extends Fragment {
 
     @OnClick(R.id.complete_form_salir)
     void exitForm() {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        for(int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
-            fragmentManager.popBackStack();
-        }
-        fragmentTransaction.replace(R.id.fragment_content, new ReportsList());
-        fragmentTransaction.commit();
+//        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        for(int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+//            fragmentManager.popBackStack();
+//        }
+//        fragmentTransaction.replace(R.id.fragment_content, new ReportsList());
+//        fragmentTransaction.commit();
+//
+        getActivity().finish();
+
     }
 
     @OnClick(R.id.complete_form_guardar)

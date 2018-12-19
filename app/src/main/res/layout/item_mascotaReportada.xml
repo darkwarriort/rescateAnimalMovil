@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
     android:layout_marginTop="10dp"
     android:layout_gravity="center_horizontal"
     android:background="@color/colorGrayItems"
@@ -13,9 +14,11 @@
         android:orientation="horizontal"
         android:weightSum="2">
         <ImageView
+            android:id="@+id/imgMascota"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/imgProducto"
+            android:src="@color/light_blue"
+            android:layout_margin="5dp"
             android:layout_weight="0.5"/>
         <LinearLayout
             android:layout_width="0dp"
@@ -26,21 +29,37 @@
                 android:id="@+id/nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="textStart"
                 android:text="Nombre"
-                android:textSize="18sp"
+                android:visibility="gone"
+                android:textSize="12sp"
+                android:textAppearance="?attr/textAppearanceListItem" />
+            <TextView
+                android:id="@+id/especie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Especie"
+                android:textSize="12sp"
                 android:textAppearance="?attr/textAppearanceListItem" />
 
             <TextView
-                android:id="@+id/descripcion"
+                android:id="@+id/sexo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Descripcion : Lorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet."
-                android:textSize="15sp"
+                android:text="Sexo"
+                android:textSize="12sp"
                 android:textAppearance="?attr/textAppearanceListItem" />
+
+            <TextView
+                android:id="@+id/raza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Raza: "
+                android:textSize="12sp"
+                android:textAppearance="?attr/textAppearanceListItem" />
+
 
 
         </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
