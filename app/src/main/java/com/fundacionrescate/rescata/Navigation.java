@@ -57,7 +57,7 @@ public class Navigation extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-         navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -67,7 +67,7 @@ public class Navigation extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         Menu menu = navigationView.getMenu();
-         reloadMenu();
+        reloadMenu();
     }
     void reloadMenu(){
         Menu menu = navigationView.getMenu();
@@ -130,7 +130,12 @@ public class Navigation extends AppCompatActivity
             // Handle the camera action
             setFragment( new ReportsList());
         } else if (id == R.id.nav_service) {
-
+            Intent modulCNB = new Intent(Navigation.this, Container.class);
+            Bundle b = new Bundle();
+            b.putInt("key", Container.FRAGMENT_SERVICE); //Your id
+            modulCNB.putExtras(b); //Put your id to your next Intent
+            startActivity(modulCNB);
+            overridePendingTransition(0, 0);
         }else if (id == R.id.nav_adoption) {
             Intent modulCNB = new Intent(Navigation.this, Container.class);
             Bundle b = new Bundle();
@@ -139,7 +144,7 @@ public class Navigation extends AppCompatActivity
             startActivity(modulCNB);
             overridePendingTransition(0, 0);
         } else if (id == R.id.nav_product) {
-            setFragment(new ViewProductos());
+//            setFragment(new ViewProductos());
         } else if (id == R.id.nav_about) {
 //            setFragment(new About());
             Intent modulCNB = new Intent(Navigation.this, Container.class);
@@ -154,8 +159,8 @@ public class Navigation extends AppCompatActivity
             Bundle b = new Bundle();
             b.putInt("key", Container.FRAGMENT_LOGIN); //Your id
             modulCNB.putExtras(b); //Put your id to your next Intent
-           startActivity(modulCNB);
-           overridePendingTransition(0, 0);
+            startActivity(modulCNB);
+            overridePendingTransition(0, 0);
         }  else if (id == R.id.nav_logout) {
             SharedPreferences.Editor editor = prefs.edit();
 

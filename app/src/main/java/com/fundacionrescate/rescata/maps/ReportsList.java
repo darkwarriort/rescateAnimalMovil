@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -51,6 +52,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -216,6 +218,15 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
         //-2.176148, -79.886396
 //        -2.175526, -79.887340
         getPermissions();
+
+        try {
+            boolean success = mGoogleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.map_style));
+            if (!success) {
+                Log.e("MapsActivityRaw", "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e("MapsActivityRaw", "Can't find style.", e);
+        }
     }
 
     @Override

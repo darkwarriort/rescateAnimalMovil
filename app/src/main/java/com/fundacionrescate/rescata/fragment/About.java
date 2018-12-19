@@ -31,6 +31,7 @@ public class About extends Fragment {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_about, container, false);
         ButterKnife.bind(this, v);
+        getActivity().setTitle(R.string.about_title_activity);
 
         return v ;
     }

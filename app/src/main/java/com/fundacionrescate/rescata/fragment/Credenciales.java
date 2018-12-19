@@ -120,7 +120,14 @@ public class Credenciales extends Fragment {
         fragmentTransaction.commit();
     }
 
-
+    @OnClick(R.id.login_registrar_button)
+    void gotoRegistro() {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_content, new Registro());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
 
     @OnClick(R.id.login_ingresar_button)
     void validaForm() {
