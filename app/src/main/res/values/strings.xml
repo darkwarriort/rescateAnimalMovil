@@ -102,6 +102,7 @@
     <string name="about_title_activity">Quienes somos</string>
     <string name="service_title_activity">Servicios</string>
     <string name="productos_title_activity">Productos</string>
+    <string name="reportados_title_activity">Mascotas reportadas</string>
     <string name="login_title_activity">Iniciar sesion</string>
 
 

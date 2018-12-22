@@ -30,7 +30,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nombre"
-                android:visibility="gone"
                 android:textSize="12sp"
                 android:textAppearance="?attr/textAppearanceListItem" />
             <TextView
@@ -42,14 +41,6 @@
                 android:textAppearance="?attr/textAppearanceListItem" />
 
             <TextView
-                android:id="@+id/sexo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sexo"
-                android:textSize="12sp"
-                android:textAppearance="?attr/textAppearanceListItem" />
-
-            <TextView
                 android:id="@+id/raza"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,6 +48,14 @@
                 android:textSize="12sp"
                 android:textAppearance="?attr/textAppearanceListItem" />
 
+
+            <TextView
+                android:id="@+id/sexo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sexo"
+                android:textSize="12sp"
+                android:textAppearance="?attr/textAppearanceListItem" />
 
 
         </LinearLayout>

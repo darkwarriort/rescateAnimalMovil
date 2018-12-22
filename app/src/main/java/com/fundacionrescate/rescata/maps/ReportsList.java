@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -94,8 +95,17 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
     SharedPreferences prefs;
     boolean isLoggeado = false;
 
+
+    @BindView(R.id.line2)
+    LinearLayout line2;
+
+    @BindView(R.id.lineLogin2)
+    LinearLayout lineLogin2;
+
     @BindView(R.id.register_login)
     Button btnLogin;
+    @BindView(R.id.register_report2)
+    Button register_report2;
 
     public ReportsList() {
         // Required empty public constructor
@@ -239,7 +249,15 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
 
         isLoggeado = prefs.getBoolean(AppConfig.PREF_isLOGGED, false);
         if(isLoggeado){
-            btnLogin.setVisibility(View.INVISIBLE);
+            btnLogin.setVisibility(View.GONE);
+            register_report2.setVisibility(View.VISIBLE);
+            line2.setVisibility(View.GONE);
+            lineLogin2.setVisibility(View.VISIBLE);
+        }else{
+            btnLogin.setVisibility(View.VISIBLE);
+            register_report2.setVisibility(View.GONE);
+            line2.setVisibility(View.VISIBLE);
+            lineLogin2.setVisibility(View.GONE);
         }
         Consulta.GETARRAY(AppConfig.URL_LIST_REPORTE,consultaReportes);
 
@@ -417,13 +435,27 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
     //
     //register_report
 
-    @OnClick(R.id.register_report)
+    @OnClick({R.id.register_report, R.id.register_report2})
     void nextMapReport() {
 
 
         Intent modulCNB = new Intent(getContext(), Container.class);
         Bundle b = new Bundle();
         b.putInt("key", Container.FRAGMENT_REPORTE); //Your id
+        modulCNB.putExtras(b); //Put your id to your next Intent
+        getActivity().startActivity(modulCNB);
+        getActivity().overridePendingTransition(0, 0);
+
+    }
+
+
+    @OnClick(R.id.btnMascotas)
+    void viewReportados() {
+
+
+        Intent modulCNB = new Intent(getContext(), Container.class);
+        Bundle b = new Bundle();
+        b.putInt("key", Container.FRAGMENT_MIS_REPORTE); //Your id
         modulCNB.putExtras(b); //Put your id to your next Intent
         getActivity().startActivity(modulCNB);
         getActivity().overridePendingTransition(0, 0);

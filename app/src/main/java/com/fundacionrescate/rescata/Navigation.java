@@ -87,9 +87,12 @@ public class Navigation extends AppCompatActivity
             String sUsuario = prefs.getString(AppConfig.PREF_USUARIO,null);
             Usuario userRegistrado = new Gson().fromJson(sUsuario, Usuario.class);
             textView.setText(userRegistrado.getUsuario());
+
+
         }else{
             menu.findItem(R.id.nav_logout).setVisible(false);
             menu.findItem(R.id.nav_login).setVisible(true);
+            textView.setText("");
         }
     }
 

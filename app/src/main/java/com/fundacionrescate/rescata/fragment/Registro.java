@@ -311,7 +311,20 @@ public class Registro extends Fragment {
                         .setAction("Action", null).show();
                 }
             }else{
-                getActivity().finish();
+                final Usuario usuario = new Gson().fromJson(response.toString(),Usuario.class);
+
+                if(usuario.getId_usuario() != null && usuario.getId_usuario()>0)
+                {
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString(AppConfig.PREF_USUARIO,response.toString());
+                    editor.putBoolean(AppConfig.PREF_isLOGGED,true);
+                    editor.commit();
+                    getActivity().finish();
+                }
+                else{
+                    Snackbar.make(getView(), "Usuario o Correo ya se encuentra registrado", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
 
 
