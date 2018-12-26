@@ -93,6 +93,49 @@ public class Consulta {
         AppController.getInstance().addToRequestQueue(req, "POST");
 
     }
+    public static void POST (final JSONArray jsonRequest, final String url, final CallBackConsulta callback ){
+        final ProgressDialog mProgressDialog ;
+        mProgressDialog = new ProgressDialog(callback.getContext());
+
+        mProgressDialog.getWindow().setBackgroundDrawable(new
+
+                ColorDrawable(android.graphics.Color.TRANSPARENT));
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+        mProgressDialog.setContentView(R.layout.my_progress);
+
+        System.out.println(jsonRequest.toString());
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.POST,
+                url,jsonRequest,
+                new Response.Listener() {
+                    @Override
+                    public void onResponse(Object response) {
+                        if(mProgressDialog!=null){
+                            mProgressDialog.dismiss();
+                        }
+                        System.out.println("POST :" +response);
+                        callback.onSuccess(response);
+
+                    }
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Failure Callback
+                        if(mProgressDialog!=null){
+                            mProgressDialog.dismiss();
+                        }
+                        callback.onError(null);
+
+                    }
+                });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(req, "POST");
+
+    }
 
     public static void POSTMultiPart (final Bitmap image, final String url, final CallBackConsulta callback ){
         final ProgressDialog mProgressDialog ;

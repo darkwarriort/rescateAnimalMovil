@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -29,12 +30,19 @@ import com.fundacionrescate.rescata.model.Adopcion;
 import com.fundacionrescate.rescata.model.Especie;
 import com.fundacionrescate.rescata.model.Mascota;
 import com.fundacionrescate.rescata.model.ObAdopcion;
+import com.fundacionrescate.rescata.model.Postulantes;
 import com.fundacionrescate.rescata.model.Raza;
 import com.fundacionrescate.rescata.model.Sexo;
+import com.fundacionrescate.rescata.model.Usuario;
 import com.fundacionrescate.rescata.util.OnCustomItemSelectedListener;
 import com.google.gson.Gson;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,9 +59,11 @@ import static com.fundacionrescate.rescata.app.AppConfig.URL_ADOPCIONES;
 public class ViewMascotas extends Fragment {
 
     Context context ;
+    boolean isLoggeado;
+
 
     SharedPreferences prefs;
-
+    Usuario userRegistrado= null;
     RecyclerView recyclerView;
     ArrayList<ObAdopcion> items;
     ArrayList<ObAdopcion> itemsTo;
@@ -251,28 +261,58 @@ public class ViewMascotas extends Fragment {
             }
         }
         System.out.println("JSON POSTULA: "+itemsTo.toString());
-        boolean isLoggeado = prefs.getBoolean(AppConfig.PREF_isLOGGED, false);
+        isLoggeado = prefs.getBoolean(AppConfig.PREF_isLOGGED, false);
+        String sUsuario = prefs.getString(AppConfig.PREF_USUARIO,null);
+        userRegistrado = new Gson().fromJson(sUsuario, Usuario.class);
+
         if(isLoggeado) {
-            AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-            alertDialog.setTitle(context.getString(R.string.app_name));
-            alertDialog.setMessage("Gracias, nos comunicaremos con usted");
-            alertDialog.setCancelable(false);
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Aceptar",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
+            List<Postulantes> postulantes = new ArrayList<>();
+            for(ObAdopcion obAdopcion:itemsTo){
+                Postulantes postulante = new Postulantes();
+                postulante.setId_adopcion(obAdopcion.getId());
+                postulante.setId_usuario(userRegistrado.getId_usuario());
+                postulantes.add(postulante);
+            }
 
 
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
-                                fragmentManager.popBackStack();
-                            }
-                            fragmentTransaction.replace(R.id.fragment_content, new ReportsList());
-                            fragmentTransaction.commit();
+            try {
+                Consulta.POST(new JSONArray(new Gson().toJson(postulantes.toArray())), AppConfig.URL_ADOPCIONES_POSTULAR, new Consulta.CallBackConsulta() {
+                    @Override
+                    public void onError(Object response) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(Object response) {
+                        System.out.println(response);
+                        if(response!=null){
+
+                            AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                            alertDialog.setTitle(context.getString(R.string.app_name));
+                            alertDialog.setMessage("Gracias, nos comunicaremos con usted");
+                            alertDialog.setCancelable(false);
+                            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Aceptar",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                            getActivity().finish();
+                                        }
+                                    });
+                            alertDialog.show();
+
                         }
-                    });
-            alertDialog.show();
+                    }
+
+                    @Override
+                    public Context getContext() {
+                        return context;
+                    }
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
         }
         else{
             android.support.v7.app.AlertDialog.Builder builder;

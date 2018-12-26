@@ -60,7 +60,7 @@ public class MascotasReportadas extends RecyclerView.Adapter<MascotasReportadas.
 
 
 
-        System.out.println("FOTO : " +AppConfig.HOST_UPLOAD+mValuesFilter.get(position).getFoto());
+        System.out.println("FOTO : " +AppConfig.HOST_UPLOAD+ mValuesFilter.get(position).getFoto());
 
         Glide.with(context)
                 .load(AppConfig.HOST_UPLOAD+mValuesFilter.get(position).getFoto())

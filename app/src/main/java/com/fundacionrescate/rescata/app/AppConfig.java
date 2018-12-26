@@ -27,9 +27,11 @@ public class AppConfig {
     public static String URL_USUARIO_RECOVERY = HOST+"api/usuario/recovery";
     public static String URL_USUARIO_VALIDA = HOST+"api/usuario/valida";
     public static String URL_ADOPCIONES = HOST+"api/adopciones";
+    public static String URL_ADOPCIONES_POSTULAR = HOST+"api/postular/newArray";
     public static String URL_PRODUCTOS= HOST+"api/productos";
     public static String URL_SALUD= HOST+"api/salud";
     public static String URL_EVENTO= HOST+"api/evento";
+    public static String URL_EVENTO_PARTICIPANTE= HOST+"api/participante/new";
 
 
     public static String PREF_USUARIO = "Usuario";
