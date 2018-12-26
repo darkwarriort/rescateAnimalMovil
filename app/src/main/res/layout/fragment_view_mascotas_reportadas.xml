@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/white"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
+    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+        android:id="@+id/spnEspecie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/complete_form_especie"
+        android:textColorHint="#05ab9a"
+        app:met_floatingLabel="normal" />
+    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+        android:id="@+id/spnRaza"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/complete_form_raza"
+        android:textColorHint="#05ab9a"
+        app:met_floatingLabel="normal" />
+    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+        android:id="@+id/spnSexo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/complete_form_sexo"
+        android:textColorHint="#05ab9a"
+        app:met_floatingLabel="normal" />
     <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listProducto"
@@ -45,4 +67,4 @@
         <!--android:layout_height="50dp"-->
         <!--android:background="@drawable/button_rounded"-->
         <!--android:text="@string/view_mascota_postular" />-->
-</RelativeLayout>
+</LinearLayout>

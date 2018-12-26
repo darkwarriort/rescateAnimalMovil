@@ -224,6 +224,7 @@ public class Reporte extends Fragment {
 
             for (Especie e : lstEspecie){
                 if(e.getNombre().equals(string)){
+
                     Consulta.GETARRAY(AppConfig.URL_RAZA+"/"+ e.getIdEspecie(),consultaRaza);
                     break;
                 }

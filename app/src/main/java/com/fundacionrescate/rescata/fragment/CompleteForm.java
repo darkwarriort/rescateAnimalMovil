@@ -2,7 +2,9 @@ package com.fundacionrescate.rescata.fragment;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -19,11 +21,14 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -111,6 +116,7 @@ public class CompleteForm extends Fragment {
     Sexo[] lstSexo;
 
     private int PICK_IMAGE_REQUEST = 1;
+    private int CAMERA_PHOTO = 2;
 
     //storage permission code
     private static final int STORAGE_PERMISSION_CODE = 123;
@@ -292,10 +298,56 @@ public class CompleteForm extends Fragment {
 
     @OnClick(R.id.imgPhoto)
      void showFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        // Add the buttons
+        builder.setPositiveButton("Tomar foto", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+//                captureCameraImage();
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivityForResult(takePictureIntent, CAMERA_PHOTO);
+                }
+            }
+        });
+        builder.setNegativeButton("Elegir foto", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+//                selectPicture();
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.putExtra("scale", true);
+                intent.putExtra("outputX", 256);
+                intent.putExtra("outputY", 256);
+                intent.putExtra("aspectX", 1);
+                intent.putExtra("aspectY", 1);
+                intent.putExtra("return-data", true);
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+
+            }
+        });
+
+        builder.setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        Button neutralButton = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+        //
+        positiveButton.setTextColor(getResources().getColor(R.color.colorPrimary));
+        negativeButton.setTextColor(getResources().getColor(R.color.colorPrimary));
+        neutralButton.setTextColor(getResources().getColor(R.color.colorPrimary));
+        //
+        LinearLayout parent = (LinearLayout) positiveButton.getParent();
+        parent.setGravity(Gravity.CENTER);
+        View leftSpacer = parent.getChildAt(1);
+        leftSpacer.setVisibility(View.GONE);
+
+
     }
 
 
@@ -395,7 +447,21 @@ public class CompleteForm extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else
+        if (requestCode == CAMERA_PHOTO && resultCode == Activity.RESULT_OK) {
+            Bundle extras = data.getExtras();
+            try {
+                bitmap = (Bitmap) extras.get("data");
+                imageView.setImageBitmap(bitmap);
+                Consulta.POSTMultiPart(bitmap,AppConfig.URL_REPORTE_IMAGE+reporte.getIdReporte(),uploadFoto);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
+
+
+
     }
 
 

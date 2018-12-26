@@ -93,6 +93,7 @@ public class Registro extends Fragment {
 
     Mascota mascota = null;
     Usuario userRegistrado= null;
+    boolean isLoggeado;
     public Registro() {
         // Required empty public constructor
     }
@@ -154,7 +155,23 @@ public class Registro extends Fragment {
 //            TextViewUtils.separateGroups(edtAmount);
         phone_input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        cargaData();
+    }
 
+    void cargaData(){
+
+        if(userRegistrado== null){
+            isLoggeado = prefs.getBoolean(AppConfig.PREF_isLOGGED, false);
+            if(isLoggeado){
+                String sUsuario = prefs.getString(AppConfig.PREF_USUARIO,null);
+                userRegistrado = new Gson().fromJson(sUsuario, Usuario.class);
+                getActivity().setTitle("Perfil de usuario");
+
+            }
+        }else{
+            String sUsuario = prefs.getString(AppConfig.PREF_USUARIO,null);
+            userRegistrado = new Gson().fromJson(sUsuario, Usuario.class);
+        }
 
         if(userRegistrado!=null){
             name_input.setText(userRegistrado.getNombres());
@@ -166,7 +183,41 @@ public class Registro extends Fragment {
             user_input.setText(userRegistrado.getUsuario());
             user_input.setEnabled(false);
             password_input.setText(userRegistrado.getContrasena());
+//            password_input.setEnabled();
+            password_input.setFocusable(false);
+            password_input.setClickable(true);
 
+            password_input.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final Snackbar snackbar = Snackbar.make(getView(),"Desea realizar un cambio de clave", Snackbar.LENGTH_SHORT);
+                    snackbar.setAction("SI", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+//                            snackbar.dismiss();
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.fragment_content, new Perfil());
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+                        }
+                    });
+                    snackbar.show();
+                }
+            });
+
+
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        cargaData();
+        if(userRegistrado!=null){
+            getActivity().setTitle("Perfil de usuario");
+        }else{
+            getActivity().setTitle("Registro de usuario");
 
         }
     }
@@ -229,19 +280,22 @@ public class Registro extends Fragment {
             user_layout.setErrorEnabled(false);
 
         }
-        if(password_input.getText().toString().isEmpty()){
-            password_layout.setErrorEnabled(true);
-            password_layout.setError("Por favor ingrese la clave");
-            berror = true;
-        }else{
-            if(isPasswordValid(password_input.getText().toString())){
+        if(!isLoggeado){
+            if(password_input.getText().toString().isEmpty()){
                 password_layout.setErrorEnabled(true);
-                password_layout.setError("La clave debe tener entre 6 u 8 caracteres");
+                password_layout.setError("Por favor ingrese la clave");
                 berror = true;
             }else{
-                password_layout.setErrorEnabled(false);
-            }
 
+                if(isPasswordValid(password_input.getText().toString())){
+                    password_layout.setErrorEnabled(true);
+                    password_layout.setError("La clave debe tener entre 6 u 8 caracteres");
+                    berror = true;
+                }else{
+                    password_layout.setErrorEnabled(false);
+                }
+
+            }
         }
 
         if(!berror){
@@ -255,7 +309,11 @@ public class Registro extends Fragment {
             user.setTelefono(phone_input.getText().toString());
             user.setDireccion(address_input.getText().toString());
             user.setUsuario(user_input.getText().toString());
-            user.setContrasena(Security.MD5(password_input.getText().toString()));
+            if(isLoggeado){
+                user.setContrasena(password_input.getText().toString());
+            }else {
+                user.setContrasena(Security.MD5(password_input.getText().toString()));
+            }
             user.setEstado("ACTIVO");
 
             try {

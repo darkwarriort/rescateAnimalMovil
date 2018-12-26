@@ -7,7 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -19,15 +22,27 @@ import com.squareup.picasso.Callback;
 
 import java.util.ArrayList;
 
-public class Mascotas extends RecyclerView.Adapter<Mascotas.ViewHolder> {
+public class Mascotas extends RecyclerView.Adapter<Mascotas.ViewHolder> implements Filterable{
 
     private final ArrayList<ObAdopcion> mValues;
+    private  ArrayList<ObAdopcion> mValuesFilter;
     Context context;
+    private CustomFilter mFilter;
+
     public Mascotas( ArrayList<ObAdopcion> items, Context context) {
         mValues = items;
+        mValuesFilter = new ArrayList<>();
+        mValuesFilter.addAll(mValues);
         this.context = context;
+        this.mFilter = new CustomFilter(Mascotas.this);
+
     }
 
+
+    public  ArrayList<ObAdopcion> getmValuesFilter()
+    {
+        return mValuesFilter;
+    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -36,21 +51,21 @@ public class Mascotas extends RecyclerView.Adapter<Mascotas.ViewHolder> {
     }
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.nombre.setText(mValues.get(position).getNombre());
-        holder.raza.setText("Raza: \t"+mValues.get(position).getRaza());
-        holder.sexo.setText("Sexo: \t"+mValues.get(position).getSexo());
-        holder.especie.setText("Especie: \t"+mValues.get(position).getEspecie());
-        holder.descripcion.setText(mValues.get(position).getDescripcion());
+        holder.nombre.setText("Nombre: \t"+mValuesFilter.get(position).getNombre());
+        holder.raza.setText("Raza: \t"+mValuesFilter.get(position).getRaza());
+        holder.sexo.setText("Sexo: \t"+mValuesFilter.get(position).getSexo());
+        holder.especie.setText("Especie: \t"+mValuesFilter.get(position).getEspecie());
+        holder.descripcion.setText(mValuesFilter.get(position).getDescripcion());
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                mValues.get(position).setCheck(b);
+                mValuesFilter.get(position).setCheck(b);
             }
         });
-        System.out.println("FOTO : " +AppConfig.HOST_IMAGE+mValues.get(position).getFoto());
+        System.out.println("FOTO : " +AppConfig.HOST_IMAGE+mValuesFilter.get(position).getFoto());
 
         Glide.with(context)
-                .load(AppConfig.HOST_IMAGE+mValues.get(position).getFoto())
+                .load(AppConfig.HOST_IMAGE+mValuesFilter.get(position).getFoto())
                 .error(R.drawable.ic_pawprint)
                 .into(holder.imgMascota);
 
@@ -58,7 +73,80 @@ public class Mascotas extends RecyclerView.Adapter<Mascotas.ViewHolder> {
     }
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mValuesFilter.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return mFilter;
+    }
+
+
+
+    /*Filtro*/
+    public class CustomFilter extends Filter {
+        private Mascotas listAdapter;
+
+        private CustomFilter(Mascotas listAdapter) {
+            super();
+            this.listAdapter = listAdapter;
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            mValuesFilter.clear();
+            final FilterResults results = new FilterResults();
+            if (constraint.length() == 0) {
+                mValuesFilter.addAll(mValues);
+            } else {
+                final String filterPattern = constraint.toString().toLowerCase().trim();
+                for (final ObAdopcion person : mValues) {
+//                    if (person.getName().toLowerCase().contains(filterPattern)) {
+//                        mValuesFilter.add(person);
+//                    }
+                }
+            }
+            results.values = mValuesFilter;
+            results.count = mValuesFilter.size();
+            return results;
+        }
+
+        public void filter(String raza,String especie, String idSexo){
+            mValuesFilter.clear();
+            final FilterResults results = new FilterResults();
+            mValuesFilter.addAll(mValues);
+
+            if(!idSexo.isEmpty()){
+                for (final ObAdopcion adopcion : mValues) {
+                    if (!adopcion.getSexo().equals( idSexo)){
+                        mValuesFilter.remove(adopcion);
+                    }
+                }
+            }
+            if(!raza.isEmpty()){
+                for (final ObAdopcion adopcion : mValuesFilter) {
+                    if (!adopcion.getRaza().equals( raza)){
+                        mValuesFilter.remove(adopcion);
+                    }
+                }
+            }else
+            if(!especie.isEmpty()){
+                for (final ObAdopcion adopcion : mValuesFilter) {
+                    if (!adopcion.getEspecie().equals( especie)){
+                        mValuesFilter.remove(adopcion);
+                    }
+                }
+            }
+
+
+            notifyDataSetChanged();
+
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            this.listAdapter.notifyDataSetChanged();
+        }
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView imgMascota;

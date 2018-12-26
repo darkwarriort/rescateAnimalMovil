@@ -114,14 +114,8 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-
         buildGoogleApiClient();
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
+
     }
 
     @Override
@@ -200,35 +194,7 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
         mGoogleMap.setOnMapClickListener(this);
 
         Consulta.GETARRAY(AppConfig.URL_LIST_REPORTE,consultaReportes);
-//        new LatLng(-33.852, 151.211);
 
-//        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-2.193847, -79.887411))
-////                .title("Mascota 1"));
-////
-////        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-2.189550, -79.886836))
-////                .title("Mascota 2"));
-////
-////        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-2.185554, -79.896872))
-////                .title("Mascota 3"));
-////
-////        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-2.185541, -79.895466))
-////                .title("Mascota 4"));
-////
-////        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-2.176148, -79.886396))
-////                .title("Mascota 5"));
-////
-////        mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(-2.175526, -79.887340))
-//                .title("Mascota 6"));
-
-
-        // -2.193847, -79.887411
-//        -2.189550, -79.886836
-
-//        -2.185554, -79.896872
-//        -2.185541, -79.895466
-
-        //-2.176148, -79.886396
-//        -2.175526, -79.887340
         getPermissions();
 
         try {
@@ -468,6 +434,17 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
         Intent modulCNB = new Intent(getContext(), Container.class);
         Bundle b = new Bundle();
         b.putInt("key", Container.FRAGMENT_LOGIN); //Your id
+        modulCNB.putExtras(b); //Put your id to your next Intent
+        getActivity().startActivity(modulCNB);
+        getActivity().overridePendingTransition(0, 0);
+
+    }
+    @OnClick(R.id.gotoPerfil)
+    void nextPerfil() {
+
+        Intent modulCNB = new Intent(getContext(), Container.class);
+        Bundle b = new Bundle();
+        b.putInt("key", Container.FRAGMENT_PERFIL); //Your id
         modulCNB.putExtras(b); //Put your id to your next Intent
         getActivity().startActivity(modulCNB);
         getActivity().overridePendingTransition(0, 0);

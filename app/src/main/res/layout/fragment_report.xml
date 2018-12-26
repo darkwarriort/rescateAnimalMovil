@@ -67,5 +67,20 @@
         <!--android:layout_height="50dp"-->
         <!--android:background="@drawable/button_rounded"-->
         <!--android:text="@string/fixPoint" />-->
-
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="40dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:background="@color/light_blue"
+            android:gravity="center_vertical"
+            android:paddingRight="20dp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:layout_gravity="center"
+            android:text="Sr. Usuario de clic en la ubicación que usted desee para realizar el reporte de la mascota"/>
+    </android.support.v7.widget.CardView>
 </RelativeLayout>

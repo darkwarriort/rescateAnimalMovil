@@ -26,14 +26,20 @@ import com.fundacionrescate.rescata.app.AppConfig;
 import com.fundacionrescate.rescata.cnx.Consulta;
 import com.fundacionrescate.rescata.maps.ReportsList;
 import com.fundacionrescate.rescata.model.Adopcion;
+import com.fundacionrescate.rescata.model.Especie;
 import com.fundacionrescate.rescata.model.Mascota;
 import com.fundacionrescate.rescata.model.ObAdopcion;
+import com.fundacionrescate.rescata.model.Raza;
+import com.fundacionrescate.rescata.model.Sexo;
+import com.fundacionrescate.rescata.util.OnCustomItemSelectedListener;
 import com.google.gson.Gson;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -53,9 +59,28 @@ public class ViewMascotas extends Fragment {
     ArrayList<ObAdopcion> itemsTo;
 
     Mascotas mascotasAdapter;
+
+    @BindView(R.id.spnEspecie)
+    MaterialBetterSpinner spnEspecie;
+    @BindView(R.id.spnSexo)
+    MaterialBetterSpinner spnSexo;
+    @BindView(R.id.spnRaza)
+    MaterialBetterSpinner spnRaza;
+
+    ArrayAdapter<Especie> adapterEspecie;
+    ArrayAdapter<Raza> adapterRaza;
+    Especie[] lstEspecie;
+    Raza[] lstRaza;
+
+    ArrayAdapter<Sexo> adapterSexo;
+    Sexo[] lstSexo;
+
     public ViewMascotas() {
         // Required empty public constructor
         items = new ArrayList<>();
+        lstEspecie = new Especie[0];
+        lstRaza  = new Raza[0];
+        lstSexo = new Sexo[0];
 
     }
 
@@ -82,6 +107,24 @@ public class ViewMascotas extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        adapterEspecie= new ArrayAdapter<>(context,
+                android.R.layout.simple_dropdown_item_1line, lstEspecie);
+        spnEspecie.setAdapter(adapterEspecie);
+
+        adapterRaza = new ArrayAdapter<>(context,
+                android.R.layout.simple_dropdown_item_1line, lstRaza);
+        spnRaza.setAdapter(adapterRaza);
+        spnRaza.addTextChangedListener(listenerSpinnerRaza);
+
+        Consulta.GETARRAY(AppConfig.URL_ESPECIE, consultaEspecie);
+
+        spnEspecie.addTextChangedListener(listenerSpinnerEspecie );
+        adapterSexo= new ArrayAdapter<>(context,
+                android.R.layout.simple_dropdown_item_1line, lstSexo);
+        spnSexo.setAdapter(adapterSexo);
+        spnSexo.addTextChangedListener(listenerSpinnerSexo);
+        Consulta.GETARRAY(AppConfig.URL_SEXO, consultaSexo);
+
 
     }
 
@@ -98,11 +141,111 @@ public class ViewMascotas extends Fragment {
 
     }
 
+
+
+    OnCustomItemSelectedListener listenerSpinnerEspecie = new OnCustomItemSelectedListener() {
+        @Override
+        protected void onItemSelected(String string) {
+            ((Mascotas.CustomFilter)mascotasAdapter.getFilter()).filter("",string,spnSexo.getText().toString());
+
+            for (Especie e : lstEspecie){
+                if(e.getNombre().equals(string)){
+
+                    Consulta.GETARRAY(AppConfig.URL_RAZA+"/"+ e.getIdEspecie(),consultaRaza);
+                    break;
+                }
+            } }
+    };
+    OnCustomItemSelectedListener listenerSpinnerSexo = new OnCustomItemSelectedListener() {
+        @Override
+        protected void onItemSelected(String string) {
+            ((Mascotas.CustomFilter) mascotasAdapter.getFilter()).filter(spnRaza.getText().toString(), spnEspecie.getText().toString(), spnSexo.getText().toString());
+        }
+    };
+    OnCustomItemSelectedListener listenerSpinnerRaza= new OnCustomItemSelectedListener() {
+        @Override
+        protected void onItemSelected(String string) {
+            ((Mascotas.CustomFilter) mascotasAdapter.getFilter()).filter(spnRaza.getText().toString(), spnEspecie.getText().toString(), spnSexo.getText().toString());
+        }
+    };
+
+    Consulta.CallBackConsulta consultaSexo = new Consulta.CallBackConsulta() {
+        @Override
+        public void onError(Object response) {
+
+        }
+
+        @Override
+        public void onSuccess(Object response) {
+            try {
+
+                lstSexo = new Gson().fromJson(response.toString(), Sexo[].class);
+                adapterSexo = new ArrayAdapter<>(context,
+                        android.R.layout.simple_dropdown_item_1line, lstSexo);
+                spnSexo.setAdapter(adapterSexo);
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public Context getContext() {
+            return context;
+        }
+    };
+    Consulta.CallBackConsulta consultaRaza = new Consulta.CallBackConsulta() {
+        @Override
+        public void onError(Object response) {
+
+        }
+
+        @Override
+        public void onSuccess(Object response) {
+            lstRaza = new Gson().fromJson(response.toString(), Raza[].class);
+
+            adapterRaza = new ArrayAdapter<>(context,
+                    android.R.layout.simple_dropdown_item_1line, lstRaza);
+            spnRaza.setAdapter(adapterRaza);
+            spnRaza.setText("");
+        }
+
+        @Override
+        public Context getContext() {
+            return context;
+        }
+    };
+
+    Consulta.CallBackConsulta consultaEspecie = new Consulta.CallBackConsulta() {
+        @Override
+        public void onError(Object response) {
+
+        }
+
+        @Override
+        public void onSuccess(Object response) {
+            try {
+
+                lstEspecie = new Gson().fromJson(response.toString(), Especie[].class);
+                adapterEspecie = new ArrayAdapter<>(context,
+                        android.R.layout.simple_dropdown_item_1line, lstEspecie);
+                spnEspecie.setAdapter(adapterEspecie);
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public Context getContext() {
+            return context;
+        }
+    };
     //
     @OnClick(R.id.view_mascotas_postular)
     void clickPostular() {
         itemsTo = new ArrayList<>();
-        for(ObAdopcion obAdopcion:items){
+        for(ObAdopcion obAdopcion:mascotasAdapter.getmValuesFilter()){
             if(obAdopcion.isCheck()){
                 itemsTo.add(obAdopcion);
             }
@@ -174,7 +317,10 @@ public class ViewMascotas extends Fragment {
             try {
                 items.clear();
                 items.addAll(Arrays.asList(new Gson().fromJson(response.toString(), ObAdopcion[].class)));
-                mascotasAdapter.notifyDataSetChanged();
+
+                mascotasAdapter = new Mascotas(items,context);
+                recyclerView.setAdapter(mascotasAdapter);
+//                mascotasAdapter.notifyDataSetChanged();
 
             }catch (Exception e){
                 e.printStackTrace();

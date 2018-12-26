@@ -20,6 +20,55 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
     <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_below="@id/lineLogin1"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_rounded_white"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_marginEnd="15dp"
+        android:layout_alignParentEnd="true"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:src="@drawable/ic_location_on_blue_24dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:text="Extraviado"
+
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:src="@drawable/ic_location_green_24dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Abandonado"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -77,66 +126,87 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/line2"
-
+        android:orientation="vertical"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:weightSum="2">
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/line2"
+            android:weightSum="2">
 
-        <Button
-            android:id="@+id/register_report"
-            android:layout_margin="5dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_alignParentBottom="true"
-            android:layout_height="50dp"
-            android:textColor="@color/colorOnTextButton"
-            android:background="@drawable/button_rounded"
-            android:text="@string/report_list_report" />
-        <Button
-            android:id="@+id/report_adoption"
-            android:layout_width="0dp"
-            android:textColor="@color/colorOnTextButton"
-            android:layout_weight="1"
-            android:layout_alignParentBottom="true"
-            android:layout_height="50dp"
-            android:layout_margin="5dp"
-            android:background="@drawable/button_rounded"
-            android:text="@string/report_list_adopcion" />
+            <Button
+                android:id="@+id/register_report"
+                android:layout_margin="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_alignParentBottom="true"
+                android:layout_height="50dp"
+                android:textColor="@color/colorOnTextButton"
+                android:background="@drawable/button_rounded"
+                android:text="@string/report_list_report" />
+            <Button
+                android:id="@+id/report_adoption"
+                android:layout_width="0dp"
+                android:textColor="@color/colorOnTextButton"
+                android:layout_weight="1"
+                android:layout_alignParentBottom="true"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_rounded"
+                android:text="@string/report_list_adopcion" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:id="@+id/lineLogin2"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/gotoPerfil"
+                android:layout_margin="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_alignParentBottom="true"
+                android:layout_height="50dp"
+                android:textColor="@color/colorOnTextButton"
+                android:background="@drawable/button_rounded"
+                android:text="Perfil" />
+            <Button
+                android:id="@+id/btnMascotas"
+                android:layout_width="0dp"
+                android:textColor="@color/colorOnTextButton"
+                android:layout_weight="1"
+                android:layout_alignParentBottom="true"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_rounded"
+                android:text="Mascotas" />
+
+        </LinearLayout>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_height="40dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="20dp"
+                android:background="@color/light_blue"
+                android:gravity="center_vertical"
+                android:paddingRight="20dp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:layout_gravity="center"
+                android:text="Sr. Usuario si desea realizar un reporte de mascota debe dar clic en el botón reportar."/>
+        </android.support.v7.widget.CardView>
     </LinearLayout>
+
     <!--android:background="@color/cardview_dark_background"></View>-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        android:id="@+id/lineLogin2"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:weightSum="2">
-
-        <Button
-            android:id="@+id/gotoPerfil"
-            android:layout_margin="5dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_alignParentBottom="true"
-            android:layout_height="50dp"
-            android:textColor="@color/colorOnTextButton"
-            android:background="@drawable/button_rounded"
-            android:text="Perfil" />
-        <Button
-            android:id="@+id/btnMascotas"
-            android:layout_width="0dp"
-            android:textColor="@color/colorOnTextButton"
-            android:layout_weight="1"
-            android:layout_alignParentBottom="true"
-            android:layout_height="50dp"
-            android:layout_margin="5dp"
-            android:background="@drawable/button_rounded"
-            android:text="Mascotas" />
-    </LinearLayout>
 
 
 
