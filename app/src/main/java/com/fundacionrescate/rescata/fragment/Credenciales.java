@@ -141,9 +141,9 @@ public class Credenciales extends Fragment {
             user_layout.setErrorEnabled(false);
 
         }
-        if(password_input.getText().toString().isEmpty()){
+        if(password_input.getText().toString().isEmpty() ){
             password_layout.setErrorEnabled(true);
-            password_layout.setError("Por favor ingrese la contraseña");
+            password_layout.setError("Por favor ingrese una contraseña valida");
             berror = true;
         }else{
             password_layout.setErrorEnabled(false);

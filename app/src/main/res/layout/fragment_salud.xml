@@ -1,27 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".fragment.Salud">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:text="Consejos de salud para su mascota"
-        android:textSize="20sp"/>
-
-    <!-- TODO: Update blank fragment layout -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/listProducto"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        tools:context=".view.comercio.ComercioFragment"
-        tools:listitem="@layout/item_salud" />
-</LinearLayout>
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:textColor="#000"
+            android:textAllCaps="true"
+
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-medium"
+            android:text="Consejos de salud"
+            android:textSize="25sp"/>
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="10dp"
+            android:textAllCaps="true"
+
+            android:textColor="#000"
+        android:fontFamily="sans-serif-medium"
+        android:text=" para su mascota"
+            android:layout_gravity="center"
+        android:textSize="25sp"/>
+
+        <!-- TODO: Update blank fragment layout -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/listProducto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:context=".view.comercio.ComercioFragment"
+            tools:listitem="@layout/item_salud" />
+    </LinearLayout>
+
+</ScrollView>

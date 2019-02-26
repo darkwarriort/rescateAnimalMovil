@@ -172,6 +172,11 @@ public class Reporte extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
 
     @OnClick(R.id.register_new_button)
     void nextFormQuestion() {

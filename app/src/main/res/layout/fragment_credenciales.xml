@@ -6,6 +6,7 @@
     android:focusable="false"
     android:focusableInTouchMode="true"
     android:background="@color/white"
+
     tools:context=".fragment.Credenciales">
     <ScrollView
         android:layout_width="match_parent"
@@ -42,9 +43,9 @@
                         fontPath="fonts/Lato-Light.ttf"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/ic_person_black_24dp"
                         android:hint="@string/user"
                         android:inputType="textEmailAddress"
-                        android:drawableLeft="@drawable/ic_person_black_24dp"
                         android:maxLines="1" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -61,8 +62,9 @@
                         fontPath="fonts/Lato-Light.ttf"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="@string/password"
                         android:drawableLeft="@drawable/ic_vpn_key_black_24dp"
+                        android:hint="@string/password"
+
                         android:inputType="textPassword"
                         android:maxLines="1" />
 

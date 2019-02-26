@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Rescate Animal Ecuador</string>
     <string name="app_name_bar">FUNDACION RESCATE ANIMAL\nECUADOR</string>
+    <string name="welcome">Bienvenido a la App Cola</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Usuario no registrado</string>
@@ -63,6 +64,9 @@
     <string name="map_permission_yes_">Si</string>
     <string name="map_permission_no">No</string>
 
+
+    <string name="about_title_name">FUNDACION RESCATE ANIMAL</string>
+
     <string name="about_title">Somos una Fundación sin fines de lucro, de derecho privado, con personería jurídica, aprobada mediante Acuerdo N.- 029-2012 del Ministerio de Agricultura, Ganadería, Acuacultura y Pesca el 25 de junio del 2012, que nació en la ciudad de Guayaquil con el objetivo de luchar por el bienestar de los animales y fomentar una cultura de tolerancia y respeto hacia ellos.</string>
     <string name="about_mision">Mision</string>
     <string name="about_mision_content">Trabajar por la liberación animal a partir de la creación de estrategias educativas, la construcción y promoción de políticas públicas, la ayuda a los animales en situación de riesgo, a nivel local y nacional, que generen un cambio social profundo y permanente para la convivencia armónica humano – animal.</string>
@@ -84,7 +88,8 @@
     <string name="complete_form_save">Guardar</string>
     <string name="complete_form_exit">Salir</string>
 
-    <string name="complete_form_titulo">Completa los datos\nde mascota reportada</string>
+    <string name="complete_form_titulo">Completa los datos</string>
+    <string name="complete_form_titulo2">de mascota reportada</string>
     <string name="complete_form_nombre">Nombre persona</string>
     <string name="complete_form_nombre_mascota">Nombre de mascota</string>
     <string name="complete_form_especie">Especie</string>
@@ -92,10 +97,12 @@
     <string name="complete_form_color">Color</string>
     <string name="complete_form_edad">Edad</string>
     <string name="complete_form_sexo">Sexo</string>
+    <string name="complete_form_descripcion">Descripcion</string>
     <string name="complete_form_telefono">Telefono</string>
     <string name="complete_form_direccion">Direccion</string>
     <string name="complete_form_reporte">Reporte</string>
     <string name="complete_form_tipo_reporte">Tipo de reporte</string>
+    <string name="complete_form_observacion">Observacion</string>
     <string name="complete_form_foto">Foto</string>
 
 
@@ -105,5 +112,6 @@
     <string name="reportados_title_activity">Mascotas reportadas</string>
     <string name="login_title_activity">Iniciar sesion</string>
 
+    <string name="productos_filtro">Seleccione una categoria</string>
 
 </resources>

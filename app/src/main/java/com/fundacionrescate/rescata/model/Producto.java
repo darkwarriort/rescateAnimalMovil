@@ -10,11 +10,13 @@ public class Producto implements Parcelable {
     private Long id_producto;
     private String nombre;
     private String descripcion;
+    private String categoria;
     private String foto;
 
     private Long id_usuario;
     private String estado;
     public Producto(){}
+
     protected Producto(Parcel in) {
         if (in.readByte() == 0) {
             id_producto = null;
@@ -23,6 +25,7 @@ public class Producto implements Parcelable {
         }
         nombre = in.readString();
         descripcion = in.readString();
+        categoria = in.readString();
         foto = in.readString();
         if (in.readByte() == 0) {
             id_usuario = null;
@@ -42,6 +45,7 @@ public class Producto implements Parcelable {
         }
         dest.writeString(nombre);
         dest.writeString(descripcion);
+        dest.writeString(categoria);
         dest.writeString(foto);
         if (id_usuario == null) {
             dest.writeByte((byte) 0);
@@ -93,6 +97,14 @@ public class Producto implements Parcelable {
         this.descripcion = descripcion;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
     public String getFoto() {
         return foto;
     }
@@ -116,6 +128,4 @@ public class Producto implements Parcelable {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-
-
 }

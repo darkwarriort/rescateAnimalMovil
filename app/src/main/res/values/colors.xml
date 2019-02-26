@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#AB0101</color>
+    <color name="colorPrimary">#AF3032</color>
     <color name="colorPrimaryDark">#34515e</color>
     <color name="colorAccent">#1e88e5</color>
     <color name="colorOnPrimary">#000000</color>
@@ -15,6 +15,7 @@
     <color name="light_gray">#999999</color>
     <color name="black">#000000</color>
     <color name="light_blue">#1c6fce</color>
+    <color name = "footer_message">#F6AF92</color>
     <color name="transparent_white">#b4ffffff</color>
     <color name="transparent_blue">#801c6fce</color>
     <color name="light_red">#c70000</color>

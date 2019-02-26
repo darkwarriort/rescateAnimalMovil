@@ -222,6 +222,8 @@ public class ViewMascotasReportadas extends Fragment {
     OnCustomItemSelectedListener listenerSpinnerRaza= new OnCustomItemSelectedListener() {
         @Override
         protected void onItemSelected(String string) {
+            spnSexo.setText("");
+
             long idSexo = 0;
             for (Sexo e : lstSexo){
                 if(e.getNombre().equals(spnSexo.getText().toString())){
@@ -229,6 +231,7 @@ public class ViewMascotasReportadas extends Fragment {
                     break;
                 }
             }
+
             ((MascotasReportadas.CustomFilter) mascotasAdapter.getFilter()).filter(spnRaza.getText().toString(), spnEspecie.getText().toString(), idSexo);
 
 //            ((MascotasReportadas.CustomFilter) mascotasAdapter.getFilter()).filter(spnRaza.getText().toString(), spnEspecie.getText().toString(), spnSexo.getText().toString());
@@ -274,6 +277,7 @@ public class ViewMascotasReportadas extends Fragment {
                     android.R.layout.simple_dropdown_item_1line, lstRaza);
             spnRaza.setAdapter(adapterRaza);
             spnRaza.setText("");
+            spnSexo.setText("");
         }
 
         @Override
@@ -296,6 +300,7 @@ public class ViewMascotasReportadas extends Fragment {
                 adapterEspecie = new ArrayAdapter<>(context,
                         android.R.layout.simple_dropdown_item_1line, lstEspecie);
                 spnEspecie.setAdapter(adapterEspecie);
+
 
             }catch (Exception e){
                 e.printStackTrace();

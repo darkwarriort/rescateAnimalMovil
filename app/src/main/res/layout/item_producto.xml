@@ -37,6 +37,8 @@
                 android:layout_height="wrap_content"
                 android:text="Descripcion : Lorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet."
                 android:textSize="15sp"
+                android:textColor="@color/black"
+
                 android:textAppearance="?attr/textAppearanceListItem" />
 
 

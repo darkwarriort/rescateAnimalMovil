@@ -170,7 +170,7 @@ public class Consulta {
                         if(mProgressDialog!=null){
                             mProgressDialog.dismiss();
                         }
-                        System.out.println("GET :" +response);
+                        System.out.println("POST IMAGE :" +response);
                         callback.onSuccess(response);
 
                     }

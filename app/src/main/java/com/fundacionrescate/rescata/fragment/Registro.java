@@ -19,6 +19,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 
 import com.fundacionrescate.rescata.R;
 import com.fundacionrescate.rescata.app.AppConfig;
@@ -32,6 +33,8 @@ import com.rw.keyboardlistener.KeyboardUtils;
 import org.json.JSONObject;
 
 import java.sql.SQLOutput;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -287,9 +290,10 @@ public class Registro extends Fragment {
                 berror = true;
             }else{
 
-                if(isPasswordValid(password_input.getText().toString())){
+                if(!isPasswordValid(password_input.getText().toString())){
                     password_layout.setErrorEnabled(true);
-                    password_layout.setError("La clave debe tener entre 6 u 8 caracteres");
+//                    password_layout.setError("La clave debe tener entre 6 u 8 caracteres");//
+                    password_layout.setError("La clave debe tener minimo 8 caracteres");
                     berror = true;
                 }else{
                     password_layout.setErrorEnabled(false);
@@ -330,8 +334,11 @@ public class Registro extends Fragment {
 
 
     public boolean isPasswordValid(String clave){
-        if(clave.length()>=6 && clave.length()<=8){
-            return clave.matches("/^[a-zA-Z0-9]]+$/");
+        if(clave.length()>=8){
+            Pattern p = Pattern.compile("^[0-9a-zA-Z]+$");
+            Matcher m = p.matcher(clave);
+//            return clave.matches("/^[0-9a-zA-Z]+$/");
+            return m.find();
         }
         return false;
 

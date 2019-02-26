@@ -49,7 +49,7 @@ public class Servicios extends Fragment {
     void clickDonacion(){
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_content,new Donaciones());
+        fragmentTransaction.replace(R.id.fragment_content,new ViewDonaciones());
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 

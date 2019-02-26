@@ -1,0 +1,67 @@
+body{
+
+}
+
+.container{
+    width: 100%;
+    height: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 45px;
+    margin-bottom: 5px;
+    overflow: auto;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+}
+*:not(input):not(textarea) {
+    -webkit-user-select: none !important; /* disable selection/Copy of UIWebView */
+    -webkit-touch-callout: none !important; /* disable the IOS popup when long-press on a link */
+}
+.row{
+    width: 100%;
+    height: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+    padding-right: 0px;
+    padding-left: 0px;
+    height: 100%;
+}
+
+#cabecera{
+	color: #278EFF;
+	margin-bottom:22px;
+}
+
+#cabecera h4{
+    font-size: 17px;
+	margin: 0px;
+
+}
+.txtTerminos{
+    -webkit-overflow-scrolling: touch ;
+
+}
+
+#parrafo{
+    margin-bottom: 15px;
+    	font-size: 14px;
+}
+
+
+
+#content{
+	border-radius: 0px;
+	margin: 0px;
+	border: 0px;
+
+}
+
+#content h4{
+	font-size: 17px;
+
+	color: #278EFF;
+	margin-left: 3.448275862%;
+}

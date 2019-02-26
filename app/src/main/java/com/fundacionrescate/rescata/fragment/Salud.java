@@ -92,6 +92,7 @@ public class Salud extends Fragment {
             try {
                 items.clear();
                 items.addAll(Arrays.asList(new Gson().fromJson(response.toString(), Consejo[].class)));
+                System.out.println("Size salud "+ items.size());
                 consejosAdapter.notifyDataSetChanged();
 
             }catch (Exception e){

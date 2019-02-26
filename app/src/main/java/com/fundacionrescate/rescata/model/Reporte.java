@@ -29,6 +29,8 @@ public class Reporte implements Parcelable {
 
     private String especie;
     private String raza;
+    private String descripcion;
+    private String observacion;
 
     public Reporte() {
     }
@@ -72,6 +74,8 @@ public class Reporte implements Parcelable {
         }
         especie = in.readString();
         raza = in.readString();
+        descripcion = in.readString();
+        observacion = in.readString();
     }
 
     @Override
@@ -119,6 +123,8 @@ public class Reporte implements Parcelable {
         }
         dest.writeString(especie);
         dest.writeString(raza);
+        dest.writeString(descripcion);
+        dest.writeString(observacion);
     }
 
     @Override
@@ -280,5 +286,21 @@ public class Reporte implements Parcelable {
 
     public void setRaza(String raza) {
         this.raza = raza;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
     }
 }

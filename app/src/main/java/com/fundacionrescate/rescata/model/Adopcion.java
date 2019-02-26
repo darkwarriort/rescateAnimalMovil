@@ -5,14 +5,14 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
-public class Adopcion implements Parcelable{
+public class Adopcion
+        implements Parcelable{
 
 
     private Long id;
 
     private String nombre;
-    private int anio;
-    private int mes;
+    private int edad;
     private Long id_especie;
     private Long id_raza;
     private Long id_sexo;
@@ -23,6 +23,9 @@ public class Adopcion implements Parcelable{
     private Date fecha_ingreso;
     private Date fecha_modificacion;
     private String estado;
+    private String adoptado_por;
+    private String observacion;
+
 
 
     public Adopcion() {
@@ -35,8 +38,7 @@ public class Adopcion implements Parcelable{
             id = in.readLong();
         }
         nombre = in.readString();
-        anio = in.readInt();
-        mes = in.readInt();
+        edad = in.readInt();
         if (in.readByte() == 0) {
             id_especie = null;
         } else {
@@ -61,6 +63,9 @@ public class Adopcion implements Parcelable{
             id_usuario = in.readLong();
         }
         estado = in.readString();
+        adoptado_por = in.readString();
+        observacion = in.readString();
+        estado = in.readString();
     }
 
     @Override
@@ -72,8 +77,7 @@ public class Adopcion implements Parcelable{
             dest.writeLong(id);
         }
         dest.writeString(nombre);
-        dest.writeInt(anio);
-        dest.writeInt(mes);
+        dest.writeInt(edad);
         if (id_especie == null) {
             dest.writeByte((byte) 0);
         } else {
@@ -101,6 +105,9 @@ public class Adopcion implements Parcelable{
             dest.writeByte((byte) 1);
             dest.writeLong(id_usuario);
         }
+        dest.writeString(estado);
+        dest.writeString(adoptado_por);
+        dest.writeString(observacion);
         dest.writeString(estado);
     }
 
@@ -137,20 +144,12 @@ public class Adopcion implements Parcelable{
         this.nombre = nombre;
     }
 
-    public int getAnio() {
-        return anio;
+    public int getEdad() {
+        return edad;
     }
 
-    public void setAnio(int anio) {
-        this.anio = anio;
-    }
-
-    public int getMes() {
-        return mes;
-    }
-
-    public void setMes(int mes) {
-        this.mes = mes;
+    public void setEdad(int edad) {
+        this.edad = edad;
     }
 
     public Long getId_especie() {
@@ -231,5 +230,21 @@ public class Adopcion implements Parcelable{
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getAdoptado_por() {
+        return adoptado_por;
+    }
+
+    public void setAdoptado_por(String adoptado_por) {
+        this.adoptado_por = adoptado_por;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
     }
 }

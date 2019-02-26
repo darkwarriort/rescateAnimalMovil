@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -26,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -33,6 +38,9 @@ import com.fundacionrescate.rescata.R;
 import com.fundacionrescate.rescata.activity.Container;
 import com.fundacionrescate.rescata.app.AppConfig;
 import com.fundacionrescate.rescata.cnx.Consulta;
+import com.fundacionrescate.rescata.fragment.AddObservarcion;
+import com.fundacionrescate.rescata.fragment.DetalleReporte;
+import com.fundacionrescate.rescata.model.Reporte;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -54,6 +62,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -70,6 +79,8 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
         GoogleMap.CancelableCallback,
         GoogleMap.OnCameraMoveListener,
         GoogleMap.OnMapClickListener,
+GoogleMap.OnMarkerClickListener,
+        GoogleMap.OnInfoWindowClickListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
@@ -210,7 +221,6 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
     @Override
     public void onResume() {
         super.onResume();
-
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         isLoggeado = prefs.getBoolean(AppConfig.PREF_isLOGGED, false);
@@ -494,28 +504,36 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
         public void onSuccess(Object response) {
             com.fundacionrescate.rescata.model.Reporte[] lstReporte =
                 new Gson().fromJson(response.toString(), com.fundacionrescate.rescata.model.Reporte[].class);
+            mGoogleMap.clear();
 
             for (com.fundacionrescate.rescata.model.Reporte reporte : lstReporte){
                 MarkerOptions markerOptions =new MarkerOptions();
                 markerOptions.position(new LatLng(reporte.getLongitud(), reporte.getLatitud()));
 
-                if(reporte.getNombre()!=null){
+                if(reporte.getNombre()!=null && !reporte.getNombre().isEmpty()){
                     markerOptions.title(reporte.getNombre());
                     markerOptions.snippet(reporte.getEspecie()+" "+reporte.getRaza());
-
                 }else{
                     markerOptions.title(reporte.getEspecie()+" "+reporte.getRaza());
-
                 }
+
                 if(reporte.getEstado_animal()!=null && reporte.getEstado_animal().equals("Extraviado")){
                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-
-                }else{
+                }else if (reporte.getEstado_animal()!=null && reporte.getEstado_animal().equals("Encontrado")) {
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+                }else if (reporte.getEstado_animal()!=null && reporte.getEstado_animal().equals("Abandono")){
                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-
                 }
-                mGoogleMap.addMarker(markerOptions);
+
+                Marker marker = mGoogleMap.addMarker(markerOptions);
+                marker.setTag(reporte);
+
+
+
             }
+            mGoogleMap.setOnMarkerClickListener(ReportsList.this);
+            mGoogleMap.setOnInfoWindowClickListener(ReportsList.this);
+
         }
 
         @Override
@@ -525,4 +543,41 @@ public class ReportsList extends Fragment implements OnMapReadyCallback,
     };
 
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+//        FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.fragment_content, AddObservarcion.newInstance((Reporte) marker.getTag()));
+//        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.commit();
+
+        return false;
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+
+        if(!((Reporte) marker.getTag()).getEstado_animal().equals("Encontrado")){
+            FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_content, AddObservarcion.newInstance((Reporte) marker.getTag()));
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+//        String latitude = String.valueOf(marker.getPosition().latitude);
+//        String longitude = String.valueOf(marker.getPosition().longitude);
+//        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + latitude + "," + longitude);
+//        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+////        mapIntent.setPackage("com.google.android.apps.maps");
+//
+//        try{
+//            if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+//                startActivity(mapIntent);
+//            }
+//        }catch (NullPointerException e){
+//            Log.e(TAG, "onClick: NullPointerException: Couldn't open map." + e.getMessage() );
+//            Toast.makeText(getActivity(), "Couldn't open map", Toast.LENGTH_SHORT).show();
+//        }
+
+    }
 }

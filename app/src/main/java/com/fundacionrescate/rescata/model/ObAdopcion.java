@@ -8,11 +8,20 @@ public class ObAdopcion {
     String foto;
     String especie;
     String raza;
+    int edad;
     String sexo;
 
     boolean check;
 
     public ObAdopcion() {
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
     }
 
     public boolean isCheck() {

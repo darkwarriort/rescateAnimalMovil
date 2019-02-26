@@ -1,6 +1,9 @@
 package com.fundacionrescate.rescata.adapter;
 
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +11,13 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.fundacionrescate.rescata.R;
 import com.fundacionrescate.rescata.app.AppConfig;
+import com.fundacionrescate.rescata.fragment.DetalleReporte;
 import com.fundacionrescate.rescata.model.ObAdopcion;
 import com.fundacionrescate.rescata.model.Reporte;
 
@@ -67,6 +72,20 @@ public class MascotasReportadas extends RecyclerView.Adapter<MascotasReportadas.
                 .error(R.drawable.ic_pawprint)
                 .into(holder.imgMascota);
 
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_content, DetalleReporte.newInstance(mValuesFilter.get(position)));
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+
+            }
+        });
+
 
     }
     @Override
@@ -86,6 +105,7 @@ public class MascotasReportadas extends RecyclerView.Adapter<MascotasReportadas.
         final TextView especie;
         final TextView sexo;
         final TextView raza;
+        final LinearLayout layout;
 
         public ViewHolder(View view) {
             super(view);
@@ -94,6 +114,7 @@ public class MascotasReportadas extends RecyclerView.Adapter<MascotasReportadas.
             especie = view.findViewById(R.id.especie);
             raza = view.findViewById(R.id.raza);
             sexo = view.findViewById(R.id.sexo);
+            layout = view.findViewById(R.id.layout);
         }
     }
 

@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -253,11 +254,13 @@ public class CompleteForm extends Fragment {
             isComplete =false;
             spnSexo.setError("Seleccione un sexo");
         }
-        if(mascota_input.getText().toString().isEmpty()){
-            isComplete =false;
-            mascota_layout.setError("Asignele un nombre a la mascota");
-        }
 
+        if(!reporte_input.getEditableText().toString().equals("Abandono")) {
+            if (mascota_input.getText().toString().isEmpty()) {
+                isComplete = false;
+                mascota_layout.setError("Asignele un nombre a la mascota");
+            }
+        }
         if(color_input.getText().toString().isEmpty())
         {
             isComplete =false;
@@ -279,7 +282,7 @@ public class CompleteForm extends Fragment {
             reporte.setNombre(mascota_input.getText().toString());
             reporte.setTelefono(telefono_input.getText().toString());
             reporte.setColor(color_input.getText().toString());
-            reporte.setEstado("ACTIVO");
+            reporte.setEstado("INACTIVO");
             reporte.setId_usuario(usuario.getId_usuario());
 
 
@@ -359,7 +362,19 @@ public class CompleteForm extends Fragment {
 
         @Override
         public void onSuccess(Object response) {
-            getActivity().finish();
+
+            final android.support.v7.app.AlertDialog.Builder dialog = new android.support.v7.app.AlertDialog.Builder(context);
+            dialog.setTitle(context.getString(R.string.app_name))
+                    .setMessage("SE VERIFICARÁ QUE LA FOTO Y LOS DATOS SEAN CORRECTOS PARA SER PUBLICADOS. “GRACIAS”")
+                    .setCancelable(false)
+                    .setNeutralButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                            getActivity().finish();
+                        }
+                    });
+            dialog.show();
+
 
 
         }
@@ -380,14 +395,19 @@ public class CompleteForm extends Fragment {
         @Override
         public void onSuccess(Object response) {
             try {
+                System.out.println(response.toString());
                 final com.fundacionrescate.rescata.model.Reporte reporteImage = new Gson().fromJson(response.toString(), com.fundacionrescate.rescata.model.Reporte.class);
-                if(reporteImage.getIdReporte()!= null && reporteImage.getIdReporte()== reporte.getIdReporte()){
+                if(reporteImage.getIdReporte()!= null && reporteImage.getIdReporte().compareTo(reporte.getIdReporte())==0){
+
                     Glide.with(context)
                             .load(AppConfig.HOST_UPLOAD+reporteImage.getFoto())
                             .error(R.drawable.ic_photo_camera_black_24dp)
                             .into(imageView);
                     reporte.setFoto(reporteImage.getFoto());
 
+                    System.out.println("CARGO URL DE IMAGE EN REPORTE LOCAL : " +new Gson().toJson(reporte));
+
+                    Snackbar.make(getView(),"SE VERIFICARÁ QUE LA FOTO Y LOS DATOS SEAN CORRECTOS PARA SER PUBLICADOS. “GRACIAS”",Snackbar.LENGTH_SHORT).show();
                 }
 
             }catch (Exception e){

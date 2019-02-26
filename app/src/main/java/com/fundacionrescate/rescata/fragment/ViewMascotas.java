@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.fundacionrescate.rescata.R;
 import com.fundacionrescate.rescata.adapter.Mascotas;
@@ -36,6 +37,7 @@ import com.fundacionrescate.rescata.model.Sexo;
 import com.fundacionrescate.rescata.model.Usuario;
 import com.fundacionrescate.rescata.util.OnCustomItemSelectedListener;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import org.json.JSONArray;
@@ -175,6 +177,7 @@ public class ViewMascotas extends Fragment {
     OnCustomItemSelectedListener listenerSpinnerRaza= new OnCustomItemSelectedListener() {
         @Override
         protected void onItemSelected(String string) {
+            spnSexo.setText("");
             ((Mascotas.CustomFilter) mascotasAdapter.getFilter()).filter(spnRaza.getText().toString(), spnEspecie.getText().toString(), spnSexo.getText().toString());
         }
     };
@@ -218,6 +221,7 @@ public class ViewMascotas extends Fragment {
                     android.R.layout.simple_dropdown_item_1line, lstRaza);
             spnRaza.setAdapter(adapterRaza);
             spnRaza.setText("");
+            spnSexo.setText("");
         }
 
         @Override
@@ -255,9 +259,12 @@ public class ViewMascotas extends Fragment {
     @OnClick(R.id.view_mascotas_postular)
     void clickPostular() {
         itemsTo = new ArrayList<>();
-        for(ObAdopcion obAdopcion:mascotasAdapter.getmValuesFilter()){
-            if(obAdopcion.isCheck()){
-                itemsTo.add(obAdopcion);
+        ObAdopcion obAdopcion = null;
+
+        for(ObAdopcion obAdopcion1:mascotasAdapter.getmValuesFilter()){
+            if(obAdopcion1.isCheck()){
+                obAdopcion = obAdopcion1;
+
             }
         }
         System.out.println("JSON POSTULA: "+itemsTo.toString());
@@ -266,53 +273,72 @@ public class ViewMascotas extends Fragment {
         userRegistrado = new Gson().fromJson(sUsuario, Usuario.class);
 
         if(isLoggeado) {
-            List<Postulantes> postulantes = new ArrayList<>();
-            for(ObAdopcion obAdopcion:itemsTo){
+//            List<Postulantes> postulantes = new ArrayList<>();
+//            for(ObAdopcion obAdopcion:itemsTo){
+//
+//            }
+            if(obAdopcion !=null) {
                 Postulantes postulante = new Postulantes();
                 postulante.setId_adopcion(obAdopcion.getId());
                 postulante.setId_usuario(userRegistrado.getId_usuario());
-                postulantes.add(postulante);
-            }
-
-
-            try {
-                Consulta.POST(new JSONArray(new Gson().toJson(postulantes.toArray())), AppConfig.URL_ADOPCIONES_POSTULAR, new Consulta.CallBackConsulta() {
-                    @Override
-                    public void onError(Object response) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(Object response) {
-                        System.out.println(response);
-                        if(response!=null){
-
-                            AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-                            alertDialog.setTitle(context.getString(R.string.app_name));
-                            alertDialog.setMessage("Gracias, nos comunicaremos con usted");
-                            alertDialog.setCancelable(false);
-                            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Aceptar",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                            getActivity().finish();
-                                        }
-                                    });
-                            alertDialog.show();
+//            postulantes.add(postulante);
+                try {
+                    Consulta.POST(new JSONObject(new Gson().toJson(postulante)), AppConfig.URL_ADOPCIONES_POSTULAR, new Consulta.CallBackConsulta() {
+                        @Override
+                        public void onError(Object response) {
 
                         }
-                    }
 
-                    @Override
-                    public Context getContext() {
-                        return context;
-                    }
-                });
-            } catch (JSONException e) {
-                e.printStackTrace();
+                        @Override
+                        public void onSuccess(Object response) {
+                            System.out.println(response);
+                            if (response != null) {
+                                System.out.println("JSON POSTULA RESPONSE :" +response);
+
+                                Postulantes res =  new Gson().fromJson(response.toString(),Postulantes.class);
+                                if(res.getId_post()!=null) {
+                                    AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                                    alertDialog.setTitle(context.getString(R.string.app_name));
+                                    alertDialog.setMessage("Gracias, nos comunicaremos con usted");
+                                    alertDialog.setCancelable(false);
+                                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Aceptar",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                    getActivity().finish();
+                                                }
+                                            });
+                                    alertDialog.show();
+                                }else{
+                                    AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+                                    alertDialog.setTitle(context.getString(R.string.app_name));
+                                    alertDialog.setMessage("Usted ya postulo por esta mascota.\n" +
+                                            "Gracias.\n");
+                                    alertDialog.setCancelable(false);
+                                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Aceptar",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+
+                                                }
+                                            });
+                                    alertDialog.show();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public Context getContext() {
+                            return context;
+                        }
+                    });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }else{
+                Toast.makeText(context, "No ha seleccionado ninguna mascota", Toast.LENGTH_SHORT).show();
             }
-
-
         }
         else{
             android.support.v7.app.AlertDialog.Builder builder;

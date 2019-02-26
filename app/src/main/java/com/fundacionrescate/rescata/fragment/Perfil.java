@@ -23,6 +23,9 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -88,7 +91,7 @@ public class Perfil extends Fragment {
                 new_password_layout.setError("Por favor ingrese la clave");
                 berror = true;
             }else{
-                if(isPasswordValid(new_password_input.getText().toString())){
+                if(!isPasswordValid(new_password_input.getText().toString())){
                     new_password_layout.setErrorEnabled(true);
                     new_password_layout.setError("La clave debe tener entre 6 u 8 caracteres");
                     berror = true;
@@ -114,8 +117,11 @@ public class Perfil extends Fragment {
         }
     }
     public boolean isPasswordValid(String clave){
-        if(clave.length()>=6 && clave.length()<=8){
-            return clave.matches("/^[a-zA-Z0-9]]+$/");
+        if(clave.length()>=8){
+            Pattern p = Pattern.compile("^[0-9a-zA-Z]+$");
+            Matcher m = p.matcher(clave);
+//            return clave.matches("/^[0-9a-zA-Z]+$/");
+            return m.find();
         }
         return false;
 

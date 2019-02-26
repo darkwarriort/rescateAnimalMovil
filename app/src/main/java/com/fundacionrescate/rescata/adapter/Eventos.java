@@ -84,32 +84,37 @@ public class Eventos extends RecyclerView.Adapter<Eventos.ViewHolder>{
             public void onClick(View view) {
 
                 if(isLoggeado){
-                    final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-                    dialog.setTitle(context.getString(R.string.app_name))
-                            .setMessage("Deseas registrarse para el evento")
-                            .setCancelable(false)
-                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                                    try {
-                                        Participante participante = new Participante();
-                                        participante.setId_evento(mValues.get(position).getIdEventos());
-                                        participante.setId_usuario(userRegistrado.getId_usuario());
-                                        Consulta.POST(new JSONObject(new Gson().toJson(participante)), AppConfig.URL_EVENTO_PARTICIPANTE,postAgregar);
 
-                                    }catch (Exception e){
+                    if(userRegistrado.getId_grupo()!= null && userRegistrado.getId_grupo().compareTo(Long.parseLong("3"))==0){
+
+                        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                        dialog.setTitle(context.getString(R.string.app_name))
+                                .setMessage("Deseas registrarse para el evento")
+                                .setCancelable(false)
+                                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                                        try {
+                                            Participante participante = new Participante();
+                                            participante.setId_evento(mValues.get(position).getIdEventos());
+                                            participante.setId_usuario(userRegistrado.getId_usuario());
+                                            Consulta.POST(new JSONObject(new Gson().toJson(participante)), AppConfig.URL_EVENTO_PARTICIPANTE,postAgregar);
+
+                                        }catch (Exception e){
+
+                                        }
 
                                     }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
 
-                                }
-                            })
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                                    }
+                                });
+                        dialog.show();
+                    }
 
-                                }
-                            });
-                    dialog.show();
                 }else{
                     final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
                     dialog.setTitle(context.getString(R.string.app_name))

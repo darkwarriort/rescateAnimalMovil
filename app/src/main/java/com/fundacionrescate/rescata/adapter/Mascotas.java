@@ -18,6 +18,7 @@ import com.fundacionrescate.rescata.R;
 import com.fundacionrescate.rescata.app.AppConfig;
 import com.fundacionrescate.rescata.model.Adopcion;
 import com.fundacionrescate.rescata.model.ObAdopcion;
+import com.fundacionrescate.rescata.model.Reporte;
 import com.squareup.picasso.Callback;
 
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ public class Mascotas extends RecyclerView.Adapter<Mascotas.ViewHolder> implemen
 
     private final ArrayList<ObAdopcion> mValues;
     private  ArrayList<ObAdopcion> mValuesFilter;
+    private  ArrayList<ObAdopcion> mValuesFilterTMP;
+
     Context context;
     private CustomFilter mFilter;
 
@@ -33,6 +36,8 @@ public class Mascotas extends RecyclerView.Adapter<Mascotas.ViewHolder> implemen
         mValues = items;
         mValuesFilter = new ArrayList<>();
         mValuesFilter.addAll(mValues);
+        mValuesFilterTMP = new ArrayList<>();
+
         this.context = context;
         this.mFilter = new CustomFilter(Mascotas.this);
 
@@ -51,17 +56,44 @@ public class Mascotas extends RecyclerView.Adapter<Mascotas.ViewHolder> implemen
     }
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.nombre.setText("Nombre: \t"+mValuesFilter.get(position).getNombre());
-        holder.raza.setText("Raza: \t"+mValuesFilter.get(position).getRaza());
-        holder.sexo.setText("Sexo: \t"+mValuesFilter.get(position).getSexo());
-        holder.especie.setText("Especie: \t"+mValuesFilter.get(position).getEspecie());
+        holder.nombre.setText(/*"Nombre: \t"+*/mValuesFilter.get(position).getNombre());
+
+        holder.raza.setText(/*"Raza: \t"+*/mValuesFilter.get(position).getRaza());
+        holder.sexo.setText(/*"Sexo: \t"+*/mValuesFilter.get(position).getSexo());
+        holder.especie.setText(/*"Especie: \t"+*/mValuesFilter.get(position).getEspecie());
         holder.descripcion.setText(mValuesFilter.get(position).getDescripcion());
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.edad.setText(/*"Edad: \t"+*/mValuesFilter.get(position).getEdad()+" años");
+        holder.checkBox.setChecked(mValuesFilter.get(position).isCheck());
+        holder.checkBox.setTag(position);
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                mValuesFilter.get(position).setCheck(b);
+            public void onClick(View v) {
+
+                Integer pos = (Integer) holder.checkBox.getTag();
+
+                if (mValuesFilter.get(pos).isCheck()) {
+                    mValuesFilter.get(pos).setCheck(false);
+                } else {
+                    for (int i = 0; i < mValuesFilter.size(); i++)
+                    {
+                        mValuesFilter.get(i).setCheck(false);
+                    }
+                    mValuesFilter.get(pos).setCheck(true);
+
+                }
+                notifyDataSetChanged();
             }
         });
+//        holder.checkBox.setOnClickListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                if(b){
+//
+//                }
+//
+//                mValuesFilter.get(position).setCheck(b);
+//            }
+//        });
         System.out.println("FOTO : " +AppConfig.HOST_IMAGE+mValuesFilter.get(position).getFoto());
 
         Glide.with(context)
@@ -112,30 +144,65 @@ public class Mascotas extends RecyclerView.Adapter<Mascotas.ViewHolder> implemen
         }
 
         public void filter(String raza,String especie, String idSexo){
+//            mValuesFilter.clear();
+//            final FilterResults results = new FilterResults();
+//            mValuesFilter.addAll(mValues);
+
+//            if(!idSexo.isEmpty()){
+//                for (final ObAdopcion adopcion : mValues) {
+//                    if (!adopcion.getSexo().equals( idSexo)){
+//                        mValuesFilter.remove(adopcion);
+//                    }
+//                }
+//            }
+//            if(!raza.isEmpty()){
+//                for (final ObAdopcion adopcion : mValuesFilter) {
+//                    if (!adopcion.getRaza().equals( raza)){
+//                        mValuesFilter.remove(adopcion);
+//                    }
+//                }
+//            }else
+//            if(!especie.isEmpty()){
+//                for (final ObAdopcion adopcion : mValuesFilter) {
+//                    if (!adopcion.getEspecie().equals( especie)){
+//                        mValuesFilter.remove(adopcion);
+//                    }
+//                }
+//            }
+//
             mValuesFilter.clear();
-            final FilterResults results = new FilterResults();
-            mValuesFilter.addAll(mValues);
+            mValuesFilterTMP.clear();
 
             if(!idSexo.isEmpty()){
-                for (final ObAdopcion adopcion : mValues) {
-                    if (!adopcion.getSexo().equals( idSexo)){
-                        mValuesFilter.remove(adopcion);
+                for ( final ObAdopcion adopcion : mValues) {
+
+                    if(adopcion.getSexo()!= null){
+                        if (adopcion.getSexo().equals( idSexo)){
+                            mValuesFilterTMP.add(adopcion);
+                        }
                     }
                 }
+            }else{
+                mValuesFilterTMP.addAll(mValues);
             }
+
+
             if(!raza.isEmpty()){
-                for (final ObAdopcion adopcion : mValuesFilter) {
-                    if (!adopcion.getRaza().equals( raza)){
-                        mValuesFilter.remove(adopcion);
+
+                for ( final ObAdopcion adopcion : mValuesFilterTMP) {
+                    if (adopcion.getRaza().equals( raza)){
+                        mValuesFilter.add(adopcion);
                     }
                 }
             }else
             if(!especie.isEmpty()){
-                for (final ObAdopcion adopcion : mValuesFilter) {
-                    if (!adopcion.getEspecie().equals( especie)){
-                        mValuesFilter.remove(adopcion);
+                for ( final ObAdopcion adopcion : mValuesFilterTMP) {
+                    if (adopcion.getEspecie().equals( especie)){
+                        mValuesFilter.add(adopcion);
                     }
                 }
+            }else{
+                mValuesFilter.addAll(mValuesFilterTMP);
             }
 
 

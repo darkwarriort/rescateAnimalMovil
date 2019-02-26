@@ -17,7 +17,7 @@ public class Usuario implements Parcelable{
     private String contrasena;
 
     private String estado;
-
+    private Long id_grupo;
     public Usuario() {
     }
 
@@ -35,6 +35,11 @@ public class Usuario implements Parcelable{
         usuario = in.readString();
         contrasena = in.readString();
         estado = in.readString();
+        if (in.readByte() == 0) {
+            id_grupo = null;
+        } else {
+            id_grupo = in.readLong();
+        }
     }
 
     @Override
@@ -53,6 +58,12 @@ public class Usuario implements Parcelable{
         dest.writeString(usuario);
         dest.writeString(contrasena);
         dest.writeString(estado);
+        if (id_grupo == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id_grupo);
+        }
     }
 
     @Override
@@ -142,5 +153,13 @@ public class Usuario implements Parcelable{
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Long getId_grupo() {
+        return id_grupo;
+    }
+
+    public void setId_grupo(Long id_grupo) {
+        this.id_grupo = id_grupo;
     }
 }

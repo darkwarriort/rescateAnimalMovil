@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:drawable="@drawable/ic_pawprint_gray" />
+    <!--item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+
+
+            <gradient
+                android:startColor="#DCEDE9"
+                android:endColor="#D2E2DE"
+                android:angle="270"/>
+        </shape>
+    </item-->
+</layer-list>
+

@@ -8,28 +8,41 @@
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical">
+        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            android:id="@+id/spnEspecie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/complete_form_especie"
+            android:textColorHint="#05ab9a"
+            android:textSize="14sp"
+            app:met_floatingLabelPadding="5dp"
+            app:met_floatingLabel="none"  />
+        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            android:id="@+id/spnRaza"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/complete_form_raza"
+            android:textColorHint="#05ab9a"
+            android:textSize="14sp"
+            app:met_floatingLabelPadding="5dp"
+            app:met_floatingLabel="none"  />
+        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            android:id="@+id/spnSexo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/complete_form_sexo"
+            android:textColorHint="#05ab9a"
+            android:textSize="14sp"
+            app:met_floatingLabelPadding="5dp"
+            app:met_floatingLabel="none" />
+    </LinearLayout>
 
-    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-        android:id="@+id/spnEspecie"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/complete_form_especie"
-        android:textColorHint="#05ab9a"
-        app:met_floatingLabel="normal" />
-    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-        android:id="@+id/spnRaza"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/complete_form_raza"
-        android:textColorHint="#05ab9a"
-        app:met_floatingLabel="normal" />
-    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-        android:id="@+id/spnSexo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/complete_form_sexo"
-        android:textColorHint="#05ab9a"
-        app:met_floatingLabel="normal" />
     <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listProducto"
@@ -60,11 +73,11 @@
             android:text="@string/view_mascota_postular" />
     </LinearLayout>
     <!--<Button-->
-        <!--android:id="@+id/register_new_button"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_margin="20dp"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:background="@drawable/button_rounded"-->
-        <!--android:text="@string/view_mascota_postular" />-->
+    <!--android:id="@+id/register_new_button"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_margin="20dp"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:background="@drawable/button_rounded"-->
+    <!--android:text="@string/view_mascota_postular" />-->
 </LinearLayout>

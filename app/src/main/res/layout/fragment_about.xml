@@ -1,52 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.About">
+    android:background="@color/white">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="40dp"
-        android:paddingBottom="25dp"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="textStart"
-            android:textSize="@dimen/about_title"
-            android:text="@string/about_title"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/about_title_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/about_mision"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/about_title_subcontent"
-            android:text="@string/about_mision_content"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/about_title_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/about_vision"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/about_title_subcontent"
-            android:text="@string/about_vision_content"
-            />
+
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/webViewAbout"
+
+            android:layout_above="@+id/register_new_button"
+            ></WebView>
+        <!--<ImageView-->
+            <!--android:layout_width="150dp"-->
+            <!--android:id="@+id/imgLogo"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_height="150dp"-->
+            <!--android:src="@drawable/logo"/>-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="@dimen/about_title"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:textStyle="bold"-->
+            <!--android:text="@string/about_title_name"-->
+            <!--/>-->
+        <!--<com.fundacionrescate.rescata.util.JustifyTextView-->
+            <!--android:layout_width="331dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:textSize="@dimen/about_title_content"-->
+            <!--android:text="@string/about_title"            -->
+            <!--/>-->
+        <!---->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="@dimen/about_title"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:text="@string/about_mision"-->
+            <!--/>-->
+        <!--<com.fundacionrescate.rescata.util.JustifyTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="@dimen/about_title_content"-->
+            <!--android:text="@string/about_mision_content"-->
+            <!--/>-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="@dimen/about_title"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:text="@string/about_vision"-->
+            <!--/>-->
+        <!--<com.fundacionrescate.rescata.util.JustifyTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="@dimen/about_title_content"-->
+            <!--android:text="@string/about_vision_content"-->
+            <!--android:layout_marginBottom="30dp"-->
+
+            <!--/>-->
 
 
         <!--<TextView-->
@@ -61,11 +84,15 @@
         <Button
             android:id="@+id/register_new_button"
             android:layout_width="match_parent"
-            android:layout_margin="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="30dp"
             android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+
             android:textColor="@color/colorOnTextButton"
             android:background="@drawable/button_rounded"
             android:text="Desea registrarse?" />
-    </LinearLayout>
 
-</ScrollView>
+</RelativeLayout>

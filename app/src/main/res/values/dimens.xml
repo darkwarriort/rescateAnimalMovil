@@ -21,7 +21,7 @@
 
     <!--ABOUT-->
 
-    <dimen name="about_title">14sp</dimen>
+    <dimen name="about_title">16sp</dimen>
     <dimen name="about_title_content">14sp</dimen>
     <dimen name="about_title_subcontent">12sp</dimen>
 
